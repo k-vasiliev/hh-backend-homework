@@ -9,6 +9,7 @@
           Создать пользователя
         </el-button>
         <el-button
+          @click="onCreateResumeButtonClick"
           type="success">
           Создать резюме
         </el-button>
@@ -56,16 +57,19 @@
       </el-tabs>
     </el-row>
     <create-user-form ref="createUserForm"/>
+    <create-resume-form ref="createResumeForm"/>
   </div>
 </template>
 
 <script>
   import CreateUserForm from './CreateUserForm'
+  import CreateResumeForm from './CreateResumeForm'
 
   export default {
     name: 'ResumePage',
     components: {
-      CreateUserForm
+      CreateUserForm,
+      CreateResumeForm
     },
     data () {
       return {
@@ -103,6 +107,9 @@
       },
       onCreateUserButtonClick () {
         this.$refs['createUserForm'].open()
+      },
+      onCreateResumeButtonClick () {
+        this.$refs['createResumeForm'].open()
       }
     },
   }

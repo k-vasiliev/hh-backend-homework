@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-on:opencreateuserform="dialogVisible = true"
+  <el-dialog
     title="Создание пользователя"
     :visible.sync="dialogVisible"
     width="30%"
@@ -16,8 +16,8 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="onCreateUserClick">Создать</el-button>
-  </span>
+      <el-button type="primary" @click="onCreateUserClick">Создать</el-button>
+    </span>
   </el-dialog>
 </template>
 
@@ -41,7 +41,7 @@
       }
     },
     methods: {
-      open() {
+      open () {
         this.dialogVisible = true
       },
       clearForm () {
