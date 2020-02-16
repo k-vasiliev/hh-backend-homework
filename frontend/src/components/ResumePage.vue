@@ -14,6 +14,7 @@
           Создать резюме
         </el-button>
         <el-button
+          @click="onCreateCompanyButtonClick"
           type="success">
           Создать компанию
         </el-button>
@@ -58,18 +59,21 @@
     </el-row>
     <create-user-form ref="createUserForm"/>
     <create-resume-form ref="createResumeForm"/>
+    <create-company-form ref="createCompanyForm"/>
   </div>
 </template>
 
 <script>
   import CreateUserForm from './CreateUserForm'
   import CreateResumeForm from './CreateResumeForm'
+  import CreateCompanyForm from './CreateCompanyForm'
 
   export default {
     name: 'ResumePage',
     components: {
       CreateUserForm,
-      CreateResumeForm
+      CreateResumeForm,
+      CreateCompanyForm
     },
     data () {
       return {
@@ -110,6 +114,9 @@
       },
       onCreateResumeButtonClick () {
         this.$refs['createResumeForm'].open()
+      },
+      onCreateCompanyButtonClick () {
+        this.$refs['createCompanyForm'].open()
       }
     },
   }

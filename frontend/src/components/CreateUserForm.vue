@@ -61,8 +61,8 @@
               .then(() => {
                 this.clear()
                 this.dialogVisible = false
+                this.clearForm()
               })
-              .finally(() => this.clearForm())
           } else {
             return false
           }

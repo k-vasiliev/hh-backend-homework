@@ -26,6 +26,14 @@
           v-model="form.workExperience">
         </el-input>
       </el-form-item>
+      <el-form-item label="Контакты" prop="contacts">
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 5}"
+          placeholder="Ваш опыт работы"
+          v-model="form.contacts">
+        </el-input>
+      </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="onCreateUserClick">Создать</el-button>
@@ -44,7 +52,8 @@
         form: {
           resumeTitle: '',
           resumeUserId: '',
-          workExperience: ''
+          workExperience: '',
+          contacts: ''
         },
         rules: {
           resumeTitle: [
@@ -55,6 +64,9 @@
           ],
           workExperience: [
             { required: true, message: 'Заполните опыт работы', trigger: 'blur' }
+          ],
+          contacts: [
+            { required: true, message: 'Заполните контакты', trigger: 'blur' }
           ]
         },
         applicants: [
@@ -94,13 +106,14 @@
             createResume({
               title: this.form.resumeTitle,
               userId: this.form.resumeUserId,
-              workExperience: this.form.workExperience
+              workExperience: this.form.workExperience,
+              contacts: this.form.contacts
             })
               .then(() => {
                 this.clear()
                 this.dialogVisible = false
+                this.clearForm()
               })
-              .finally(() => this.clearForm())
           } else {
             return false
           }
