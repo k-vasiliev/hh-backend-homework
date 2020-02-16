@@ -1,0 +1,29 @@
+version: "2.4"
+
+services:
+  postgres:
+    image: postgres:10.7-alpine
+    restart: always
+    volumes:
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: hh
+      POSTGRES_DB: hh
+      POSTGRES_USER: hh
+
+  hh-homework-backend:
+    image: hh-homework-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+    ports:
+      - "8080:8080"
+
+  hh-homework-front:
+    image: hh-homework-front
+    restart: always
+    ports:
+      - "80:80"
