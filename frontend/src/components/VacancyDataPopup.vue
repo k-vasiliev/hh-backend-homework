@@ -23,11 +23,23 @@
       <h3>Контакты</h3>
       <span>{{vacancy.contacts}}</span>
     </div>
+
+    <div class="content-block">
+      <h3>Отклики</h3>
+      <template v-if="negotiations.length === 0">
+        <span>Откликов нет</span>
+      </template>
+      <template v-else>
+        <p :key="negotiation.id" v-for="negotiation in negotiations">
+          {{negotiation.resume.applicant.name}}, <b>{{ negotiation.resume.title }}</b>
+        </p>
+      </template>
+    </div>
   </el-dialog>
 </template>
 
 <script>
-  import { getVacancy } from './../api/vacancy'
+  import { getVacancy, getNegotiations } from './../api/vacancy'
 
   export default {
     name: 'ShowVacancyPopup',
@@ -36,13 +48,27 @@
       return {
         dialogVisible: true,
         dataLoaded: false,
-        vacancy: {}
+        vacancy: {
+          company: {}
+        },
+        negotiations: [
+          /*{
+            id: 1,
+            resume: {
+              title: 'resumeTitle',
+              applicant: {
+                name: 'Applicant name'
+              },
+            },
+          }*/
+        ]
       }
     },
     methods: {
       open (vacancyId) {
         this.dialogVisible = true
         this.loadVacancyData(vacancyId)
+        this.loadNegotiationsData(vacancyId)
       },
       handleClose (done) {
         done()
@@ -54,6 +80,12 @@
             this.vacancy = response.data
             this.dataLoaded = true
           })
+      },
+      loadNegotiationsData (vacancyId) {
+        getNegotiations(vacancyId)
+        .then(response => {
+          this.negotiations = response.data
+        })
       }
     }
   }

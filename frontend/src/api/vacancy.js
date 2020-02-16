@@ -13,3 +13,7 @@ export const getVacancies = () => {
 export const getVacancy = (vacancyId) => {
   return get(VACANCY_PATH + '/' + vacancyId)
 }
+
+export const getNegotiations = (vacancyId) => {
+  return get(VACANCY_PATH + '/' + vacancyId + '/negotiations')
+}

@@ -43,7 +43,7 @@
               <template slot-scope="scope">
                 <el-button
                   size="mini"
-                  @click="openVacancyPopup(scope.$index)">Подробнее
+                  @click="openVacancyPopup(scope.row.id)">Подробнее
                 </el-button>
                 <el-button
                   size="mini"
@@ -90,21 +90,19 @@
         activeName: 'vacancies',
         displayVacancyId: null,
         vacancies: [
-          {
+          /*{
+            id: 5,
             dateCreate: '21.01.2018',
             title: 'Ассенизатор senior/Team lead',
             company: {
               name: 'COMPANY NAME'
             },
-          },
+          },*/
         ],
         resumes: []
       }
     },
     methods: {
-      handleEdit (index, row) {
-        console.log(index, row)
-      },
       openVacancyPopup (vacancyId) {
         this.$refs['vacancyDataPopup'].open(vacancyId)
       },
