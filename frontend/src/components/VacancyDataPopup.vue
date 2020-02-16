@@ -43,7 +43,6 @@
 
   export default {
     name: 'ShowVacancyPopup',
-    props: ['vacancyId'],
     data () {
       return {
         dialogVisible: true,
@@ -51,17 +50,7 @@
         vacancy: {
           company: {}
         },
-        negotiations: [
-          /*{
-            id: 1,
-            resume: {
-              title: 'resumeTitle',
-              applicant: {
-                name: 'Applicant name'
-              },
-            },
-          }*/
-        ]
+        negotiations: []
       }
     },
     methods: {
@@ -83,9 +72,9 @@
       },
       loadNegotiationsData (vacancyId) {
         getNegotiations(vacancyId)
-        .then(response => {
-          this.negotiations = response.data
-        })
+          .then(response => {
+            this.negotiations = response.data
+          })
       }
     }
   }
