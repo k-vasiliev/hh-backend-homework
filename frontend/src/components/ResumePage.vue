@@ -19,6 +19,7 @@
           Создать компанию
         </el-button>
         <el-button
+          @click="onCreateVacancyButtonClick"
           type="success">
           Создать вакансию
         </el-button>
@@ -60,6 +61,7 @@
     <create-user-form ref="createUserForm"/>
     <create-resume-form ref="createResumeForm"/>
     <create-company-form ref="createCompanyForm"/>
+    <create-vacancy-form ref="createVacancyForm"/>
   </div>
 </template>
 
@@ -67,13 +69,15 @@
   import CreateUserForm from './CreateUserForm'
   import CreateResumeForm from './CreateResumeForm'
   import CreateCompanyForm from './CreateCompanyForm'
+  import CreateVacancyForm from './CreateVacancyForm'
 
   export default {
     name: 'ResumePage',
     components: {
       CreateUserForm,
       CreateResumeForm,
-      CreateCompanyForm
+      CreateCompanyForm,
+      CreateVacancyForm
     },
     data () {
       return {
@@ -117,6 +121,9 @@
       },
       onCreateCompanyButtonClick () {
         this.$refs['createCompanyForm'].open()
+      },
+      onCreateVacancyButtonClick () {
+        this.$refs['createVacancyForm'].open()
       }
     },
   }

@@ -30,7 +30,7 @@
         <el-input
           type="textarea"
           :autosize="{ minRows: 2, maxRows: 5}"
-          placeholder="Ваш опыт работы"
+          placeholder="Контакты"
           v-model="form.contacts">
         </el-input>
       </el-form-item>
