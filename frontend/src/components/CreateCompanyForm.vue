@@ -27,6 +27,7 @@
 
 <script>
   import { createCompany } from './../api/company'
+  import { getUsers } from '../api/user'
 
   export default {
     name: 'CreateCompanyForm',
@@ -45,29 +46,13 @@
             { required: true, message: 'Выберите пользователя', trigger: 'change' }
           ]
         },
-        employers: [
-          {
-            id: 1,
-            name: 'Company name'
-          },
-          {
-            id: 2,
-            name: 'Company name 2'
-          },
-          {
-            id: 3,
-            name: 'User name 3'
-          },
-          {
-            id: 4,
-            name: 'User name 4'
-          },
-        ]
+        employers: []
       }
     },
     methods: {
       open () {
         this.dialogVisible = true
+        this.loadEmployers()
       },
       clearForm () {
         this.$refs['createCompanyForm'].resetFields()
@@ -92,6 +77,12 @@
             return false
           }
         })
+      },
+      loadEmployers () {
+        getUsers('employer')
+          .then(response => {
+            this.employers = response.data
+          })
       }
     }
   }

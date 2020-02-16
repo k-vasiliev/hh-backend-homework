@@ -43,6 +43,7 @@
 
 <script>
   import { createResume } from './../api/resume'
+  import { getUsers } from '../api/user'
 
   export default {
     name: 'CreateResumeForm',
@@ -69,28 +70,12 @@
             { required: true, message: 'Заполните контакты', trigger: 'blur' }
           ]
         },
-        applicants: [
-          {
-            id: 1,
-            name: 'User name'
-          },
-          {
-            id: 2,
-            name: 'User name 2'
-          },
-          {
-            id: 3,
-            name: 'User name 3'
-          },
-          {
-            id: 4,
-            name: 'User name 4'
-          },
-        ]
+        applicants: []
       }
     },
     methods: {
       open () {
+        this.loadApplicants()
         this.dialogVisible = true
       },
       clearForm () {
@@ -118,6 +103,12 @@
             return false
           }
         })
+      },
+      loadApplicants () {
+        getUsers('applicant')
+          .then(response => {
+            this.applicants = response.data
+          })
       }
     }
   }

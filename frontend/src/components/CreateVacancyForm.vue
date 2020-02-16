@@ -46,6 +46,7 @@
 
 <script>
   import { createVacancy } from './../api/vacancy'
+  import { getCompanies } from '../api/company'
 
   export default {
     name: 'CreateVacancyForm',
@@ -73,29 +74,13 @@
             { required: true, message: 'Заполните контакты', trigger: 'blur' }
           ]
         },
-        companies: [
-          {
-            id: 1,
-            name: 'Company name'
-          },
-          {
-            id: 2,
-            name: 'Company name 2'
-          },
-          {
-            id: 3,
-            name: 'User name 3'
-          },
-          {
-            id: 4,
-            name: 'User name 4'
-          },
-        ]
+        companies: []
       }
     },
     methods: {
       open () {
         this.dialogVisible = true
+        this.loadCompanies()
       },
       clearForm () {
         this.$refs['createVacancyForm'].resetFields()
@@ -123,6 +108,12 @@
             return false
           }
         })
+      },
+      loadCompanies () {
+        getCompanies()
+          .then(response => {
+            this.companies = response.data
+          })
       }
     }
   }
