@@ -3,53 +3,51 @@
     <el-row>
       <el-col>
         <!--<el-button-group>-->
-        <el-button
-          @click="onCreateUserButtonClick"
-          type="success">
+        <el-button @click="onCreateUserButtonClick" type="success">
           Создать пользователя
         </el-button>
-        <el-button
-          @click="onCreateResumeButtonClick"
-          type="success">
+        <el-button @click="onCreateResumeButtonClick" type="success">
           Создать резюме
         </el-button>
-        <el-button
-          @click="onCreateCompanyButtonClick"
-          type="success">
+        <el-button @click="onCreateCompanyButtonClick" type="success">
           Создать компанию
         </el-button>
-        <el-button
-          @click="onCreateVacancyButtonClick"
-          type="success">
+        <el-button @click="onCreateVacancyButtonClick" type="success">
           Создать вакансию
         </el-button>
         <!--</el-button-group>-->
       </el-col>
     </el-row>
     <el-row :class="'content'">
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs v-model="activeName">
         <el-tab-pane label="Вакансии" name="vacancies">
           <el-table
             :data="vacancies"
             style="width: 100%">
             <el-table-column
-              label="Название"
+              width="220px"
+              label="Заголовок"
               prop="title">
             </el-table-column>
             <el-table-column
-              label="Date"
-              prop="date">
+              label="Компания"
+              prop="company.name">
+            </el-table-column>
+            <el-table-column
+              width="125px"
+              label="Дата создания"
+              prop="dateCreate">
             </el-table-column>
             <el-table-column width="300px"
                              align="right">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
-                  @click="handleEdit(scope.$index, scope.row)">Подробнее
+                  @click="openVacancyPopup(scope.$index)">Подробнее
                 </el-button>
                 <el-button
                   size="mini"
-                  @click="handleEdit(scope.$index, scope.row)">Добавить отклик
+                >Добавить отклик
                 </el-button>
               </template>
             </el-table-column>
@@ -62,6 +60,7 @@
     <create-resume-form ref="createResumeForm"/>
     <create-company-form ref="createCompanyForm"/>
     <create-vacancy-form ref="createVacancyForm"/>
+    <vacancy-data-popup ref="vacancyDataPopup"/>
   </div>
 </template>
 
@@ -70,6 +69,9 @@
   import CreateResumeForm from './CreateResumeForm'
   import CreateCompanyForm from './CreateCompanyForm'
   import CreateVacancyForm from './CreateVacancyForm'
+  import VacancyDataPopup from './VacancyDataPopup'
+
+  import { getVacancies } from './../api/vacancy'
 
   export default {
     name: 'ResumePage',
@@ -77,32 +79,24 @@
       CreateUserForm,
       CreateResumeForm,
       CreateCompanyForm,
-      CreateVacancyForm
+      CreateVacancyForm,
+      VacancyDataPopup
+    },
+    mounted () {
+      this.loadVacancies()
     },
     data () {
       return {
         activeName: 'vacancies',
+        displayVacancyId: null,
         vacancies: [
           {
-            date: '2016-05-03',
-            title: 'Tom',
-            address: 'No. 189, Grove St, Los Angeles'
+            dateCreate: '21.01.2018',
+            title: 'Ассенизатор senior/Team lead',
+            company: {
+              name: 'COMPANY NAME'
+            },
           },
-          {
-            date: '2016-05-02',
-            title: 'John',
-            address: 'No. 189, Grove St, Los Angeles'
-          },
-          {
-            date: '2016-05-04',
-            title: 'Morgan',
-            address: 'No. 189, Grove St, Los Angeles'
-          },
-          {
-            date: '2016-05-01',
-            title: 'Jessy',
-            address: 'No. 189, Grove St, Los Angeles'
-          }
         ],
         resumes: []
       }
@@ -111,7 +105,8 @@
       handleEdit (index, row) {
         console.log(index, row)
       },
-      handleClick () {
+      openVacancyPopup (vacancyId) {
+        this.$refs['vacancyDataPopup'].open(vacancyId)
       },
       onCreateUserButtonClick () {
         this.$refs['createUserForm'].open()
@@ -124,6 +119,12 @@
       },
       onCreateVacancyButtonClick () {
         this.$refs['createVacancyForm'].open()
+      },
+      loadVacancies () {
+        getVacancies()
+          .then(response => {
+            this.vacancies = response.data
+          })
       }
     },
   }
@@ -131,7 +132,7 @@
 
 <style scoped>
   .app-container {
-    max-width: 750px;
+    max-width: 800px;
     margin: 0 auto;
   }
 
