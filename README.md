@@ -1,8 +1,9 @@
+![](https://habrastorage.org/webt/i4/vc/ut/i4vcut4xumyn9e51-37njhahkdo.png)
+
 Привет! Твое задание - сделать так, чтобы при запуске `run.sh` запускался полностью рабочий проект.
 В папке `frontend` лежит готовая страница, для которой тебе предстоит дописать backend-часть, 
 а также настроить nginx так, чтобы он обращался по нужному адресу.
 
-![](https://habrastorage.org/webt/i4/vc/ut/i4vcut4xumyn9e51-37njhahkdo.png)
 
 ## Требования
 
