@@ -1,4 +1,4 @@
 rm -r ./dist
-npm run build
+npm install && npm run build
 
 docker image build -t hh-homework-front .
