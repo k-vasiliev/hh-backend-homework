@@ -1,6 +1,6 @@
 import { get, post } from './request'
 
-const COMPANY_PATH = '/company/'
+const COMPANY_PATH = '/company'
 
 export const createCompany = (companyData) => {
   return post(COMPANY_PATH, companyData)
