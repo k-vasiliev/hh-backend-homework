@@ -23,8 +23,8 @@ public class UserDao {
   }
 
   @Transactional
-  public User getReference(Long id) {
-    return sessionFactory.getCurrentSession().load(User.class, id);
+  public User get(Long id) {
+    return sessionFactory.getCurrentSession().get(User.class, id);
   }
 
   @Transactional

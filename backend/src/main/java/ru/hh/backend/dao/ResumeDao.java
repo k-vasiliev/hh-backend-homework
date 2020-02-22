@@ -23,7 +23,7 @@ public class ResumeDao {
   }
 
   @Transactional
-  public List<Resume> getByType() {
+  public List<Resume> getAll() {
     return sessionFactory.getCurrentSession()
         .createQuery("FROM Resume r", Resume.class)
         .getResultList();

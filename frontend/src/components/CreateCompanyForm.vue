@@ -69,7 +69,6 @@
               userId: this.form.companyUserId,
             })
               .then(() => {
-                this.clear()
                 this.dialogVisible = false
                 this.clearForm()
               })

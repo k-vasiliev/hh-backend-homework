@@ -1,41 +1,37 @@
 package ru.hh.backend.resource;
 
 import org.springframework.stereotype.Controller;
-import ru.hh.backend.model.Resume;
-import ru.hh.backend.model.User;
+import ru.hh.backend.dao.ResumeDao;
+import ru.hh.backend.dto.request.ResumeRequestDto;
+import ru.hh.backend.dto.response.ResumeResponseDto;
+import ru.hh.backend.mapper.ResumeMapper;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/api/resume")
 @Produces(MediaType.APPLICATION_JSON)
 @Controller
 public class ResumeResource {
 
-    @GET
-    public List<Resume> getAll() {
-        User user = new User();
-        user.setId(1L);
-        user.setName("Денис");
-        user.setUserType("APPLICANT");
+    private final ResumeMapper resumeMapper;
+    private final ResumeDao resumeDao;
 
-        Resume resume = new Resume();
-        resume.setId(1L);
-        resume.setTitle("Программист");
-        resume.setApplicant(user);
-//        resume.setDateCreate(LocalDateTime.now());
-        return Collections.singletonList(resume);
+    public ResumeResource(ResumeMapper resumeMapper, ResumeDao resumeDao) {
+        this.resumeMapper = resumeMapper;
+        this.resumeDao = resumeDao;
+    }
+
+    @GET
+    public List<ResumeResponseDto> getAll() {
+        return resumeDao.getAll().stream().map(resumeMapper::map).collect(Collectors.toList());
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Resume create(Resume resume) {
-        resume.setId(1L);
-
-        return resume;
+    public ResumeResponseDto create(ResumeRequestDto resumeRequestDto) {
+        return resumeMapper.map(resumeDao.create(resumeMapper.map(resumeRequestDto)));
     }
 }
