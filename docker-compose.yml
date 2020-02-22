@@ -32,5 +32,8 @@ services:
   hh-homework-front:
     image: hh-homework-front
     restart: always
+    depends_on:
+      hh-homework-backend:
+        condition: service_started
     ports:
       - "80:80"
