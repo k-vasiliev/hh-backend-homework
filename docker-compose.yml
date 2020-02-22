@@ -7,7 +7,9 @@ services:
     volumes:
       - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5432:5432"
+      - "5430:5432"
+    healthcheck:
+      test: "exit 0"
     environment:
       POSTGRES_PASSWORD: hh
       POSTGRES_DB: hh
