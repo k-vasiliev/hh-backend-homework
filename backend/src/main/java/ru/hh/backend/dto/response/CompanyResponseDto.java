@@ -3,7 +3,7 @@ package ru.hh.backend.dto.response;
 import lombok.Data;
 
 @Data
-public class UserResponseDto {
+public class CompanyResponseDto {
 
     private Long id;
 

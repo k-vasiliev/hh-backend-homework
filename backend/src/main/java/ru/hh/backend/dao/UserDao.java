@@ -10,29 +10,29 @@ import java.util.List;
 
 @Repository
 public class UserDao {
-  private final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-  public UserDao(SessionFactory sessionFactory) {
-    this.sessionFactory = sessionFactory;
-  }
+    public UserDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
-  @Transactional
-  public User create(User user) {
-    sessionFactory.getCurrentSession().save(user);
-    return user;
-  }
+    @Transactional
+    public User create(User user) {
+        sessionFactory.getCurrentSession().save(user);
+        return user;
+    }
 
-  @Transactional
-  public User get(Long id) {
-    return sessionFactory.getCurrentSession().get(User.class, id);
-  }
+    @Transactional
+    public User get(Long id) {
+        return sessionFactory.getCurrentSession().get(User.class, id);
+    }
 
-  @Transactional
-  public List<User> getByType(String userType) {
-    return sessionFactory.getCurrentSession()
-        .createQuery("FROM User u WHERE u.userType = :userType", User.class)
-        .setParameter("userType", userType)
-        .getResultList();
-  }
+    @Transactional
+    public List<User> getByType(String userType) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM User u WHERE u.userType = :userType", User.class)
+                .setParameter("userType", userType)
+                .getResultList();
+    }
 
 }

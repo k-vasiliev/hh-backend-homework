@@ -5,13 +5,13 @@ import ru.hh.nab.starter.NabApplication;
 
 public class Application {
 
-  public static void main(String[] args) {
-    build().run(AppConfig.class);
-  }
+    public static void main(String[] args) {
+        build().run(AppConfig.class);
+    }
 
-  private static NabApplication build() {
-    return NabApplication.builder()
-      .configureJersey().bindToRoot()
-      .build();
-  }
+    private static NabApplication build() {
+        return NabApplication.builder()
+                .configureJersey().bindToRoot()
+                .build();
+    }
 }

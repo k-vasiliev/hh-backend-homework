@@ -10,23 +10,27 @@ import java.util.List;
 
 @Repository
 public class ResumeDao {
-  private final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-  public ResumeDao(SessionFactory sessionFactory) {
-    this.sessionFactory = sessionFactory;
-  }
+    public ResumeDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
-  @Transactional
-  public Resume create(Resume resume) {
-    sessionFactory.getCurrentSession().save(resume);
-    return resume;
-  }
+    @Transactional
+    public Resume create(Resume resume) {
+        sessionFactory.getCurrentSession().save(resume);
+        return resume;
+    }
 
-  @Transactional
-  public List<Resume> getAll() {
-    return sessionFactory.getCurrentSession()
-        .createQuery("FROM Resume r", Resume.class)
-        .getResultList();
-  }
+    @Transactional
+    public Resume get(Long id) {
+        return sessionFactory.getCurrentSession().get(Resume.class, id);
+    }
+
+    @Transactional
+    public List<Resume> getAll() {
+        return sessionFactory.getCurrentSession().createQuery("FROM Resume r", Resume.class)
+                .getResultList();
+    }
 
 }

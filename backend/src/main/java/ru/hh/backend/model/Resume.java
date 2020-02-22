@@ -20,6 +20,5 @@ public class Resume extends BaseEntity{
     private String contacts;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User applicant;
 }

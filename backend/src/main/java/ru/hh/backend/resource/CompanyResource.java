@@ -1,26 +1,37 @@
 package ru.hh.backend.resource;
 
 import org.springframework.stereotype.Controller;
-import ru.hh.backend.model.Company;
+import ru.hh.backend.dao.CompanyDao;
+import ru.hh.backend.dto.request.CompanyRequestDto;
+import ru.hh.backend.dto.response.CompanyResponseDto;
+import ru.hh.backend.mapper.CompanyMapper;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/api/company")
+@Produces(MediaType.APPLICATION_JSON)
 @Controller
 public class CompanyResource {
 
-    @GET
-    public Response getAll() {
-        Company company = new Company();
-        company.setId(1L);
-        company.setName("hh");
+    private final CompanyMapper companyMapper;
+    private final CompanyDao companyDao;
 
-        return Response.ok().entity(Collections.singletonList(company)).build();
+    public CompanyResource(CompanyMapper companyMapper, CompanyDao companyDao) {
+        this.companyMapper = companyMapper;
+        this.companyDao = companyDao;
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public CompanyResponseDto create(CompanyRequestDto companyRequestDto) {
+        return companyMapper.map(companyDao.create(companyMapper.map(companyRequestDto)));
+    }
+
+    @GET
+    public List<CompanyResponseDto> getAll() {
+        return companyDao.getAll().stream().map(companyMapper::map).collect(Collectors.toList());
     }
 }
