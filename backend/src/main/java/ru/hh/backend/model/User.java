@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "users")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
@@ -14,6 +14,6 @@ public class User extends BaseEntity {
     @Column
     private String name;
 
-    @Column
+    @Column(name = "user_type")
     private String userType;
 }

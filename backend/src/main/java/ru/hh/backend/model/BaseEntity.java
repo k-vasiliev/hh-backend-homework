@@ -16,8 +16,10 @@ public class BaseEntity {
     protected Long id;
 
     @CreationTimestamp
+    @Column(name = "date_create")
     protected Date dateCreate;
 
     @UpdateTimestamp
+    @Column(name = "date_modify")
     protected Date dateModify;
 }

@@ -3,19 +3,13 @@ package ru.hh.backend.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "vacancies")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Vacancy extends BaseEntity{
-
-    @ManyToOne
-    private Company company;
 
     @Column
     private String title;
@@ -29,6 +23,7 @@ public class Vacancy extends BaseEntity{
     @Column
     private String contacts;
 
-    @OneToMany(mappedBy = "vacancy")
-    private List<Negotiation> negotiations;
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 }
