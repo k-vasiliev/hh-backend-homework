@@ -1,2 +1,2 @@
-mvn clean package -DskipTests
+mvn clean package
 docker image build -t hh-homework-backend .

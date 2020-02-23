@@ -9,7 +9,7 @@ public class Application {
         build().run(AppConfig.class);
     }
 
-    private static NabApplication build() {
+    public static NabApplication build() {
         return NabApplication.builder()
                 .configureJersey().bindToRoot()
                 .build();
