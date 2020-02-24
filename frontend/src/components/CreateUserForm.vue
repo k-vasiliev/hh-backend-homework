@@ -10,8 +10,8 @@
       </el-form-item>
       <el-form-item label="Тип пользователя">
         <el-radio-group v-model="form.userType">
-          <el-radio size="medium" label="APPLICANT" border>Соискатель</el-radio>
-          <el-radio size="medium" label="EMPLOYER" border>Работодатель</el-radio>
+          <el-radio size="medium" label="applicant" border>Соискатель</el-radio>
+          <el-radio size="medium" label="employer" border>Работодатель</el-radio>
         </el-radio-group>
       </el-form-item>
     </el-form>
@@ -31,7 +31,7 @@
         dialogVisible: false,
         form: {
           userName: '',
-          userType: 'APPLICANT',
+          userType: 'applicant',
         },
         rules: {
           userName: [
