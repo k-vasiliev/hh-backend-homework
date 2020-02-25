@@ -3,11 +3,9 @@ package ru.hh.school.dao;
 import ru.hh.school.models.Resume;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 public class ResumeDao {
     private final SessionFactory sessionFactory;
@@ -17,23 +15,27 @@ public class ResumeDao {
     }
 
     @Transactional
-    public void create(Resume resume) {
+    public Resume create(Resume resume) {
         session().persist(resume);
+        return resume;
     }
 
     @Transactional
-    public Optional<Resume> getBy(int id) {
-        return Optional.ofNullable(
-                session().get(Resume.class, id));
+    public Resume get(Integer id) {
+        return session().get(Resume.class, id);
     }
 
     @Transactional
-    public Set<Resume> getResumesForUserId(int userId) {
-        return new HashSet<>(
-                session().createQuery("from Resume where userId=:userId", Resume.class)
-                        .setParameter("userId",userId)
-                        .list()
-        );
+    public List<Resume> getByUserId(Integer userId) {
+        return session().createQuery("FROM Resume WHERE userId=:userId", Resume.class)
+                        .setParameter("userId", userId)
+                        .getResultList();
+    }
+
+    @Transactional
+    public List<Resume> getAll() {
+        return session().createQuery("FROM Resume", Resume.class)
+                .getResultList();
     }
 
     private Session session() {

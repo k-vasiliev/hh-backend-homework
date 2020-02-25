@@ -33,7 +33,7 @@ public class UserService {
   }
 
   public Optional<User> getBy(int userId) {
-    return th.inTransaction(() -> userDao.getBy(userId));
+    return th.inTransaction(() -> userDao.get(userId));
   }
 
   public void deleteBy(int userId) {
@@ -46,7 +46,7 @@ public class UserService {
 
   public void changeName(int userId, String name) {
     th.inTransaction(() -> {
-      userDao.getBy(userId)
+      userDao.get(userId)
         .stream()
         .forEach(user -> user.setName(name));
       // хибер отслеживает изменения сущностей и выполняет sql update перед коммитом транзакции

@@ -3,11 +3,9 @@ package ru.hh.school.dao;
 import ru.hh.school.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 public class UserDao {
 
@@ -18,46 +16,38 @@ public class UserDao {
     }
 
     @Transactional
-    public void create(User user) {
-        session().persist(user);
+    public User create(User user) {
+        session().save(user);
+        return user;
     }
 
     @Transactional
-    public Set<User> getAll() {
-        return new HashSet<>(
-        session().createQuery("from User", User.class).list());
+    public List<User> getAll() {
+        return session().createQuery("FROM User", User.class)
+                .getResultList();
     }
 
-    public Optional<User> getBy(int id) {
-        return Optional.ofNullable(
-                session().get(User.class, id)
-        );
+    @Transactional
+    public User get(Integer id) {
+        return session().get(User.class, id);
     }
 
-    public void deleteBy(int id) {
-        // jpa2.1 criteria builder
-
-      /*  CriteriaBuilder builder = session().getCriteriaBuilder();
-
-        var query = builder.createCriteriaDelete(User.class);
-        query.where(
-                builder.equal(query.from(User.class).get("id"), id)
-        );
-
-        session().createQuery(query).executeUpdate();*/
-      //второй подход
-      getBy(id).ifPresent(
-              e->session().delete(e)
-      );
-      //третий подход
-      session().createQuery("delete from User where id = :id_to_delete")
-              .setParameter("id_to_delete",id).executeUpdate();
-
-        // + есть ещё 2 способа это сделать
+    @Transactional
+    public List<User> getByType(Integer userType) {
+        return session().createQuery("FROM User WHERE userType = :userType", User.class)
+                .setParameter("userType", userType)
+                .getResultList();
     }
 
+    @Transactional
+    public void deleteBy(Integer id) {
+      session().createQuery("DELETE FROM User WHERE id = :id_to_delete")
+              .setParameter("id_to_delete", id).executeUpdate();
+    }
+
+    @Transactional
     public void deleteAll() {
-        session().createQuery("delete from User").executeUpdate();
+        session().createQuery("DELETE FROM User").executeUpdate();
     }
 
     @Transactional

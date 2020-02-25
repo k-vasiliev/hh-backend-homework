@@ -2,9 +2,11 @@ package ru.hh.school.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.models.Company;
 
-import javax.transaction.Transactional;
+import java.util.List;
+
 
 public class CompanyDao {
     private final SessionFactory sessionFactory;
@@ -14,13 +16,20 @@ public class CompanyDao {
     }
 
     @Transactional
-    public void create(Company company) {
+    public Company create(Company company) {
         session().save(company);
+        return company;
     }
 
     @Transactional
     public Company get(Integer id) {
         return session().get(Company.class, id);
+    }
+
+    @Transactional
+    public List<Company> getAll() {
+        return session().createQuery("FROM Company", Company.class)
+                .getResultList();
     }
 
     private Session session() {

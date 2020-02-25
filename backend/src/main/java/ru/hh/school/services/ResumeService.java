@@ -24,10 +24,10 @@ public class ResumeService {
     }
 
     public Optional<Resume> getBy(int resumeId) {
-        return th.inTransaction(() -> resumeDao.getBy(resumeId));
+        return th.inTransaction(() -> resumeDao.get(resumeId));
     }
 
     public Set<Resume> getActiveResumesForUserId(int userId) {
-        return th.inTransaction(() -> resumeDao.getResumesForUserId(userId));
+        return th.inTransaction(() -> resumeDao.getByUserId(userId));
     }
 }
