@@ -52,10 +52,10 @@
                     <systemProperties>
                         <systemProperty>
                             <key>settingsDir</key>
-                            <value>src/etc/nab-example</value>
+                            <value>src/etc</value>
                         </systemProperty>
                     </systemProperties>
-                    <mainClass>ru.hh.nab.example.ExampleMain</mainClass>
+                    <mainClass>ru.hh.school.Application</mainClass>
                 </configuration>
             </plugin>
 
@@ -80,7 +80,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <systemPropertyVariables>
-                        <settingsDir>${basedir}/src/etc/nab-example</settingsDir>
+                        <settingsDir>${basedir}/src/etc</settingsDir>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
