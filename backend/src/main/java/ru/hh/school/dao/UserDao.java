@@ -1,9 +1,10 @@
-package dao;
+package ru.hh.school.dao;
 
-import models.User;
+import ru.hh.school.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -16,15 +17,15 @@ public class UserDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public Set<User> getAll() {
-        //TODO: implement
-        return new HashSet<>(
-        session().createQuery("from User", User.class).list());
+    @Transactional
+    public void create(User user) {
+        session().persist(user);
     }
 
-    public void saveNew(User user) {
-        //TODO: implement
-        session().persist(user);
+    @Transactional
+    public Set<User> getAll() {
+        return new HashSet<>(
+        session().createQuery("from User", User.class).list());
     }
 
     public Optional<User> getBy(int id) {
@@ -59,8 +60,8 @@ public class UserDao {
         session().createQuery("delete from User").executeUpdate();
     }
 
+    @Transactional
     public void update(User user) {
-        //TODO: implement
         session().update(user);
     }
 

@@ -1,9 +1,9 @@
-package services;
+package ru.hh.school.services;
 
-import dao.ResumeDao;
-import models.Resume;
+import ru.hh.school.dao.ResumeDao;
+import ru.hh.school.models.Resume;
 import org.hibernate.SessionFactory;
-import utils.TransactionHelper;
+import ru.hh.school.utils.TransactionHelper;
 
 import java.util.Optional;
 import java.util.Set;
@@ -20,7 +20,7 @@ public class ResumeService {
     }
 
     public void saveNew(Resume resume) {
-        th.inTransaction(() -> resumeDao.saveNew(resume));
+        th.inTransaction(() -> resumeDao.create(resume));
     }
 
     public Optional<Resume> getBy(int resumeId) {
@@ -28,6 +28,6 @@ public class ResumeService {
     }
 
     public Set<Resume> getActiveResumesForUserId(int userId) {
-        return th.inTransaction(() -> resumeDao.getActiveResumesForUserId(userId));
+        return th.inTransaction(() -> resumeDao.getResumesForUserId(userId));
     }
 }

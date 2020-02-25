@@ -1,4 +1,4 @@
-package utils;
+package ru.hh.school.utils;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
