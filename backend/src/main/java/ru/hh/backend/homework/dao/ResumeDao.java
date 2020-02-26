@@ -1,0 +1,48 @@
+package ru.hh.backend.homework.dao;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import ru.hh.backend.homework.entity.ResumeEntity;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public class ResumeDao {
+    private final SessionFactory sessionFactory;
+
+    public ResumeDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public ResumeEntity save(ResumeEntity resumeEntity) {
+        getSessionFactory().getCurrentSession().save(resumeEntity);
+        return resumeEntity;
+    }
+
+    public Optional<ResumeEntity> get(Integer id) {
+        Session session = getSessionFactory().getCurrentSession();
+        try {
+            ResumeEntity resume = session
+                    .createQuery("SELECT r FROM ResumeEntity r WHERE r.id = :id", ResumeEntity.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+            return Optional.of(resume);
+        } catch (RuntimeException e) {
+            return Optional.empty();
+        }
+    }
+
+    public List<ResumeEntity> getAll() {
+        return getSessionFactory()
+                .getCurrentSession()
+                .createQuery("SELECT r FROM ResumeEntity r", ResumeEntity.class)
+                .getResultList();
+    }
+
+    private SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+}
