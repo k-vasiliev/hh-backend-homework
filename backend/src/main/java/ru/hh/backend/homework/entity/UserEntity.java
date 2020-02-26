@@ -1,5 +1,8 @@
 package ru.hh.backend.homework.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -12,9 +15,11 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @CreationTimestamp
     @Column(name = "creation_date")
     private Date creationDate;
 
+    @UpdateTimestamp
     @Column(name = "modification_date")
     private Date modificationDate;
 
