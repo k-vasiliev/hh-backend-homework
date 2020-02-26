@@ -5,6 +5,7 @@ import ru.hh.school.models.Resume;
 import org.hibernate.SessionFactory;
 import ru.hh.school.utils.TransactionHelper;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -23,11 +24,11 @@ public class ResumeService {
         th.inTransaction(() -> resumeDao.create(resume));
     }
 
-    public Optional<Resume> getBy(int resumeId) {
+    public Resume getBy(int resumeId) {
         return th.inTransaction(() -> resumeDao.get(resumeId));
     }
 
-    public Set<Resume> getActiveResumesForUserId(int userId) {
+    public List<Resume> getResumesForUserId(int userId) {
         return th.inTransaction(() -> resumeDao.getByUserId(userId));
     }
 }

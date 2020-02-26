@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "company")
@@ -14,8 +15,12 @@ public class Company {
     @Column (name = "company_id",  updatable = false)
     private Integer id;
 
-    @Column (name = "user_id")
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vacancy> vacancies;
 
     @Column (name = "title")
     private String title;

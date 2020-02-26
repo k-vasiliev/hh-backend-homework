@@ -14,8 +14,9 @@ public class Resume {
     @Column (name = "resume_id",  updatable = false)
     private Integer id;
 
-    @Column (name = "user_id")
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name = "user_id")
+    private User user;
 
     @Column (name = "title")
     private String title;

@@ -15,8 +15,9 @@ public class Vacancy {
     @Column(name = "vacancy_id",  updatable = false)
     private Integer id;
 
-    @Column (name = "company_id")
-    private Integer companyId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name = "company_id")
+    private Company company;
 
     @Column (name = "title")
     private String title;

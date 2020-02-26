@@ -5,6 +5,7 @@ import ru.hh.school.models.User;
 import org.hibernate.SessionFactory;
 import ru.hh.school.utils.TransactionHelper;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class UserService {
     this.th = new TransactionHelper(sessionFactory);
   }
 
-  public Set<User> getAll() {
+  public List<User> getAll() {
     return th.inTransaction(userDao::getAll);
   }
 
@@ -32,7 +33,7 @@ public class UserService {
     th.inTransaction(() -> userDao.create(user));
   }
 
-  public Optional<User> getBy(int userId) {
+  public User getBy(int userId) {
     return th.inTransaction(() -> userDao.get(userId));
   }
 
@@ -46,9 +47,7 @@ public class UserService {
 
   public void changeName(int userId, String name) {
     th.inTransaction(() -> {
-      userDao.get(userId)
-        .stream()
-        .forEach(user -> user.setName(name));
+      userDao.get(userId).setName(name);
       // хибер отслеживает изменения сущностей и выполняет sql update перед коммитом транзакции
     });
   }
