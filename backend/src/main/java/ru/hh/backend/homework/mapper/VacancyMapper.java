@@ -4,11 +4,20 @@ import ru.hh.backend.homework.dto.VacancyRequestDto;
 import ru.hh.backend.homework.dto.VacancyResponseDto;
 import ru.hh.backend.homework.entity.CompanyEntity;
 import ru.hh.backend.homework.entity.VacancyEntity;
+import ru.hh.backend.homework.service.CompanyService;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
 public class VacancyMapper {
+    private final CompanyService companyService;
+
+    @Inject
+    public VacancyMapper(CompanyService companyService) {
+        this.companyService = companyService;
+    }
+
     public VacancyEntity map(VacancyRequestDto vacancyRequestDto) {
         VacancyEntity vacancy = new VacancyEntity();
         vacancy.setTitle(vacancyRequestDto.getTitle());
@@ -20,8 +29,7 @@ public class VacancyMapper {
     }
 
     public VacancyResponseDto map(VacancyEntity vacancyEntity) {
-        //добавить нормальную CompanyEntity
         return new VacancyResponseDto(vacancyEntity.getVacancyId(), vacancyEntity.getTitle(),
-                vacancyEntity.getCreationDate(), new CompanyEntity());
+                vacancyEntity.getCreationDate(), companyService.get(vacancyEntity.getCompanyEntity()));
     }
 }
