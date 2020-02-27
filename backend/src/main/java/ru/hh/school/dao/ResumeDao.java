@@ -1,5 +1,6 @@
 package ru.hh.school.dao;
 
+import org.springframework.stereotype.Repository;
 import ru.hh.school.models.Resume;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Repository
 public class ResumeDao {
     private final SessionFactory sessionFactory;
 

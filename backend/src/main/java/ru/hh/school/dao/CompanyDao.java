@@ -2,12 +2,13 @@ package ru.hh.school.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.models.Company;
 
 import java.util.List;
 
-
+@Repository
 public class CompanyDao {
     private final SessionFactory sessionFactory;
 
