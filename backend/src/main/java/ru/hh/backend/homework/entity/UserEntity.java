@@ -2,6 +2,7 @@ package ru.hh.backend.homework.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import ru.hh.backend.homework.enums.UserType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,7 +28,7 @@ public class UserEntity {
     private String name;
 
     @Column(name = "user_type")
-    private String userType;
+    private UserType userType;
 
     public Integer getId() {
         return id;
@@ -61,11 +62,11 @@ public class UserEntity {
         this.name = name;
     }
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
