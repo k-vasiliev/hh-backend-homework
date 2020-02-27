@@ -34,6 +34,9 @@ public class VacancyEntity {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "contacts")
+    private String contacts;
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Integer companyEntity;
@@ -84,6 +87,14 @@ public class VacancyEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
     }
 
     public Integer getCompanyEntity() {
