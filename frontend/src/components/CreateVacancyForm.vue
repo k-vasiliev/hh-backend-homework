@@ -100,7 +100,6 @@
               contacts: this.form.contacts
             })
               .then(() => {
-                this.clear()
                 this.dialogVisible = false
                 this.clearForm()
               })

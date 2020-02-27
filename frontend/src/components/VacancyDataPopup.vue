@@ -16,7 +16,7 @@
 
     <div class="content-block">
       <h3>Описание</h3>
-      <span>{{vacancy.desription}}</span>
+      <span>{{vacancy.description}}</span>
     </div>
 
     <div class="content-block">

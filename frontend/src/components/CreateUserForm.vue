@@ -59,7 +59,6 @@
               type: this.form.userType
             })
               .then(() => {
-                this.clear()
                 this.dialogVisible = false
                 this.clearForm()
               })
