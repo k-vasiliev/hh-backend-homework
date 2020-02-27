@@ -1,5 +1,5 @@
 CREATE TABLE users (
-    id serial PRIMARY KEY NOT NULL,
+    user_id serial PRIMARY KEY NOT NULL,
     creation_date TIMESTAMP NOT NULL,
     modification_date TIMESTAMP NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -7,27 +7,27 @@ CREATE TABLE users (
 );
 
 CREATE TABLE companies (
-    id serial PRIMARY KEY NOT NULL,
+    company_id serial PRIMARY KEY NOT NULL,
     creation_date TIMESTAMP NOT NULL,
     modification_date TIMESTAMP NOT NULL,
     name VARCHAR(255) NOT NULL,
     user_id INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE resumes (
-    id serial PRIMARY KEY NOT NULL,
+    resume_id serial PRIMARY KEY NOT NULL,
     creation_date TIMESTAMP NOT NULL,
     modification_date TIMESTAMP NOT NULL,
     title VARCHAR(255) NOT NULL,
     work_experience TEXT NOT NULL,
     contacts TEXT NOT NULL,
     user_id INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE vacancies (
-   id serial PRIMARY KEY NOT NULL,
+   vacancy_id serial PRIMARY KEY NOT NULL,
    creation_date TIMESTAMP NOT NULL,
    modification_date TIMESTAMP NOT NULL,
    title VARCHAR(255) NOT NULL,
@@ -35,15 +35,15 @@ CREATE TABLE vacancies (
    description TEXT NOT NULL,
    contacts TEXT NOT NULL,
    company_id INTEGER NOT NULL,
-   FOREIGN KEY (company_id) REFERENCES companies(id)
+   FOREIGN KEY (company_id) REFERENCES companies(company_id)
 );
 
 CREATE TABLE negotiations (
-   id serial PRIMARY KEY NOT NULL,
+   negotiation_id serial PRIMARY KEY NOT NULL,
    creation_date TIMESTAMP NOT NULL,
    modification_date TIMESTAMP NOT NULL,
    resume_id INTEGER NOT NULL,
    vacancy_id INTEGER NOT NULL,
-   FOREIGN KEY (resume_id) REFERENCES resumes(id),
-   FOREIGN KEY (vacancy_id) REFERENCES vacancies(id)
+   FOREIGN KEY (resume_id) REFERENCES resumes(resume_id),
+   FOREIGN KEY (vacancy_id) REFERENCES vacancies(vacancy_id)
 );
