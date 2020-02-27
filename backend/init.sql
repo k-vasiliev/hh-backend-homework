@@ -43,7 +43,8 @@ create table responses (
     response_id serial primary key,
     vacancy_id integer not null,
     resume_id integer not null,
-    date timestamp not null,
+    creation_date timestamp not null,
+    last_update_date timestamp not null,
     foreign key (vacancy_id) references vacancies(vacancy_id),
     foreign key (resume_id) references resumes(resume_id)
 );
@@ -69,7 +70,7 @@ insert into vacancies (title, company_id, salary, description, contacts, creatio
 insert into vacancies (title, company_id, salary, description, contacts, creation_date, last_update_date)
     values ('Инженер-тестировщик', 2, 1700, 'В команду Алисы требуется тестировщик', '178-9881', now(), now());
 
-insert into responses (vacancy_id, resume_id, date) values (1, 1, now());
-insert into responses (vacancy_id, resume_id, date) values (2, 1, now());
-insert into responses (vacancy_id, resume_id, date) values (3, 2, now());
-insert into responses (vacancy_id, resume_id, date) values (3, 3, now());
+insert into responses (vacancy_id, resume_id, date) values (1, 1, now(), now());
+insert into responses (vacancy_id, resume_id, date) values (2, 1, now(), now());
+insert into responses (vacancy_id, resume_id, date) values (3, 2, now(), now());
+insert into responses (vacancy_id, resume_id, date) values (3, 3, now(), now());
