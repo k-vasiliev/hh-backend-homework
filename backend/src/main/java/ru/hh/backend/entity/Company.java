@@ -21,7 +21,7 @@ public class Company {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
     @CreationTimestamp
     @Column(name = "creation_date")
@@ -47,11 +47,11 @@ public class Company {
         this.companyName = companyName;
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 

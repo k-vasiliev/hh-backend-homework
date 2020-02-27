@@ -30,10 +30,10 @@ public class ApplicationConfig {
 
     Properties properties = new Properties();
     properties.put(Environment.DIALECT, PostgreSQL10Dialect.class.getName());
-    properties.put(Environment.HBM2DDL_AUTO, "update");
+    //properties.put(Environment.HBM2DDL_AUTO, "update");
     localSessionFactoryBean.setHibernateProperties(properties);
     localSessionFactoryBean.setPackagesToScan("ru.hh.backend.dao");
-    localSessionFactoryBean.setAnnotatedClasses(ru.hh.backend.entity.Model.class, ru.hh.backend.entity.Company.class, Negotiation.class, Resume.class, User.class, Vacancy.class);
+    localSessionFactoryBean.setAnnotatedClasses(ru.hh.backend.entity.Company.class, Negotiation.class, Resume.class, UserEntity.class, Vacancy.class);
     return localSessionFactoryBean;
   }
 

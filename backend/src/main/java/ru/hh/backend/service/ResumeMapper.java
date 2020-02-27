@@ -17,10 +17,12 @@ public class ResumeMapper {
     }
 
     public Resume map(ResumeRequestDto resumeRequestDto) {
-        return new Resume(resumeRequestDto.getResumeTitle(),
-                resumeRequestDto.getWorkExperience(),
-                resumeRequestDto.getContacts(),
-                userDao.get(resumeRequestDto.getUserId()));
+        Resume resume = new Resume();
+        resume.setTitle(resumeRequestDto.getResumeTitle());
+        resume.setWorkExperience(resumeRequestDto.getWorkExperience());
+        resume.setContacts(resumeRequestDto.getContacts());
+        resume.setUser(userDao.get(resumeRequestDto.getUserId()));
+        return resume;
     }
 
     public ResumeResponseDto map(Resume resume) {

@@ -2,7 +2,7 @@ package ru.hh.backend.service;
 
 import org.springframework.stereotype.Service;
 import ru.hh.backend.dao.UserDao;
-import ru.hh.backend.entity.User;
+import ru.hh.backend.entity.UserEntity;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -16,18 +16,17 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    @Transactional
-    public User create(User user) {
+
+    public UserEntity create(UserEntity user) {
         return userDao.create(user);
     }
 
-    @Transactional
-    public User get(Long id) {
+    public UserEntity get(Long id) {
         return userDao.get(id);
     }
 
     @Transactional
-    public List<User> getByType(String type) {
+    public List<UserEntity> getByType(String type) {
         return userDao.getByType(type);
     }
 }

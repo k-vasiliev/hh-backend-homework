@@ -26,8 +26,8 @@ public class NegotiationController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(NegotiationRequestDto negotiationRequestDto) {
+    public NegotiationResponseDto create(NegotiationRequestDto negotiationRequestDto) {
         Negotiation negotiation = negotiationService.create(negotiationMapper.map(negotiationRequestDto));
-        return Response.ok(negotiationMapper.map(negotiation)).build();
+        return negotiationMapper.map(negotiation);
     }
 }

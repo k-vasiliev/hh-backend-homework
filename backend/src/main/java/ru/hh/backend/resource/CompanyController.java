@@ -28,18 +28,18 @@ public class CompanyController {
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(CompanyRequestDto companyRequestDto) {
+    public CompanyResponseDto create(CompanyRequestDto companyRequestDto) {
         Company company = companyService.create(companyMapper.map(companyRequestDto));
-        return Response.ok(companyMapper.map(company)).build();
+        return companyMapper.map(company);
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getAll() {
+    public List<CompanyResponseDto> getAll() {
         List<Company> companies = companyService.getAll();
-        return Response.ok(companies.stream().map(companyMapper::map).collect(Collectors.toList())).build();
+        return companies.stream()
+                .map(companyMapper::map)
+                .collect(Collectors.toList());
     }
 }

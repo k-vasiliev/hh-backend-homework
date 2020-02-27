@@ -4,11 +4,11 @@ public class UserResponseDto {
 
     private Long id;
 
-    private String userName;
+    private String name;
 
     public UserResponseDto(Long id, String userName) {
         this.id = id;
-        this.userName = userName;
+        this.name = userName;
     }
 
     public Long getId() {
@@ -19,11 +19,11 @@ public class UserResponseDto {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

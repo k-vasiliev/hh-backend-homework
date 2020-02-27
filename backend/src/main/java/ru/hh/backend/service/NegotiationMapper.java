@@ -21,7 +21,10 @@ public class NegotiationMapper {
     }
 
     public Negotiation map(NegotiationRequestDto negotiationRequestDto) {
-        return new Negotiation(resumeDao.get(negotiationRequestDto.getResumeId()), vacancyDao.get(negotiationRequestDto.getVacancyId()));
+        Negotiation negotiation = new Negotiation();
+        negotiation.setResume(resumeDao.get(negotiationRequestDto.getResumeId()));
+        negotiation.setVacancy(vacancyDao.get(negotiationRequestDto.getVacancyId()));
+        return negotiation;
     }
 
     public NegotiationResponseDto map(Negotiation negotiation) {

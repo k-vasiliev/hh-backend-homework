@@ -3,22 +3,23 @@ package ru.hh.backend.entity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
-public class Model {
+@Entity
+@Table(name = "users")
+public class UserEntity {
+
+    public UserEntity() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @CreationTimestamp
     @Column(name = "creation_date")
     protected Date creationDate;
 
-    @UpdateTimestamp
     @Column(name = "correction_date")
     protected Date correctionDate;
 
@@ -44,5 +45,27 @@ public class Model {
 
     public void setCorrectionDate(Date correctionDate) {
         this.correctionDate = correctionDate;
+    }
+
+    @Column(name = "user_name")
+    private String name;
+
+    @Column(name = "user_type")
+    private String userType;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

@@ -27,15 +27,15 @@ public class ResumeController {
     }
 
     @GET
-    public Response getAll() {
+    public List<ResumeResponseDto> getAll() {
         List<Resume> resumes = resumeService.getAll();
-        return Response.ok(resumes.stream().map(resumeMapper::map).collect(Collectors.toList())).build();
+        return resumes.stream().map(resumeMapper::map).collect(Collectors.toList());
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(ResumeRequestDto resumeRequestDto) {
+    public ResumeResponseDto create(ResumeRequestDto resumeRequestDto) {
         Resume resume = resumeService.create(resumeMapper.map(resumeRequestDto));
-        return Response.ok(resumeMapper.map(resume)).build();
+        return resumeMapper.map(resume);
     }
 }

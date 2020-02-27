@@ -1,6 +1,6 @@
 package ru.hh.backend.dto.response;
 
-import ru.hh.backend.entity.User;
+import ru.hh.backend.entity.UserEntity;
 
 public class ResumeResponseDto {
     private Long id;
@@ -9,9 +9,9 @@ public class ResumeResponseDto {
 
     private String dateCreate;
 
-    private User user;
+    private UserEntity user;
 
-    public ResumeResponseDto(Long id, String title, String dateCreate, User user) {
+    public ResumeResponseDto(Long id, String title, String dateCreate, UserEntity user) {
         this.id = id;
         this.title = title;
         this.dateCreate = dateCreate;
@@ -43,11 +43,11 @@ public class ResumeResponseDto {
         this.dateCreate = dateCreate;
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 }
