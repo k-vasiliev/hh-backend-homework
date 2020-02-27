@@ -1,13 +1,12 @@
 package ru.hh.backend.homework.dao;
 
 import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.hh.backend.homework.entity.NegotiationEntity;
 
+import javax.inject.Singleton;
 import java.util.List;
 
-@Repository
+@Singleton
 public class NegotiationDao {
     private final SessionFactory sessionFactory;
 

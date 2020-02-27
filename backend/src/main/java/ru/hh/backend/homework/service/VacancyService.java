@@ -1,14 +1,14 @@
 package ru.hh.backend.homework.service;
 
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.backend.homework.dao.VacancyDao;
 import ru.hh.backend.homework.entity.VacancyEntity;
 
+import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Singleton
 public class VacancyService {
     private final VacancyDao vacancyDao;
 

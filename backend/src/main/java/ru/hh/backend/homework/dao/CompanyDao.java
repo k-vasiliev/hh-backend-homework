@@ -2,14 +2,13 @@ package ru.hh.backend.homework.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.hh.backend.homework.entity.CompanyEntity;
 
+import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Singleton
 public class CompanyDao {
     private final SessionFactory sessionFactory;
 
