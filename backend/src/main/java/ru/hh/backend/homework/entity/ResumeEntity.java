@@ -1,5 +1,6 @@
 package ru.hh.backend.homework.entity;
 
+import jnr.ffi.annotations.In;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -35,7 +36,7 @@ public class ResumeEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity applicant;
+    private Integer applicant;
 
     public Integer getResumeId() {
         return resumeId;
@@ -85,11 +86,11 @@ public class ResumeEntity {
         this.contacts = contacts;
     }
 
-    public UserEntity getApplicant() {
+    public Integer getApplicant() {
         return applicant;
     }
 
-    public void setApplicant(UserEntity applicant) {
+    public void setApplicant(Integer applicant) {
         this.applicant = applicant;
     }
 

@@ -8,4 +8,12 @@ public class CompanyRequestDto {
         this.name = name;
         this.userId = userId;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
 }

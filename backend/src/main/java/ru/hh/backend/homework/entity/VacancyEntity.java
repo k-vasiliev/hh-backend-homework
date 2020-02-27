@@ -1,5 +1,6 @@
 package ru.hh.backend.homework.entity;
 
+import jnr.ffi.annotations.In;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -35,7 +36,7 @@ public class VacancyEntity {
 
     @ManyToOne
     @JoinColumn(name = "company_id")
-    private CompanyEntity companyEntity;
+    private Integer companyEntity;
 
     public Integer getVacancyId() {
         return vacancyId;
@@ -85,11 +86,11 @@ public class VacancyEntity {
         this.description = description;
     }
 
-    public CompanyEntity getCompanyEntity() {
+    public Integer getCompanyEntity() {
         return companyEntity;
     }
 
-    public void setCompanyEntity(CompanyEntity companyEntity) {
+    public void setCompanyEntity(Integer companyEntity) {
         this.companyEntity = companyEntity;
     }
 
