@@ -1,4 +1,9 @@
-CREATE TABLE user(
+DROP TABLE resume;
+DROP TABLE vacancy;
+DROP TABLE company;
+DROP TABLE userHH;
+
+CREATE TABLE userHH(
      user_id SERIAL PRIMARY KEY,
      name VARCHAR(256),
      user_type integer DEFAULT 0 NOT NULL,
@@ -15,7 +20,7 @@ CREATE TABLE resume(
      contacts text,
      creation_date timestamp NOT NULL,
      update_date timestamp NOT NULL,
-     FOREIGN KEY (user_id) REFERENCES user(user_id)
+     FOREIGN KEY (user_id) REFERENCES userHH(user_id)
 );
 
 CREATE TABLE company(
@@ -24,7 +29,7 @@ CREATE TABLE company(
      title varchar(256) DEFAULT ''::varchar NOT NULL,
      creation_date timestamp NOT NULL,
      update_date timestamp NOT NULL,
-     FOREIGN KEY (user_id) REFERENCES user(user_id)
+     FOREIGN KEY (user_id) REFERENCES userHH(user_id)
 );
 
 CREATE TABLE vacancy(
@@ -39,7 +44,7 @@ CREATE TABLE vacancy(
      FOREIGN KEY (company_id) REFERENCES company(company_id)
 );
 
-INSERT INTO user (name, user_type, creation_date, update_date) VALUES
+INSERT INTO userHH (name, user_type, creation_date, update_date) VALUES
     ('Павел Иванов', 0, now(), now()),
     ('Татьяна Семеновна', 0, now(), now()),
     ('Сергей Сидоров', 0, now(), now()),
@@ -52,7 +57,7 @@ INSERT INTO resume (title, user_id, work_experience, contacts, creation_date, up
     ('Доцент', 3, '10 лет', 'hh3@mgu.com', now(), now());
 
 INSERT INTO company (user_id, title, creation_date, update_date) VALUES
-    ('ООО "Мини HH"', 4, now(), now());
+    (4, 'Мини HH', now(), now());
 
 INSERT INTO vacancy (company_id, title, compensation, description, contacts, creation_date, update_date) VALUES
     (1, 'java разработчик', 70000, 'разработка сервиса для подбора персонала', 'contacts_hh@hh.com', now(), now()),
