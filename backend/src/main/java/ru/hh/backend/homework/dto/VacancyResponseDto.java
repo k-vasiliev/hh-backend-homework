@@ -1,4 +1,4 @@
-package ru.hh.backend.homework.dto.response;
+package ru.hh.backend.homework.dto;
 
 import ru.hh.backend.homework.entity.CompanyEntity;
 

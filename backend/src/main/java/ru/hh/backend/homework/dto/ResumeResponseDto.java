@@ -1,4 +1,4 @@
-package ru.hh.backend.homework.dto.response;
+package ru.hh.backend.homework.dto;
 
 import java.util.Date;
 

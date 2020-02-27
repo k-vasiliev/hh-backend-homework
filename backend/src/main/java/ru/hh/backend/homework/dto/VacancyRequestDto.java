@@ -1,4 +1,4 @@
-package ru.hh.backend.homework.dto.request;
+package ru.hh.backend.homework.dto;
 
 public class VacancyRequestDto {
     private String title;
@@ -13,5 +13,25 @@ public class VacancyRequestDto {
         this.salary = salary;
         this.description = description;
         this.contacts = contacts;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public Integer getSalary() {
+        return salary;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getContacts() {
+        return contacts;
     }
 }

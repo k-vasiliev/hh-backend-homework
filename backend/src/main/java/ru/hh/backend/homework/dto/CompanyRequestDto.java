@@ -1,4 +1,4 @@
-package ru.hh.backend.homework.dto.request;
+package ru.hh.backend.homework.dto;
 
 public class CompanyRequestDto {
     private String name;
