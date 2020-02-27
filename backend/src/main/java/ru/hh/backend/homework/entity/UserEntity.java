@@ -14,7 +14,8 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "user_id")
+    private Integer userId;
 
     @CreationTimestamp
     @Column(name = "creation_date")
@@ -30,12 +31,12 @@ public class UserEntity {
     @Column(name = "user_type")
     private UserType userType;
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Date getCreationDate() {
@@ -75,7 +76,7 @@ public class UserEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity userEntity = (UserEntity) o;
-        return id.equals(userEntity.id) &&
+        return userId.equals(userEntity.userId) &&
                 creationDate.equals(userEntity.creationDate) &&
                 modificationDate.equals(userEntity.modificationDate) &&
                 name.equals(userEntity.name) &&
@@ -84,6 +85,6 @@ public class UserEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, creationDate, modificationDate, name, userType);
+        return Objects.hash(userId, creationDate, modificationDate, name, userType);
     }
 }

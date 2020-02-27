@@ -13,7 +13,8 @@ public class ResumeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "resume_id")
+    private Integer resumeId;
 
     @CreationTimestamp
     @Column(name = "creation_date")
@@ -36,12 +37,12 @@ public class ResumeEntity {
     @JoinColumn(name = "user_id")
     private UserEntity applicant;
 
-    public Integer getId() {
-        return id;
+    public Integer getResumeId() {
+        return resumeId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setResumeId(Integer resumeId) {
+        this.resumeId = resumeId;
     }
 
     public Date getCreationDate() {
@@ -97,7 +98,7 @@ public class ResumeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ResumeEntity resumeEntity = (ResumeEntity) o;
-        return id.equals(resumeEntity.id) &&
+        return resumeId.equals(resumeEntity.resumeId) &&
                 creationDate.equals(resumeEntity.creationDate) &&
                 modificationDate.equals(resumeEntity.modificationDate) &&
                 title.equals(resumeEntity.title) &&
@@ -108,6 +109,6 @@ public class ResumeEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, creationDate, modificationDate, title, workExperience, contacts, applicant);
+        return Objects.hash(resumeId, creationDate, modificationDate, title, workExperience, contacts, applicant);
     }
 }

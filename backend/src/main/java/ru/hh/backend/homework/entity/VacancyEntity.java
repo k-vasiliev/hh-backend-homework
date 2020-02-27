@@ -13,7 +13,8 @@ public class VacancyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "vacancy_id")
+    private Integer vacancyId;
 
     @CreationTimestamp
     @Column(name = "creation_date")
@@ -36,12 +37,12 @@ public class VacancyEntity {
     @JoinColumn(name = "company_id")
     private CompanyEntity companyEntity;
 
-    public Integer getId() {
-        return id;
+    public Integer getVacancyId() {
+        return vacancyId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setVacancyId(Integer vacancyId) {
+        this.vacancyId = vacancyId;
     }
 
     public Date getCreationDate() {
@@ -97,7 +98,7 @@ public class VacancyEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VacancyEntity vacancyEntity = (VacancyEntity) o;
-        return id.equals(vacancyEntity.id) &&
+        return vacancyId.equals(vacancyEntity.vacancyId) &&
                 creationDate.equals(vacancyEntity.creationDate) &&
                 modificationDate.equals(vacancyEntity.modificationDate) &&
                 title.equals(vacancyEntity.title) &&
@@ -108,6 +109,6 @@ public class VacancyEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, creationDate, modificationDate, title, salary, description, companyEntity);
+        return Objects.hash(vacancyId, creationDate, modificationDate, title, salary, description, companyEntity);
     }
 }

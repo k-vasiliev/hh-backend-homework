@@ -13,7 +13,8 @@ public class NegotiationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "negotiation_id")
+    private Integer negotiationId;
 
     @CreationTimestamp
     @Column(name = "creation_date")
@@ -31,12 +32,12 @@ public class NegotiationEntity {
     @JoinColumn(name = "vacancy_id")
     private VacancyEntity vacancyEntity;
 
-    public Integer getId() {
-        return id;
+    public Integer getNegotiationId() {
+        return negotiationId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setNegotiationId(Integer negotiationId) {
+        this.negotiationId = negotiationId;
     }
 
     public Date getCreationDate() {
@@ -76,7 +77,7 @@ public class NegotiationEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NegotiationEntity that = (NegotiationEntity) o;
-        return id.equals(that.id) &&
+        return negotiationId.equals(that.negotiationId) &&
                 creationDate.equals(that.creationDate) &&
                 modificationDate.equals(that.modificationDate) &&
                 resumeEntity.equals(that.resumeEntity) &&
@@ -85,6 +86,6 @@ public class NegotiationEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, creationDate, modificationDate, resumeEntity, vacancyEntity);
+        return Objects.hash(negotiationId, creationDate, modificationDate, resumeEntity, vacancyEntity);
     }
 }

@@ -13,7 +13,8 @@ public class CompanyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "company_id")
+    private Integer companyId;
 
     @CreationTimestamp
     @Column(name = "creation_date")
@@ -30,12 +31,12 @@ public class CompanyEntity {
     @JoinColumn(name = "user_id")
     private UserEntity employer;
 
-    public Integer getId() {
-        return id;
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public Date getCreationDate() {
@@ -75,7 +76,7 @@ public class CompanyEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CompanyEntity companyEntity = (CompanyEntity) o;
-        return id.equals(companyEntity.id) &&
+        return companyId.equals(companyEntity.companyId) &&
                 creationDate.equals(companyEntity.creationDate) &&
                 modificationDate.equals(companyEntity.modificationDate) &&
                 name.equals(companyEntity.name) &&
@@ -84,6 +85,6 @@ public class CompanyEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, creationDate, modificationDate, name, employer);
+        return Objects.hash(companyId, creationDate, modificationDate, name, employer);
     }
 }
