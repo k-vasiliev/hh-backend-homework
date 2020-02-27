@@ -1,18 +1,27 @@
 package ru.hh.backend.homework.mapper;
 
-import org.springframework.stereotype.Service;
-import ru.hh.backend.homework.dto.VacancyDto;
+import ru.hh.backend.homework.dto.VacancyRequestDto;
+import ru.hh.backend.homework.dto.VacancyResponseDto;
+import ru.hh.backend.homework.entity.CompanyEntity;
 import ru.hh.backend.homework.entity.VacancyEntity;
 
-@Service
+import javax.inject.Singleton;
+
+@Singleton
 public class VacancyMapper {
-    public VacancyDto map(VacancyEntity vacancyEntity) {
-        return new VacancyDto(vacancyEntity.getId(),
-                vacancyEntity.getCreationDate(),
-                vacancyEntity.getModificationDate(),
-                vacancyEntity.getTitle(),
-                vacancyEntity.getSalary(),
-                vacancyEntity.getDescription(),
-                vacancyEntity.getCompanyEntity());
+    public VacancyEntity map(VacancyRequestDto vacancyRequestDto) {
+        VacancyEntity vacancy = new VacancyEntity();
+        vacancy.setTitle(vacancyRequestDto.getTitle());
+        vacancy.setCompanyEntity(vacancyRequestDto.getCompanyId());
+        vacancy.setSalary(vacancyRequestDto.getSalary());
+        vacancy.setDescription(vacancyRequestDto.getDescription());
+        vacancy.setContacts(vacancyRequestDto.getContacts());
+        return vacancy;
+    }
+
+    public VacancyResponseDto map(VacancyEntity vacancyEntity) {
+        //добавить нормальную CompanyEntity
+        return new VacancyResponseDto(vacancyEntity.getVacancyId(), vacancyEntity.getTitle(),
+                vacancyEntity.getCreationDate(), new CompanyEntity());
     }
 }
