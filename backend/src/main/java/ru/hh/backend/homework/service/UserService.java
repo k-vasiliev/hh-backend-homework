@@ -3,6 +3,7 @@ package ru.hh.backend.homework.service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.backend.homework.dao.UserDao;
 import ru.hh.backend.homework.entity.UserEntity;
+import ru.hh.backend.homework.enums.UserType;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -27,7 +28,7 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserEntity> getAllByType(String userType) {
+    public List<UserEntity> getAllByType(UserType userType) {
         return userDao.getAllByType(userType);
     }
 }

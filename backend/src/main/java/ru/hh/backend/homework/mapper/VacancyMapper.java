@@ -1,5 +1,6 @@
 package ru.hh.backend.homework.mapper;
 
+import ru.hh.backend.homework.dto.VacancyDetailsResponseDto;
 import ru.hh.backend.homework.dto.VacancyRequestDto;
 import ru.hh.backend.homework.dto.VacancyResponseDto;
 import ru.hh.backend.homework.entity.CompanyEntity;
@@ -8,6 +9,7 @@ import ru.hh.backend.homework.service.CompanyService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Optional;
 
 @Singleton
 public class VacancyMapper {
@@ -31,5 +33,14 @@ public class VacancyMapper {
     public VacancyResponseDto map(VacancyEntity vacancyEntity) {
         return new VacancyResponseDto(vacancyEntity.getVacancyId(), vacancyEntity.getTitle(),
                 vacancyEntity.getCreationDate(), companyService.get(vacancyEntity.getCompanyEntity()));
+    }
+
+    public VacancyDetailsResponseDto mapDetails(VacancyEntity vacancyEntity) {
+        return new VacancyDetailsResponseDto(vacancyEntity.getVacancyId(),
+                vacancyEntity.getTitle(),
+                vacancyEntity.getSalary(),
+                vacancyEntity.getDescription(),
+                vacancyEntity.getContacts(),
+                companyService.get(vacancyEntity.getCompanyEntity()));
     }
 }

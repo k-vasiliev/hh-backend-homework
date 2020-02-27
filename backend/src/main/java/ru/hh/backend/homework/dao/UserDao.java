@@ -3,6 +3,7 @@ package ru.hh.backend.homework.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.hh.backend.homework.entity.UserEntity;
+import ru.hh.backend.homework.enums.UserType;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -34,7 +35,7 @@ public class UserDao {
         }
     }
 
-    public List<UserEntity> getAllByType(String userType) {
+    public List<UserEntity> getAllByType(UserType userType) {
         return getSessionFactory()
                 .getCurrentSession()
                 .createQuery("SELECT u FROM UserEntity u WHERE u.user_type = :userType", UserEntity.class)
