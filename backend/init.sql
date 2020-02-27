@@ -1,9 +1,11 @@
+CREATE TYPE user_type AS ENUM ('employer', 'applicant');
+
 CREATE TABLE users (
     user_id serial PRIMARY KEY NOT NULL,
     creation_date TIMESTAMP NOT NULL,
     modification_date TIMESTAMP NOT NULL,
     name VARCHAR(255) NOT NULL,
-    user_type VARCHAR(50) NOT NULL
+    user_type user_type NOT NULL
 );
 
 CREATE TABLE companies (
