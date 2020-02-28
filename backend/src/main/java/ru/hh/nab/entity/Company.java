@@ -10,8 +10,8 @@ import java.util.Set;
 @Table(name = "company")
 public class Company {
 
-    public Company(int compId, String name, Date lastUpdate, boolean active) {
-        this.compId = compId;
+    public Company(Users users, String name, Date lastUpdate, boolean active) {
+        this.users = users;
         this.name = name;
         this.lastUpdate = lastUpdate;
         this.active = active;

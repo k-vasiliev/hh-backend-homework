@@ -40,13 +40,13 @@ CREATE TABLE IF NOT EXISTS vacancy (
 
 INSERT INTO users
 (name, type, last_update, active)
-VALUES ('Pasha', 'APPLICANT',
+VALUES ('Pasha', 'applicant',
         now()-(random() * 365 * 24 * 3600 * 5) * '1 second'::interval, TRUE),
-       ('Masha', 'APPLICANT',
+       ('Masha', 'applicant',
        now()-(random() * 365 * 24 * 3600 * 5) * '1 second'::interval, TRUE),
-       ('Misha', 'EMPLOYER',
+       ('Misha', 'employer',
         now()-(random() * 365 * 24 * 3600 * 5) * '1 second'::interval, TRUE),
-       ('Kolya', 'EMPLOYER',
+       ('Kolya', 'employer',
         now()-(random() * 365 * 24 * 3600 * 5) * '1 second'::interval, TRUE);
 
 INSERT INTO resume

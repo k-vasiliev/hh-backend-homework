@@ -8,8 +8,8 @@ import java.util.Objects;
 @Table(name = "resume")
 public class Resume {
 
-    public Resume(String exp, String heading, String contacts, boolean active, Date last_update) {
-        //this.userId = userId;
+    public Resume(Users users, String exp, String heading, String contacts, boolean active, Date last_update) {
+        this.users = users;
         this.exp = exp;
         this.heading = heading;
         this.contacts = contacts;
