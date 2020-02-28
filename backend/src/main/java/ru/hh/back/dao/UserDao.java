@@ -1,6 +1,5 @@
 package ru.hh.back.dao;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +17,9 @@ public class UserDao {
 
     @Transactional
     public List<UserEntity> getUser(String type) {
-        Session session = getSessionFactory().getCurrentSession();
         try {
-            List<UserEntity> users = session.createQuery("SELECT u From UserEntity u WHERE u.type = :type", UserEntity.class)
+            List<UserEntity> users = getSessionFactory().getCurrentSession()
+                    .createQuery("SELECT u From UserEntity u WHERE u.type = :type", UserEntity.class)
                     .setParameter("type", type)
                     .list();
             return users;
@@ -32,8 +31,7 @@ public class UserDao {
 
     @Transactional
     public Integer save(UserEntity user) {
-        Session session = getSessionFactory().getCurrentSession();
-        session.saveOrUpdate(user);
+        getSessionFactory().getCurrentSession().saveOrUpdate(user);
         return user.getId();
     }
 
