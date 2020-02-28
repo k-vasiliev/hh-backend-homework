@@ -31,4 +31,6 @@ services:
     image: hh-homework-front
     restart: always
     ports:
-      - "80:80"
+      - "8081:8081"
+    links:
+      - hh-homework-backend
