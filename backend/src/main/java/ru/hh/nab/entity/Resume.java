@@ -21,11 +21,11 @@ public class Resume {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Users users;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "res_id")
+    @Column(name = "resume_id")
     private int resId;
 
     /*@ManyToOne
@@ -36,7 +36,7 @@ public class Resume {
     @Column(name = "exp")
     private String exp;
 
-    @Column(name = "heading")
+    @Column(name = "head")
     private String heading;
 
     @Column(name = "contacts")
@@ -53,8 +53,8 @@ public class Resume {
         return resId;
     }
 
-    public User getUser() {
-        return user;
+    public Users getUser() {
+        return users;
     }
 
     /*public int getUserId() {
@@ -85,8 +85,8 @@ public class Resume {
         this.resId = resId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Users user) {
+        this.users = user;
     }
 
     /*public void setUserId(int userId) {

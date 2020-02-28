@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.hh.nab.entity.User;
+import ru.hh.nab.entity.Users;
 
 @Repository
 public class UserDAO {
@@ -16,16 +16,16 @@ public class UserDAO {
     }
 
     @Transactional
-    public User addUser(String name, String type) {
-        User user = new User(name, type, new Date(), true);
+    public Users addUser(String name, String type) {
+        Users user = new Users(name, type, new Date(), true);
         sessionFactory.getCurrentSession().save(user);
         return user;
     }
 
     @Transactional
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return sessionFactory.getCurrentSession()
-                .createQuery("SELECT FROM User u", User.class)
+                .createQuery("from Users", Users.class)
                 .getResultList();
     }
 }

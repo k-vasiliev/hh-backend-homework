@@ -35,7 +35,7 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comp_id")
+    @Column(name = "company_id")
     private int compId;
 
     @Column(name = "name")
@@ -49,7 +49,7 @@ public class Company {
     private boolean active;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Users users;
 
     /*@ManyToOne
     @JoinTable(name = "user", joinColumns = @JoinColumn(name = "user_id"))
@@ -71,8 +71,8 @@ public class Company {
         return active;
     }
 
-    public User getUser() {
-        return user;
+    public Users getUser() {
+        return users;
     }
 
     /*public int getUserId() {
@@ -95,8 +95,8 @@ public class Company {
         this.active = active;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Users users) {
+        this.users = users;
     }
 
     /*public void setUserId(int userId) {

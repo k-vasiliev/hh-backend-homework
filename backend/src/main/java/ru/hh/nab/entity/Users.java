@@ -6,23 +6,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "users")
+public class Users {
 
-    public User(String userName, String type, Date lastUpdate, boolean active) {
+    public Users(String userName, String type, Date lastUpdate, boolean active) {
         this.userName = userName;
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.active = active;
     }
 
-    public User() {
+    public Users() {
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Resume> resumes = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Company> companies = new HashSet<>();
 
     public void addResume(Resume resume) {
