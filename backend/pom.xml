@@ -8,6 +8,7 @@
     <artifactId>backend</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
+    <name>hh-backend-homework</name>
 
     <properties>
         <maven.compiler.target>11</maven.compiler.target>
@@ -48,14 +49,6 @@
             <artifactId>nab-hibernate</artifactId>
             <version>${nab.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
     <build>
