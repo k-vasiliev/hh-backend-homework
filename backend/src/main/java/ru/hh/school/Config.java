@@ -9,14 +9,17 @@ import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.hibernate.NabHibernateProdConfig;
 import ru.hh.nab.starter.NabProdConfig;
 import ru.hh.school.dao.CompanyDao;
+import ru.hh.school.dao.NegotiationDao;
 import ru.hh.school.dao.ResumeDao;
 import ru.hh.school.dao.UserDao;
 import ru.hh.school.dao.VacancyDao;
 import ru.hh.school.resource.CompanyResource;
+import ru.hh.school.resource.NegotiationResource;
 import ru.hh.school.resource.ResumeResource;
 import ru.hh.school.resource.UserResource;
 import ru.hh.school.resource.VacancyResource;
 import ru.hh.school.service.CompanyService;
+import ru.hh.school.service.NegotiationService;
 import ru.hh.school.service.ResumeService;
 import ru.hh.school.service.UserService;
 import ru.hh.school.service.VacancyService;
@@ -38,7 +41,10 @@ import javax.sql.DataSource;
     CompanyService.class,
     VacancyDao.class,
     VacancyResource.class,
-    VacancyService.class
+    VacancyService.class,
+    NegotiationDao.class,
+    NegotiationResource.class,
+    NegotiationService.class
 })
 public class Config {
 

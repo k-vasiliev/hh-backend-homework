@@ -1,6 +1,6 @@
 package ru.hh.school.service;
 
-import org.springframework.stereotype.Service;
+import ru.hh.school.Utils;
 import ru.hh.school.dao.ResumeDao;
 import ru.hh.school.dao.UserDao;
 import ru.hh.school.dto.request.CreateResumeDto;
@@ -10,27 +10,19 @@ import ru.hh.school.entity.User;
 import ru.hh.school.entity.UserType;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
-@Service
+@Singleton
 public class ResumeService {
 
     private ResumeDao resumeDao;
     private UserDao userDao;
-
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter
-        .ofLocalizedDateTime(FormatStyle.MEDIUM)
-        .withLocale(Locale.forLanguageTag("RU"))
-        .withZone(ZoneId.of("Europe/Moscow"));
 
     @Inject
     public ResumeService(ResumeDao resumeDao, UserDao userDao) {
@@ -60,11 +52,11 @@ public class ResumeService {
             .map(ResumeService::convert).collect(Collectors.toList());
     }
 
-    private static ResumeDto convert(Resume resume) {
+    public static ResumeDto convert(Resume resume) {
         ResumeDto resumeDto = new ResumeDto();
         resumeDto.setId(resume.getResumeId());
         resumeDto.setTitle(resume.getTitle());
-        resumeDto.setDateCreate(dateTimeFormatter.format(resume.getCreatedAt()));
+        resumeDto.setDateCreate(Utils.dateTimeFormatter.format(resume.getCreatedAt()));
         resumeDto.setApplicant(UserService.convert(resume.getUser()));
         return resumeDto;
     }

@@ -1,14 +1,14 @@
 package ru.hh.school.dao;
 
-import org.springframework.stereotype.Repository;
 import ru.hh.school.entity.User;
 import ru.hh.school.entity.UserType;
 
+import javax.inject.Singleton;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-@Repository
+@Singleton
 public class UserDao extends AbstractDao {
 
     public List<User> getUsers(UserType userType) {

@@ -14,6 +14,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+import static ru.hh.school.Utils.check;
+
 @Path("/user")
 public class UserResource {
 
@@ -25,6 +27,8 @@ public class UserResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void createUser(UserDto userDto) {
+        check(userDto.getName() != null);
+        check(!userDto.getName().isEmpty());
         userService.createUser(userDto);
     }
 

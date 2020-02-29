@@ -1,7 +1,9 @@
 CREATE TABLE hh_user(
     user_id SERIAL PRIMARY KEY,
     name VARCHAR(64) NOT NULL,
-    type VARCHAR(16) NOT NULL
+    type VARCHAR(16) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
 CREATE TABLE resume(
@@ -17,7 +19,9 @@ CREATE TABLE resume(
 CREATE TABLE company(
     company_id SERIAL PRIMARY KEY,
     name VARCHAR(64) NOT NULL,
-    user_id INTEGER REFERENCES hh_user(user_id)
+    user_id INTEGER REFERENCES hh_user(user_id),
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
 CREATE TABLE vacancy(
@@ -27,6 +31,14 @@ CREATE TABLE vacancy(
     salary INTEGER,
     description TEXT NOT NULL,
     contacts TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE negotiation(
+    negotiation_id SERIAL PRIMARY KEY,
+    resume_id INTEGER REFERENCES resume(resume_id),
+    vacancy_id INTEGER REFERENCES vacancy(vacancy_id),
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL
 );

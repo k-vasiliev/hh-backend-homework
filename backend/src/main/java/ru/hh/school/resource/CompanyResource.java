@@ -13,6 +13,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+import static ru.hh.school.Utils.check;
+
 @Path("/company")
 public class CompanyResource {
 
@@ -26,6 +28,8 @@ public class CompanyResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void createCompany(CreateCompanyDto dto) {
+        check(dto.getName() != null);
+        check(!dto.getName().isEmpty());
         companyService.createCompany(dto);
     }
 

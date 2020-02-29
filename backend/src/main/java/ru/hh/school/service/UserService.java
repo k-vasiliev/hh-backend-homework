@@ -1,17 +1,17 @@
 package ru.hh.school.service;
 
-import org.springframework.stereotype.Service;
 import ru.hh.school.dao.UserDao;
 import ru.hh.school.dto.UserDto;
 import ru.hh.school.entity.User;
 import ru.hh.school.entity.UserType;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Singleton
 public class UserService {
 
     private UserDao userDao;

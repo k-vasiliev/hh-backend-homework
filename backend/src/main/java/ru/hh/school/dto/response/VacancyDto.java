@@ -1,41 +1,32 @@
 package ru.hh.school.dto.response;
 
-public class VacancyDto {
+public class VacancyDto extends ShortVacancyDto {
 
-    private Integer id;
-    private String title;
-    private CompanyDto company;
-    private String dateCreate;
+    private Integer salary;
+    private String description;
+    private String contacts;
 
-    public Integer getId() {
-        return id;
+    public Integer getSalary() {
+        return salary;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSalary(Integer salary) {
+        this.salary = salary;
     }
 
-    public String getTitle() {
-        return title;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public CompanyDto getCompany() {
-        return company;
+    public String getContacts() {
+        return contacts;
     }
 
-    public void setCompany(CompanyDto company) {
-        this.company = company;
-    }
-
-    public String getDateCreate() {
-        return dateCreate;
-    }
-
-    public void setDateCreate(String dateCreate) {
-        this.dateCreate = dateCreate;
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
     }
 }

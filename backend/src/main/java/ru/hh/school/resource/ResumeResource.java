@@ -13,6 +13,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+import static ru.hh.school.Utils.check;
+
 @Path("/resume")
 public class ResumeResource {
 
@@ -26,6 +28,12 @@ public class ResumeResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void createdResume(CreateResumeDto dto) {
+        check(dto.getTitle() != null);
+        check(!dto.getTitle().isEmpty());
+        check(dto.getWorkExperience() != null);
+        check(!dto.getWorkExperience().isEmpty());
+        check(dto.getContacts() != null);
+        check(!dto.getContacts().isEmpty());
         resumeService.createResume(dto);
     }
 

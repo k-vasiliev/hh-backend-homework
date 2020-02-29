@@ -1,13 +1,13 @@
 package ru.hh.school.dao;
 
-import org.springframework.stereotype.Repository;
 import ru.hh.school.entity.Resume;
 
+import javax.inject.Singleton;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-@Repository
+@Singleton
 public class ResumeDao extends AbstractDao {
 
     public List<Resume> getAllResumes() {
@@ -16,5 +16,9 @@ public class ResumeDao extends AbstractDao {
         root.fetch("user");
         criteriaQuery.select(root);
         return session().createQuery(criteriaQuery).getResultList();
+    }
+
+    public Resume getResume(Integer resumeId) {
+        return session().get(Resume.class, resumeId);
     }
 }
