@@ -3,6 +3,8 @@ package ru.hh.backend.homework.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import ru.hh.backend.homework.dao.*;
 import ru.hh.backend.homework.entity.*;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
@@ -14,15 +16,25 @@ import ru.hh.nab.starter.NabCommonConfig;
 import javax.sql.DataSource;
 
 @Configuration
+@EnableTransactionManagement
 @Import({
         NabCommonConfig.class,
-        NabHibernateCommonConfig.class
+        NabHibernateCommonConfig.class,
+        CompanyDao.class,
+        NegotiationDao.class,
+        ResumeDao.class,
+        UserDao.class,
+        VacancyDao.class
 })
 public class AppCommonConfig {
 
     @Bean
     public MappingConfig mappingConfig() {
-        return new MappingConfig(CompanyEntity.class, NegotiationEntity.class, ResumeEntity.class, UserEntity.class, VacancyEntity.class);
+        return new MappingConfig(CompanyEntity.class,
+                NegotiationEntity.class,
+                ResumeEntity.class,
+                UserEntity.class,
+                VacancyEntity.class);
     }
 
     @Bean
