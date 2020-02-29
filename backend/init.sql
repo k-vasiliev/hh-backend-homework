@@ -1,4 +1,4 @@
-create table "user" (
+create table users (
     user_id serial primary key,
     name varchar(150) not null,
     type varchar(9) not null,
@@ -15,7 +15,7 @@ create table resume (
     contacts varchar(50) not null,
     creation_date timestamp not null,
     last_update_date timestamp not null,
-    foreign key (user_id) references "user"(user_id)
+    foreign key (user_id) references users(user_id)
 );
 
 create table company (
@@ -24,7 +24,7 @@ create table company (
     user_id integer not null,
     creation_date timestamp not null,
     last_update_date timestamp not null,
-    foreign key (user_id) references "user"(user_id)
+    foreign key (user_id) references users(user_id)
 );
 
 create table vacancy (
@@ -49,11 +49,11 @@ create table negotiation (
     foreign key (resume_id) references resume(resume_id)
 );
 
-insert into "user" (name, type, creation_date, last_update_date) values ('Просто Саня', 'applicant', now(), now());
-insert into "user" (name, type, creation_date, last_update_date) values ('Анна Иванова', 'employer', now(), now());
-insert into "user" (name, type, creation_date, last_update_date) values ('Денис Кузнецов', 'employer', now(), now());
-insert into "user" (name, type, creation_date, last_update_date) values ('Евгений Аркадьевич', 'applicant', now(), now());
-insert into "user" (name, type, creation_date, last_update_date) values ('Менеджер Екатерина', 'employer', now(), now());
+insert into users (name, type, creation_date, last_update_date) values ('Просто Саня', 'applicant', now(), now());
+insert into users (name, type, creation_date, last_update_date) values ('Анна Иванова', 'employer', now(), now());
+insert into users (name, type, creation_date, last_update_date) values ('Денис Кузнецов', 'employer', now(), now());
+insert into users (name, type, creation_date, last_update_date) values ('Евгений Аркадьевич', 'applicant', now(), now());
+insert into users (name, type, creation_date, last_update_date) values ('Менеджер Екатерина', 'employer', now(), now());
 
 
 insert into resume (title, user_id, experience, contacts, creation_date, last_update_date) values ('Разработчик Java', 1, '1 год', '783-1233', now(), now());
