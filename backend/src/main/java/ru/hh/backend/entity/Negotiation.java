@@ -3,10 +3,10 @@ package ru.hh.backend.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "responses")
-public class Response extends BaseEntity {
+@Table(name = "negotiation")
+public class Negotiation extends BaseEntity {
     @Id
-    @Column(name = "response_id")
+    @Column(name = "negotiation_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer responseId;
 
@@ -18,7 +18,7 @@ public class Response extends BaseEntity {
     @JoinColumn(name = "resume_id")
     private Resume resume;
 
-    public Response() {
+    public Negotiation() {
     }
 
     public Integer getResponseId() {

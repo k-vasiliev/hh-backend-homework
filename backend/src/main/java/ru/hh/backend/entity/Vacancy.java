@@ -4,7 +4,7 @@ package ru.hh.backend.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "vacancies")
+@Table(name = "vacancy")
 public class Vacancy extends BaseEntity {
 
     @Id

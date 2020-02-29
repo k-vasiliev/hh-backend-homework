@@ -3,7 +3,7 @@ package ru.hh.backend.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "resumes")
+@Table(name = "resume")
 public class Resume extends BaseEntity {
 
     @Id
