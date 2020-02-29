@@ -29,6 +29,7 @@ public class UserResource {
     public void createUser(UserDto userDto) {
         check(userDto.getName() != null);
         check(!userDto.getName().isEmpty());
+        check((userDto.getName().length()<64));
         userService.createUser(userDto);
     }
 

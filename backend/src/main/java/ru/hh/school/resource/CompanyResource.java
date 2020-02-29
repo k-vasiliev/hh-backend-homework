@@ -30,6 +30,7 @@ public class CompanyResource {
     public void createCompany(CreateCompanyDto dto) {
         check(dto.getName() != null);
         check(!dto.getName().isEmpty());
+        check(dto.getName().length()<64);
         companyService.createCompany(dto);
     }
 

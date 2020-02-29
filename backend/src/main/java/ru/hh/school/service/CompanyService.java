@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,8 @@ public class CompanyService {
         Company company = new Company();
         company.setName(companyDto.getName());
         company.setUser(user);
+        company.setCreatedAt(Instant.now());
+        company.setUpdatedAt(Instant.now());
         companyDao.save(company);
     }
 

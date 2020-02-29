@@ -8,6 +8,7 @@ import ru.hh.school.entity.UserType;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,8 @@ public class UserService {
         User user = new User();
         user.setName(userDto.getName());
         user.setType(userDto.getType());
+        user.setCreatedAt(Instant.now());
+        user.setUpdatedAt(Instant.now());
         userDao.save(user);
     }
 

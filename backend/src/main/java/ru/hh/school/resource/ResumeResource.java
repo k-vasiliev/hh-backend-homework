@@ -30,6 +30,7 @@ public class ResumeResource {
     public void createdResume(CreateResumeDto dto) {
         check(dto.getTitle() != null);
         check(!dto.getTitle().isEmpty());
+        check(dto.getTitle().length()<64);
         check(dto.getWorkExperience() != null);
         check(!dto.getWorkExperience().isEmpty());
         check(dto.getContacts() != null);

@@ -37,6 +37,7 @@ public class VacancyResource {
     public void createVacancy(CreateVacancyDto dto) {
         check(dto.getTitle() != null);
         check(!dto.getTitle().isEmpty());
+        check(dto.getTitle().length()<64);
         check(dto.getDescription() != null);
         check(!dto.getDescription().isEmpty());
         check(dto.getContacts() != null);

@@ -14,8 +14,8 @@ public class Utils {
         .withLocale(Locale.forLanguageTag("RU"))
         .withZone(ZoneId.of("Europe/Moscow"));
 
-    public static void check(Boolean conditional) {
-        if (!conditional) {
+    public static void check(Boolean condition) {
+        if (!condition) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
     }
