@@ -39,6 +39,26 @@ public class ResumeEntity {
     @JoinColumn(name = "user_id")
     private UserEntity applicant;
 
+    public ResumeEntity() {
+    }
+
+    public ResumeEntity(String title, String workExperience, String contacts, UserEntity applicant) {
+        this.title = title;
+        this.workExperience = workExperience;
+        this.contacts = contacts;
+        this.applicant = applicant;
+    }
+
+    public ResumeEntity(Integer resumeId, LocalDate creationDate, LocalDate modificationDate, String title, String workExperience, String contacts, UserEntity applicant) {
+        this.resumeId = resumeId;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
+        this.title = title;
+        this.workExperience = workExperience;
+        this.contacts = contacts;
+        this.applicant = applicant;
+    }
+
     public Integer getResumeId() {
         return resumeId;
     }

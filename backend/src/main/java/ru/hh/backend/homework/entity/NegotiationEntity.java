@@ -33,6 +33,22 @@ public class NegotiationEntity {
     @JoinColumn(name = "vacancy_id")
     private VacancyEntity vacancyEntity;
 
+    public NegotiationEntity() {
+    }
+
+    public NegotiationEntity(ResumeEntity resumeEntity, VacancyEntity vacancyEntity) {
+        this.resumeEntity = resumeEntity;
+        this.vacancyEntity = vacancyEntity;
+    }
+
+    public NegotiationEntity(Integer negotiationId, LocalDate creationDate, LocalDate modificationDate, ResumeEntity resumeEntity, VacancyEntity vacancyEntity) {
+        this.negotiationId = negotiationId;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
+        this.resumeEntity = resumeEntity;
+        this.vacancyEntity = vacancyEntity;
+    }
+
     public Integer getNegotiationId() {
         return negotiationId;
     }

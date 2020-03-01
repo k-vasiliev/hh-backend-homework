@@ -32,6 +32,22 @@ public class CompanyEntity {
     @JoinColumn(name = "user_id")
     private UserEntity employer;
 
+    public CompanyEntity() {
+    }
+
+    public CompanyEntity(String name, UserEntity employer) {
+        this.name = name;
+        this.employer = employer;
+    }
+
+    public CompanyEntity(Integer companyId, LocalDate creationDate, LocalDate modificationDate, String name, UserEntity employer) {
+        this.companyId = companyId;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
+        this.name = name;
+        this.employer = employer;
+    }
+
     public Integer getCompanyId() {
         return companyId;
     }

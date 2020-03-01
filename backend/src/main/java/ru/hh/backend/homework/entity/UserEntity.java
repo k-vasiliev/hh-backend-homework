@@ -32,6 +32,22 @@ public class UserEntity {
     @Column(name = "user_type")
     private UserType userType;
 
+    public UserEntity() {
+    }
+
+    public UserEntity(String name, UserType userType) {
+        this.name = name;
+        this.userType = userType;
+    }
+
+    public UserEntity(Integer userId, LocalDate creationDate, LocalDate modificationDate, String name, UserType userType) {
+        this.userId = userId;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
+        this.name = name;
+        this.userType = userType;
+    }
+
     public Integer getUserId() {
         return userId;
     }

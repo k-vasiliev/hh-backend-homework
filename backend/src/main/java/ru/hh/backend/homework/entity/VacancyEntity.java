@@ -42,6 +42,28 @@ public class VacancyEntity {
     @JoinColumn(name = "company_id")
     private CompanyEntity companyEntity;
 
+    public VacancyEntity() {
+    }
+
+    public VacancyEntity(String title, Integer salary, String description, String contacts, CompanyEntity companyEntity) {
+        this.title = title;
+        this.salary = salary;
+        this.description = description;
+        this.contacts = contacts;
+        this.companyEntity = companyEntity;
+    }
+
+    public VacancyEntity(Integer vacancyId, LocalDate creationDate, LocalDate modificationDate, String title, Integer salary, String description, String contacts, CompanyEntity companyEntity) {
+        this.vacancyId = vacancyId;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
+        this.title = title;
+        this.salary = salary;
+        this.description = description;
+        this.contacts = contacts;
+        this.companyEntity = companyEntity;
+    }
+
     public Integer getVacancyId() {
         return vacancyId;
     }
