@@ -47,7 +47,7 @@ public class VacancyResource {
     @GET
     @Path("/{id}")
     public VacancyDetailsResponseDto getVacancy(@PathParam("id") Integer id) {
-        return vacancyMapper.mapDetails(vacancyService.get(id).get());
+        return vacancyMapper.mapDetails(vacancyService.get(id));
     }
 
     @GET
