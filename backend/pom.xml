@@ -68,10 +68,10 @@
                     <systemProperties>
                         <systemProperty>
                             <key>settingsDir</key>
-                            <value>src/etc/nab-example</value>
+                            <value>src/etc/hh-backend-homework</value>
                         </systemProperty>
                     </systemProperties>
-                    <mainClass>ru.hh.nab.example.ExampleMain</mainClass>
+                    <mainClass>ru.hh.backend.Main</mainClass>
                 </configuration>
             </plugin>
 
