@@ -36,7 +36,7 @@ public class ResumeEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Integer applicant;
+    private UserEntity applicant;
 
     public Integer getResumeId() {
         return resumeId;
@@ -86,11 +86,11 @@ public class ResumeEntity {
         this.contacts = contacts;
     }
 
-    public Integer getApplicant() {
+    public UserEntity getApplicant() {
         return applicant;
     }
 
-    public void setApplicant(Integer applicant) {
+    public void setApplicant(UserEntity applicant) {
         this.applicant = applicant;
     }
 

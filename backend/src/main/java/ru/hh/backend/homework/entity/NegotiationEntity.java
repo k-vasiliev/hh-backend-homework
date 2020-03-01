@@ -26,11 +26,11 @@ public class NegotiationEntity {
 
     @ManyToOne
     @JoinColumn(name = "resume_id")
-    private Integer resumeEntity;
+    private ResumeEntity resumeEntity;
 
     @ManyToOne
     @JoinColumn(name = "vacancy_id")
-    private Integer vacancyEntity;
+    private VacancyEntity vacancyEntity;
 
     public Integer getNegotiationId() {
         return negotiationId;
@@ -56,19 +56,19 @@ public class NegotiationEntity {
         this.modificationDate = modificationDate;
     }
 
-    public Integer getResumeEntity() {
+    public ResumeEntity getResumeEntity() {
         return resumeEntity;
     }
 
-    public void setResumeEntity(Integer resumeEntity) {
+    public void setResumeEntity(ResumeEntity resumeEntity) {
         this.resumeEntity = resumeEntity;
     }
 
-    public Integer getVacancyEntity() {
+    public VacancyEntity getVacancyEntity() {
         return vacancyEntity;
     }
 
-    public void setVacancyEntity(Integer vacancyEntity) {
+    public void setVacancyEntity(VacancyEntity vacancyEntity) {
         this.vacancyEntity = vacancyEntity;
     }
 

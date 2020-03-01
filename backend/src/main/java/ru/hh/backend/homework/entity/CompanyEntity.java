@@ -29,7 +29,7 @@ public class CompanyEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Integer employer;
+    private UserEntity employer;
 
     public Integer getCompanyId() {
         return companyId;
@@ -63,11 +63,11 @@ public class CompanyEntity {
         this.name = name;
     }
 
-    public Integer getEmployer() {
+    public UserEntity getEmployer() {
         return employer;
     }
 
-    public void setEmployer(Integer employer) {
+    public void setEmployer(UserEntity employer) {
         this.employer = employer;
     }
 

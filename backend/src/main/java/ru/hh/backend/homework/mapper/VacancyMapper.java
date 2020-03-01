@@ -23,7 +23,7 @@ public class VacancyMapper {
     public VacancyEntity map(VacancyRequestDto vacancyRequestDto) {
         VacancyEntity vacancy = new VacancyEntity();
         vacancy.setTitle(vacancyRequestDto.getTitle());
-        vacancy.setCompanyEntity(vacancyRequestDto.getCompanyId());
+        vacancy.setCompanyEntity(companyService.get(vacancyRequestDto.getCompanyId()));
         vacancy.setSalary(vacancyRequestDto.getSalary());
         vacancy.setDescription(vacancyRequestDto.getDescription());
         vacancy.setContacts(vacancyRequestDto.getContacts());
@@ -32,7 +32,7 @@ public class VacancyMapper {
 
     public VacancyResponseDto map(VacancyEntity vacancyEntity) {
         return new VacancyResponseDto(vacancyEntity.getVacancyId(), vacancyEntity.getTitle(),
-                vacancyEntity.getCreationDate(), companyService.get(vacancyEntity.getCompanyEntity()));
+                vacancyEntity.getCreationDate(), vacancyEntity.getCompanyEntity());
     }
 
     public VacancyDetailsResponseDto mapDetails(VacancyEntity vacancyEntity) {
@@ -41,6 +41,6 @@ public class VacancyMapper {
                 vacancyEntity.getSalary(),
                 vacancyEntity.getDescription(),
                 vacancyEntity.getContacts(),
-                companyService.get(vacancyEntity.getCompanyEntity()));
+                vacancyEntity.getCompanyEntity());
     }
 }
