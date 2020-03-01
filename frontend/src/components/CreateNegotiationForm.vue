@@ -63,7 +63,6 @@
               vacancyId: this.vacancyId,
             })
               .then(() => {
-                this.clear()
                 this.dialogVisible = false
                 this.clearForm()
               })
