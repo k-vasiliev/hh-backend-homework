@@ -21,17 +21,13 @@ public class CompanyDao {
         return companyEntity;
     }
 
-    public Optional<CompanyEntity> get(Integer id) {
+    public CompanyEntity get(Integer id) {
         Session session = getSessionFactory().getCurrentSession();
-        try {
-            CompanyEntity company = session
-                    .createQuery("SELECT c FROM CompanyEntity c WHERE c.id = :id", CompanyEntity.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            return Optional.of(company);
-        } catch (RuntimeException e) {
-            return Optional.empty();
-        }
+        CompanyEntity company = session
+                .createQuery("SELECT c FROM CompanyEntity c WHERE c.id = :id", CompanyEntity.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        return Optional.of(company).orElseGet(null);
     }
 
     public List<CompanyEntity> getAll() {

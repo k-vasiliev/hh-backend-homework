@@ -6,7 +6,6 @@ import ru.hh.backend.homework.entity.CompanyEntity;
 
 import javax.inject.Singleton;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
 public class CompanyService {
@@ -22,7 +21,7 @@ public class CompanyService {
     }
 
     @Transactional
-    public Optional<CompanyEntity> get(Integer id) {
+    public CompanyEntity get(Integer id) {
         return companyDao.get(id);
     }
 

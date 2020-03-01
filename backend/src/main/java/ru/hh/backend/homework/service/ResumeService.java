@@ -22,7 +22,7 @@ public class ResumeService {
     }
 
     @Transactional
-    public Optional<ResumeEntity> get(Integer id) {
+    public ResumeEntity get(Integer id) {
         return resumeDao.get(id);
     }
 

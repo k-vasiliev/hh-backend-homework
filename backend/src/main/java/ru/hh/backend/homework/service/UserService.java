@@ -23,7 +23,7 @@ public class UserService {
     }
 
     @Transactional
-    public Optional<UserEntity> get(Integer id) {
+    public UserEntity get(Integer id) {
         return userDao.get(id);
     }
 

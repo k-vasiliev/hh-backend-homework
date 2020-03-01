@@ -21,17 +21,13 @@ public class ResumeDao {
         return resumeEntity;
     }
 
-    public Optional<ResumeEntity> get(Integer id) {
+    public ResumeEntity get(Integer id) {
         Session session = getSessionFactory().getCurrentSession();
-        try {
-            ResumeEntity resume = session
-                    .createQuery("SELECT r FROM ResumeEntity r WHERE r.id = :id", ResumeEntity.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            return Optional.of(resume);
-        } catch (RuntimeException e) {
-            return Optional.empty();
-        }
+        ResumeEntity resume = session
+                .createQuery("SELECT r FROM ResumeEntity r WHERE r.id = :id", ResumeEntity.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        return Optional.of(resume).orElseGet(null);
     }
 
     public List<ResumeEntity> getAll() {

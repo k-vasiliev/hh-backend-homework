@@ -21,17 +21,13 @@ public class VacancyDao {
         return vacancyEntity;
     }
 
-    public Optional<VacancyEntity> get(Integer id) {
+    public VacancyEntity get(Integer id) {
         Session session = getSessionFactory().getCurrentSession();
-        try {
-            VacancyEntity vacancy = session
-                    .createQuery("SELECT v FROM VacancyEntity v WHERE v.id = :id", VacancyEntity.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            return Optional.of(vacancy);
-        } catch (RuntimeException e) {
-            return Optional.empty();
-        }
+        VacancyEntity vacancy = session
+                .createQuery("SELECT v FROM VacancyEntity v WHERE v.id = :id", VacancyEntity.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        return Optional.of(vacancy).orElseGet(null);
     }
 
     public List<VacancyEntity> getAll() {

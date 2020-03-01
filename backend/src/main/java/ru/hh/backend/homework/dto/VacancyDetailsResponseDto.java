@@ -10,9 +10,10 @@ public class VacancyDetailsResponseDto {
     private Integer salary;
     private String description;
     private String contacts;
-    private Optional<CompanyEntity> company;
+    private CompanyEntity company;
 
-    public VacancyDetailsResponseDto(Integer vacancyId, String title, Integer salary, String description, String contacts, Optional<CompanyEntity> company) {
+    public VacancyDetailsResponseDto(Integer vacancyId, String title, Integer salary,
+                                     String description, String contacts, CompanyEntity company) {
         this.vacancyId = vacancyId;
         this.title = title;
         this.salary = salary;

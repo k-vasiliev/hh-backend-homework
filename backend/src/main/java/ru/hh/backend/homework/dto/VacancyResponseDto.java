@@ -9,9 +9,9 @@ public class VacancyResponseDto {
     private Integer vacancyId;
     private String title;
     private Date creationDate;
-    private Optional<CompanyEntity> company;
+    private CompanyEntity company;
 
-    public VacancyResponseDto(Integer vacancyId, String title, Date creationDate, Optional<CompanyEntity> company) {
+    public VacancyResponseDto(Integer vacancyId, String title, Date creationDate, CompanyEntity company) {
         this.vacancyId = vacancyId;
         this.title = title;
         this.creationDate = creationDate;

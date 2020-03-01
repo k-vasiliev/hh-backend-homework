@@ -22,17 +22,13 @@ public class UserDao {
         return userEntity;
     }
 
-    public Optional<UserEntity> get(Integer id) {
+    public UserEntity get(Integer id) {
         Session session = getSessionFactory().getCurrentSession();
-        try {
-            UserEntity user = session
-                    .createQuery("SELECT u FROM UserEntity u WHERE u.id = :id", UserEntity.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-            return Optional.of(user);
-        } catch (RuntimeException e) {
-            return Optional.empty();
-        }
+        UserEntity user = session
+                .createQuery("SELECT u FROM UserEntity u WHERE u.id = :id", UserEntity.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        return Optional.of(user).orElseGet(null);
     }
 
     public List<UserEntity> getAllByType(UserType userType) {

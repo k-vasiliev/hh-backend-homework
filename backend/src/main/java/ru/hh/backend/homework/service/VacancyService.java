@@ -22,7 +22,7 @@ public class VacancyService {
     }
 
     @Transactional
-    public Optional<VacancyEntity> get(Integer id) {
+    public VacancyEntity get(Integer id) {
         return vacancyDao.get(id);
     }
 
