@@ -20,10 +20,7 @@ public class CompanyMapper {
     }
 
     public CompanyEntity map(CompanyRequestDto companyRequestDto) {
-        CompanyEntity company = new CompanyEntity();
-        company.setName(companyRequestDto.getName());
-        company.setEmployer(userService.get(companyRequestDto.getUserId()));
-        return company;
+        return new CompanyEntity(companyRequestDto.getName(), userService.get(companyRequestDto.getUserId()));
     }
 
     public CompanyResponseDto map(CompanyEntity companyEntity) {

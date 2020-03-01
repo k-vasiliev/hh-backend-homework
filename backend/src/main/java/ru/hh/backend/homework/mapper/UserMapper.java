@@ -9,10 +9,7 @@ import javax.inject.Singleton;
 @Singleton
 public class UserMapper {
     public UserEntity map(UserRequestDto userRequestDto) {
-        UserEntity user = new UserEntity();
-        user.setName(userRequestDto.getName());
-        user.setUserType(userRequestDto.getUserType());
-        return user;
+        return new UserEntity(userRequestDto.getName(), userRequestDto.getUserType());
     }
 
     public UserResponseDto map(UserEntity userEntity) {

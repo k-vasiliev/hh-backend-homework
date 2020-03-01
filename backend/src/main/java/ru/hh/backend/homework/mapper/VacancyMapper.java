@@ -21,13 +21,11 @@ public class VacancyMapper {
     }
 
     public VacancyEntity map(VacancyRequestDto vacancyRequestDto) {
-        VacancyEntity vacancy = new VacancyEntity();
-        vacancy.setTitle(vacancyRequestDto.getTitle());
-        vacancy.setCompanyEntity(companyService.get(vacancyRequestDto.getCompanyId()));
-        vacancy.setSalary(vacancyRequestDto.getSalary());
-        vacancy.setDescription(vacancyRequestDto.getDescription());
-        vacancy.setContacts(vacancyRequestDto.getContacts());
-        return vacancy;
+        return new VacancyEntity(vacancyRequestDto.getTitle(),
+                vacancyRequestDto.getSalary(),
+                vacancyRequestDto.getDescription(),
+                vacancyRequestDto.getContacts(),
+                companyService.get(vacancyRequestDto.getCompanyId()));
     }
 
     public VacancyResponseDto map(VacancyEntity vacancyEntity) {

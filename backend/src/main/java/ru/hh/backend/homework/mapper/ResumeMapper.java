@@ -18,12 +18,10 @@ public class ResumeMapper {
     }
 
     public ResumeEntity map(ResumeRequestDto resumeRequestDto) {
-        ResumeEntity resume = new ResumeEntity();
-        resume.setTitle(resumeRequestDto.getTitle());
-        resume.setApplicant(userService.get(resumeRequestDto.getUserId()));
-        resume.setWorkExperience(resumeRequestDto.getWorkExperience());
-        resume.setContacts(resumeRequestDto.getContacts());
-        return resume;
+        return new ResumeEntity(resumeRequestDto.getTitle(),
+                resumeRequestDto.getWorkExperience(),
+                resumeRequestDto.getContacts(),
+                userService.get(resumeRequestDto.getUserId()));
     }
 
     public ResumeResponseDto map(ResumeEntity resumeEntity) {
