@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import ru.hh.backend.homework.entity.UserEntity;
 import ru.hh.backend.homework.enums.UserType;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class UserDao {
     private final SessionFactory sessionFactory;
 
+    @Inject
     public UserDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

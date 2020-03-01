@@ -11,6 +11,5 @@ import ru.hh.nab.starter.NabProdConfig;
         NabHibernateProdConfig.class,
         AppCommonConfig.class
 })
-@ComponentScan(basePackages = "ru.hh.backend.homework")
 public class AppConfig {
 }

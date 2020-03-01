@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.hh.backend.homework.entity.CompanyEntity;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class CompanyDao {
     private final SessionFactory sessionFactory;
 
+    @Inject
     public CompanyDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

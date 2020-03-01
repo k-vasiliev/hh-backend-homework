@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.hh.backend.homework.dao.CompanyDao;
 import ru.hh.backend.homework.entity.CompanyEntity;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public class CompanyService {
     private final CompanyDao companyDao;
 
+    @Inject
     public CompanyService(CompanyDao companyDao) {
         this.companyDao = companyDao;
     }

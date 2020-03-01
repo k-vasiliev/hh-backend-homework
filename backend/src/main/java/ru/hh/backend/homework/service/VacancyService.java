@@ -4,14 +4,15 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.hh.backend.homework.dao.VacancyDao;
 import ru.hh.backend.homework.entity.VacancyEntity;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
 public class VacancyService {
     private final VacancyDao vacancyDao;
 
+    @Inject
     public VacancyService(VacancyDao vacancyDao) {
         this.vacancyDao = vacancyDao;
     }

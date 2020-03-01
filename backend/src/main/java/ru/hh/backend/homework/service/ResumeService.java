@@ -4,14 +4,15 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.hh.backend.homework.dao.ResumeDao;
 import ru.hh.backend.homework.entity.ResumeEntity;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
 public class ResumeService {
     private final ResumeDao resumeDao;
 
+    @Inject
     public ResumeService(ResumeDao resumeDao) {
         this.resumeDao = resumeDao;
     }

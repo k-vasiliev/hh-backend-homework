@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ru.hh.backend.homework.dao.*;
 import ru.hh.backend.homework.entity.*;
+import ru.hh.backend.homework.mapper.*;
+import ru.hh.backend.homework.service.*;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
@@ -21,10 +23,20 @@ import javax.sql.DataSource;
         NabCommonConfig.class,
         NabHibernateCommonConfig.class,
         CompanyDao.class,
+        CompanyService.class,
+        CompanyMapper.class,
         NegotiationDao.class,
+        NegotiationService.class,
+        NegotiationMapper.class,
         ResumeDao.class,
+        ResumeService.class,
+        ResumeMapper.class,
         UserDao.class,
-        VacancyDao.class
+        UserService.class,
+        UserMapper.class,
+        VacancyDao.class,
+        VacancyService.class,
+        VacancyMapper.class
 })
 public class AppCommonConfig {
 

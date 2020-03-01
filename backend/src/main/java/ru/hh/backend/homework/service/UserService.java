@@ -5,14 +5,15 @@ import ru.hh.backend.homework.dao.UserDao;
 import ru.hh.backend.homework.entity.UserEntity;
 import ru.hh.backend.homework.enums.UserType;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
 public class UserService {
     private final UserDao userDao;
 
+    @Inject
     public UserService(UserDao userDao) {
         this.userDao = userDao;
     }
