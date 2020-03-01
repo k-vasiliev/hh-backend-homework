@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -18,11 +19,11 @@ public class CompanyEntity {
 
     @CreationTimestamp
     @Column(name = "creation_date")
-    private Date creationDate;
+    private LocalDate creationDate;
 
     @UpdateTimestamp
     @Column(name = "modification_date")
-    private Date modificationDate;
+    private LocalDate modificationDate;
 
     @Column(name = "name")
     private String name;
@@ -39,19 +40,19 @@ public class CompanyEntity {
         this.companyId = companyId;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Date getModificationDate() {
+    public LocalDate getModificationDate() {
         return modificationDate;
     }
 
-    public void setModificationDate(Date modificationDate) {
+    public void setModificationDate(LocalDate modificationDate) {
         this.modificationDate = modificationDate;
     }
 

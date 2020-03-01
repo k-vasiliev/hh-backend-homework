@@ -2,19 +2,20 @@ package ru.hh.backend.homework.dto;
 
 import ru.hh.backend.homework.entity.CompanyEntity;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
 public class VacancyResponseDto {
     private Integer vacancyId;
     private String title;
-    private Date creationDate;
+    private LocalDate creationDate;
     private CompanyEntity company;
 
     public VacancyResponseDto() {
     }
 
-    public VacancyResponseDto(Integer vacancyId, String title, Date creationDate, CompanyEntity company) {
+    public VacancyResponseDto(Integer vacancyId, String title, LocalDate creationDate, CompanyEntity company) {
         this.vacancyId = vacancyId;
         this.title = title;
         this.creationDate = creationDate;
@@ -37,11 +38,11 @@ public class VacancyResponseDto {
         this.title = title;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
