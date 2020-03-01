@@ -8,7 +8,7 @@ public class Negotiation extends BaseEntity {
     @Id
     @Column(name = "negotiation_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer responseId;
+    private Integer negotiationId;
 
     @ManyToOne
     @JoinColumn(name = "vacancy_id")
@@ -21,12 +21,12 @@ public class Negotiation extends BaseEntity {
     public Negotiation() {
     }
 
-    public Integer getResponseId() {
-        return responseId;
+    public Integer getNegotiationId() {
+        return negotiationId;
     }
 
-    public void setResponseId(Integer responseId) {
-        this.responseId = responseId;
+    public void setNegotiationId(Integer negotiationId) {
+        this.negotiationId = negotiationId;
     }
 
     public Vacancy getVacancy() {

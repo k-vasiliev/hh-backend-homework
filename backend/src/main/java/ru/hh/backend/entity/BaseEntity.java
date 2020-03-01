@@ -1,33 +1,33 @@
 package ru.hh.backend.entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @MappedSuperclass
 public class BaseEntity {
 
     @Column(name = "creation_date")
-    protected Date creationDate;
+    protected LocalDate creationDate;
 
     @Column(name = "last_update_date")
-    protected Date lastUpdateDate;
+    protected LocalDate lastUpdateDate;
 
     public BaseEntity() {
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Date getLastUpdateDate() {
+    public LocalDate getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(Date lastUpdateDate) {
+    public void setLastUpdateDate(LocalDate lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 }

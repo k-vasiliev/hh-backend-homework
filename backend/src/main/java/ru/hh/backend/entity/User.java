@@ -1,9 +1,10 @@
 package ru.hh.backend.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User extends BaseEntity{
 
     @Id
@@ -18,6 +19,13 @@ public class User extends BaseEntity{
     private String type;
 
     public User() {
+    }
+
+    public User(String name, String type, LocalDate date) {
+        this.name = name;
+        this.type = type;
+        super.creationDate = date;
+        super.lastUpdateDate = date;
     }
 
     public Integer getUserId() {

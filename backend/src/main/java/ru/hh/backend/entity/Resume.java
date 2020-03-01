@@ -1,6 +1,7 @@
 package ru.hh.backend.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "resume")
@@ -25,6 +26,15 @@ public class Resume extends BaseEntity {
     private String contacts;
 
     public Resume() {
+    }
+
+    public Resume(String title, User user, String experience, String contacts, LocalDate date) {
+        this.title = title;
+        this.user = user;
+        this.experience = experience;
+        this.contacts = contacts;
+        super.creationDate = date;
+        super.lastUpdateDate = date;
     }
 
     public Integer getResumeId() {

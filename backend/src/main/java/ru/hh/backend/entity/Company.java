@@ -1,6 +1,7 @@
 package ru.hh.backend.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "company")
@@ -14,11 +15,18 @@ public class Company extends BaseEntity {
     @Column
     private String name;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     public Company() {
+    }
+
+    public Company(String name, User user, LocalDate date) {
+        this.name = name;
+        this.user = user;
+        super.creationDate = date;
+        super.lastUpdateDate = date;
     }
 
     public Integer getCompanyId() {
