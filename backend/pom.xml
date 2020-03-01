@@ -78,27 +78,27 @@
                 </configuration>
             </plugin>
 
-<!--            <plugin>-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>exec-maven-plugin</artifactId>-->
-<!--                <version>1.6.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>java</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <systemProperties>-->
-<!--                        <systemProperty>-->
-<!--                            <key>settingsDir</key>-->
-<!--                            <value>src/etc</value>-->
-<!--                        </systemProperty>-->
-<!--                    </systemProperties>-->
-<!--                    <mainClass>ru.hh.school.ru.hh.school.Application</mainClass>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <systemProperties>
+                        <systemProperty>
+                            <key>settingsDir</key>
+                            <value>src/etc</value>
+                        </systemProperty>
+                    </systemProperties>
+                    <mainClass>ru.hh.school.Application</mainClass>
+                </configuration>
+            </plugin>
 
 <!--            <plugin>-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->

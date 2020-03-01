@@ -1,4 +1,4 @@
-package ru.hh.school.models;
+package ru.hh.school.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

@@ -1,18 +1,20 @@
 package ru.hh.school.resource;
 
 import ru.hh.school.dto.ResumeRequestDto;
-import ru.hh.school.models.Resume;
-import ru.hh.school.services.ResumeService;
+import ru.hh.school.entity.Resume;
+import ru.hh.school.service.ResumeService;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/api/user?type=applicant")
+@Path("/api/resume")
 public class ResumeResource {
 
     private final ResumeService resumeService;
 
+    @Inject
     public ResumeResource(ResumeService resumeService) {
         this.resumeService = resumeService;
     }

@@ -1,4 +1,4 @@
-package ru.hh.school.models;
+package ru.hh.school.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -6,21 +6,21 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "User_id", updatable = false)
+    @Column (name = "users_id", updatable = false)
     private Integer id;
 
     @Column (name = "name")
     private String name;
 
     @Column (name = "user_type")
-    private Integer userType;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
     @CreationTimestamp
     @Column (name = "creation_date")
@@ -30,10 +30,10 @@ public class User {
     @Column (name = "update_date")
     private Timestamp updateDate;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Resume> resumes;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Company> companies;
 
     // ToDo: no-arg constructor
@@ -57,11 +57,11 @@ public class User {
         this.name = name;
     }
 
-    public Integer getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(Integer userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 

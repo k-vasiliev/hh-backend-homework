@@ -1,16 +1,18 @@
-package ru.hh.school.services;
+package ru.hh.school.service;
 
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.CompanyDao;
 import ru.hh.school.dao.UserDao;
 import ru.hh.school.dto.CompanyRequestDto;
-import ru.hh.school.models.Company;
-import ru.hh.school.models.User;
+import ru.hh.school.entity.Company;
+import ru.hh.school.entity.User;
+import ru.hh.school.entity.UserType;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.List;
 
-@Service
+@Singleton
 public class CompanyService {
 
     private CompanyDao companyDao;
@@ -22,9 +24,10 @@ public class CompanyService {
         this.companyDao = companyDao;
     }
 
+    @Transactional
     public void saveNew(CompanyRequestDto companyDto) {
         User user = userDao.get(companyDto.getUserId());
-        if (user.getUserType() == 1) {
+        if (user.getUserType() == UserType.EMPLOYER) {
             Company company = new Company();
             company.setTitle(companyDto.getTitle());
             company.setUser(user);
@@ -33,6 +36,7 @@ public class CompanyService {
         }
     }
 
+    @Transactional
     public List<Company> getAll() {
         return companyDao.getAll();
     }

@@ -1,15 +1,16 @@
 version: "2.3"
 
 services:
+  # Postgres Service
   postgres:
     restart: always
-    image: postgres:12-alpine    
+    image: postgres:10.7-alpine    
     volumes:
       - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5430:5432"
-    healthcheck:
-      test: "exit 0"
+      - "5432:5432"
+    # healthcheck:
+    #   test: "exit 0"
     environment:
       POSTGRES_PASSWORD: hh
       POSTGRES_DB: hh
@@ -19,7 +20,8 @@ services:
       interval: 30s
       timeout: 15s
       retries: 5
-
+  
+  # Backend Service
   hh-homework-backend:
     image: hh-homework-backend
     restart: always
@@ -29,6 +31,7 @@ services:
     ports:
       - "8080:8080"
 
+  # Frontend Service
   hh-homework-front:
     image: hh-homework-front
     restart: always

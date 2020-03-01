@@ -1,18 +1,20 @@
 package ru.hh.school.resource;
 
 import ru.hh.school.dto.VacancyRequestDto;
-import ru.hh.school.models.Vacancy;
-import ru.hh.school.services.VacancyService;
+import ru.hh.school.entity.Vacancy;
+import ru.hh.school.service.VacancyService;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/api/company")
+@Path("/api/vacancy")
 public class VacancyResource {
 
     private final VacancyService vacancyService;
 
+    @Inject
     public VacancyResource(VacancyService vacancyService) {
         this.vacancyService = vacancyService;
     }

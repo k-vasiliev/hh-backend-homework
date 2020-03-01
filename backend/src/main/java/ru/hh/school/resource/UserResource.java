@@ -1,14 +1,13 @@
 package ru.hh.school.resource;
 
-import ru.hh.school.dao.UserDao;
 import ru.hh.school.dto.UserRequestDto;
-import ru.hh.school.models.User;
-import ru.hh.school.services.UserService;
+import ru.hh.school.entity.User;
+import ru.hh.school.entity.UserType;
+import ru.hh.school.service.UserService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.awt.*;
 import java.util.List;
 
 @Path("/api/user")
@@ -23,7 +22,7 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<User> getList(@QueryParam("userType") Integer userType) {
+    public List<User> getList(@QueryParam("userType") UserType userType) {
         return userService.getUsersByType(userType);
     }
 

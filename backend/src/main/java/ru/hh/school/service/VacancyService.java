@@ -1,16 +1,17 @@
-package ru.hh.school.services;
+package ru.hh.school.service;
 
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.CompanyDao;
 import ru.hh.school.dao.VacancyDao;
 import ru.hh.school.dto.VacancyRequestDto;
-import ru.hh.school.models.Company;
-import ru.hh.school.models.Vacancy;
+import ru.hh.school.entity.Company;
+import ru.hh.school.entity.Vacancy;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.List;
 
-@Service
+@Singleton
 public class VacancyService {
 
     private VacancyDao vacancyDao;
@@ -21,7 +22,7 @@ public class VacancyService {
         this.vacancyDao = vacancyDao;
         this.companyDao = companyDao;
     }
-
+    @Transactional
     public void saveNew(VacancyRequestDto vacancyDto) {
         Company company = companyDao.get(vacancyDto.getCompanyId());
         Vacancy vacancy = new Vacancy();
@@ -30,10 +31,11 @@ public class VacancyService {
         vacancy.setDescription(vacancyDto.getDescription());
         vacancy.setContacts(vacancyDto.getContacts());
         vacancy.setCompensation(vacancyDto.getCompensation());
+        vacancy.setCompany(company);
         //TODO проверить, чтобы добавлялось время
         vacancyDao.create(vacancy);
     }
-
+    @Transactional
     public List<Vacancy> getAll() {
         return vacancyDao.getAll();
     }

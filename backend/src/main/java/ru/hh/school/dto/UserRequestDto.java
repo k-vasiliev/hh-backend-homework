@@ -1,9 +1,11 @@
 package ru.hh.school.dto;
 
+import ru.hh.school.entity.UserType;
+
 public class UserRequestDto {
 
     private String name;
-    private Integer userType;
+    private UserType userType;
 
     public String getName() {
         return name;
@@ -13,11 +15,11 @@ public class UserRequestDto {
         this.name = name;
     }
 
-    public Integer getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(Integer userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 }

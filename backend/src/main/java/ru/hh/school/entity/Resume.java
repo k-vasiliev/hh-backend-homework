@@ -1,29 +1,31 @@
-package ru.hh.school.models;
+package ru.hh.school.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
-@Table(name = "company")
-public class Company {
+@Table(name = "resume")
+public class Resume {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "company_id",  updatable = false)
+    @Column (name = "resume_id",  updatable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "user_id")
+    @JoinColumn (name = "users_id")
     private User user;
-
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Vacancy> vacancies;
 
     @Column (name = "title")
     private String title;
+
+    @Column (name = "work_experience")
+    private String workExperience;
+
+    @Column (name = "contacts")
+    private String contacts;
 
     @CreationTimestamp
     @Column (name = "creation_date")
@@ -34,7 +36,7 @@ public class Company {
     private Timestamp updateDate;
 
     // ToDo: no-arg constructor
-    public Company (){
+    public Resume (){
 
     }
 
@@ -54,20 +56,28 @@ public class Company {
         this.user = user;
     }
 
-    public List<Vacancy> getVacancies() {
-        return vacancies;
-    }
-
-    public void setVacancies(List<Vacancy> vacancies) {
-        this.vacancies = vacancies;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getWorkExperience() {
+        return workExperience;
+    }
+
+    public void setWorkExperience(String workExperience) {
+        this.workExperience = workExperience;
+    }
+
+    public String getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
     }
 
     public Timestamp getCreationDate() {

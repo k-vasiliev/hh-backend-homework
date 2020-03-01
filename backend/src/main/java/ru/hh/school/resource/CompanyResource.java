@@ -1,18 +1,20 @@
 package ru.hh.school.resource;
 
 import ru.hh.school.dto.CompanyRequestDto;
-import ru.hh.school.models.Company;
-import ru.hh.school.services.CompanyService;
+import ru.hh.school.entity.Company;
+import ru.hh.school.service.CompanyService;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/api/user?type=employer")
+@Path("/api/company")
 public class CompanyResource {
 
     private final CompanyService companyService;
 
+    @Inject
     public CompanyResource(CompanyService companyService) {
         this.companyService = companyService;
     }
