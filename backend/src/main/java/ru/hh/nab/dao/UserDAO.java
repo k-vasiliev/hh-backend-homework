@@ -1,11 +1,10 @@
 package ru.hh.nab.dao;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import ru.hh.nab.entity.Users;
+import ru.hh.nab.entity.User;
 
 @Repository
 public class UserDAO {
@@ -15,32 +14,28 @@ public class UserDAO {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional
-    public Users addUser(String name, String type) {
-        Users user = new Users(name, type, new Date(), true);
+    public User addUser(String name, String type) {
+        User user = new User(name, type, LocalDate.now(), true);
         sessionFactory.getCurrentSession().save(user);
         return user;
     }
 
-    @Transactional
-    public List<Users> getAllUsers() {
+    public List<User> getAllUsers() {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Users where active = true", Users.class)
+                .createQuery("from User where active = true", User.class)
                 .getResultList();
     }
 
-    @Transactional
-    public List<Users> getAllUsersByType(String type) {
+    public List<User> getAllUsersByType(String type) {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Users where type = :paramType and active = true", Users.class)
+                .createQuery("from User where type = :paramType and active = true", User.class)
                 .setParameter("paramType", type)
                 .getResultList();
     }
 
-    @Transactional
-    public Users getUsersById(int id) {
+    public User getUsersById(int id) {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Users where userId = :paramId", Users.class)
+                .createQuery("from User where userId = :paramId", User.class)
                 .setParameter("paramId", id)
                 .getSingleResult();
     }

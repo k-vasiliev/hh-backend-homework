@@ -2,11 +2,11 @@ package ru.hh.nab.backend;
 
 import ru.hh.nab.starter.NabApplication;
 
-public class ExampleMain {
+public class StartApp {
 
   public static void main(String[] args) {
     NabApplication.builder()
-      .configureJersey(ExampleJerseyConfig.class).bindToRoot()
-      .build().run(ExampleConfig.class);
+      .configureJersey(JerseyConfig.class).bindToRoot()
+      .build().run(AppConfig.class);
   }
 }

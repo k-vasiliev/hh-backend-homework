@@ -5,18 +5,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import ru.hh.nab.common.properties.FileSettings;
-import ru.hh.nab.dao.CompanyDAO;
-import ru.hh.nab.dao.ResumeDAO;
-import ru.hh.nab.dao.UserDAO;
-import ru.hh.nab.dao.VacancyDAO;
+import ru.hh.nab.dao.*;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
-import ru.hh.nab.entity.Company;
-import ru.hh.nab.entity.Resume;
-import ru.hh.nab.entity.Users;
-import ru.hh.nab.entity.Vacancy;
+import ru.hh.nab.entity.*;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.hibernate.NabHibernateCommonConfig;
+import ru.hh.nab.service.CompanyService;
+import ru.hh.nab.service.ResumeService;
+import ru.hh.nab.service.UserService;
+import ru.hh.nab.service.VacancyService;
 import ru.hh.nab.starter.NabCommonConfig;
 
 @Configuration
@@ -26,14 +24,21 @@ import ru.hh.nab.starter.NabCommonConfig;
         UserDAO.class,
         ResumeDAO.class,
         CompanyDAO.class,
-        VacancyDAO.class
+        VacancyDAO.class,
+        NegotiationDAO.class,
+        ResumeService.class,
+        UserService.class,
+        CompanyService.class,
+        VacancyService.class
 })
 public class CommonConfig {
 
     @Bean
     public MappingConfig mappingConfig() {
-        return new MappingConfig(Company.class, Resume.class, Users.class,
-                Vacancy.class);
+        MappingConfig mappingConfig = new MappingConfig();
+        mappingConfig.addPackagesToScan("ru.hh.nab.entity");
+        mappingConfig.addPackagesToScan("ru.hh.nab.dto");
+        return mappingConfig;
     }
 
     @Bean

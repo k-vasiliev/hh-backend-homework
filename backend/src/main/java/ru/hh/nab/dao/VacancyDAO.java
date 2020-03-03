@@ -2,11 +2,12 @@ package ru.hh.nab.dao;
 
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import ru.hh.nab.dto.ResponseVacancyDTO;
 import ru.hh.nab.entity.Company;
 import ru.hh.nab.entity.Vacancy;
+import ru.hh.nab.service.CompanyService;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -14,26 +15,28 @@ public class VacancyDAO {
 
     private final SessionFactory sessionFactory;
 
-    private final CompanyDAO companyDAO;
+    private final CompanyService companyService;
 
-    public VacancyDAO(SessionFactory sessionFactory, CompanyDAO companyDAO) {
+    public VacancyDAO(SessionFactory sessionFactory, CompanyService companyService) {
         this.sessionFactory = sessionFactory;
-        this.companyDAO = companyDAO;
+        this.companyService = companyService;
     }
 
-    @Transactional
     public Vacancy addVacancy(int companyId, String title,
                               String salary, String description, String contacts) {
-        Company company = companyDAO.getCompanyById(companyId);
+        Company company = companyService.getCompanyById(companyId);
         Vacancy vacancy = new Vacancy(company, title, Integer.valueOf(salary),
-                description, contacts, true, new Date());
+                description, contacts, true, LocalDate.now());
         sessionFactory.getCurrentSession().save(vacancy);
         return vacancy;
     }
 
-    @Transactional
-    public List<Vacancy> getAllVacancy() {
+    public List<ResponseVacancyDTO> getAllVacancy() {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Vacancy where active = true", Vacancy.class).getResultList();
+                .createQuery("select new ru.hh.nab.dto.ResponseVacancyDTO(" +
+                                "vac.header, vac.lastUpdate, com.name, com.compId) " +
+                                "from Vacancy vac " +
+                                "join vac.company com where vac.active = true",
+                        ResponseVacancyDTO.class).getResultList();
     }
 }

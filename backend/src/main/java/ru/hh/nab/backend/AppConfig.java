@@ -7,6 +7,6 @@ import ru.hh.nab.starter.NabProdConfig;
 
 @Configuration
 @Import({NabProdConfig.class, NabHibernateProdConfig.class, CommonConfig.class})
-public class ExampleConfig {
+public class AppConfig {
 
 }

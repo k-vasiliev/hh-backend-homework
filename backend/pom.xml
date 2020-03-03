@@ -40,6 +40,17 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <release>11</release>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -58,7 +69,7 @@
                             <value>src/etc/backend</value>
                         </systemProperty>
                     </systemProperties>
-                    <mainClass>ru.hh.nab.backend.ExampleMain</mainClass>
+                    <mainClass>ru.hh.nab.backend.StartApp</mainClass>
                 </configuration>
             </plugin>
 
@@ -87,6 +98,7 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

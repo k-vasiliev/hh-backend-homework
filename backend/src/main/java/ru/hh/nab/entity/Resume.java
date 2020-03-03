@@ -1,40 +1,54 @@
 package ru.hh.nab.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "resume")
 public class Resume {
 
-    public Resume(Users users, String exp, String heading, String contacts, boolean active, Date last_update) {
+    public Resume(User users, String experience, String heading, String contacts,
+                  boolean active, LocalDate lastUpdate) {
         this.users = users;
-        this.exp = exp;
+        this.experience = experience;
         this.heading = heading;
         this.contacts = contacts;
         this.active = active;
-        this.last_update = last_update;
+        this.lastUpdate = lastUpdate;
     }
 
     public Resume() {
     }
 
+    @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Negotiation> negotiations = new HashSet<>();
+
+    public void addNegotiation(Negotiation negotiation) {
+        this.negotiations.add(negotiation);
+        negotiation.setResume(this);
+    }
+
+    public void removeNegotiation(Negotiation negotiation) {
+        this.negotiations.remove(negotiation);
+        negotiation.setResume(null);
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
-    private Users users;
+    @JoinColumn(name = "user_id")
+    private User users;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "resume_id")
     private int resId;
 
-    /*@ManyToOne
-    @JoinTable(name = "user", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "user_id")
-    private int userId;*/
-
-    @Column(name = "exp")
-    private String exp;
+    @Column(name = "experience")
+    private String experience;
 
     @Column(name = "head")
     private String heading;
@@ -45,24 +59,20 @@ public class Resume {
     @Column(name = "active")
     private boolean active;
 
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "last_update")
-    private Date last_update;
+    private LocalDate lastUpdate;
 
     public int getResId() {
         return resId;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return users;
     }
 
-    /*public int getUserId() {
-        return userId;
-    }*/
-
-    public String getExp() {
-        return exp;
+    public String getExperience() {
+        return experience;
     }
 
     public String getHeading() {
@@ -77,24 +87,20 @@ public class Resume {
         return active;
     }
 
-    public Date getLast_update() {
-        return last_update;
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
     }
 
     public void setResId(int resId) {
         this.resId = resId;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.users = user;
     }
 
-    /*public void setUserId(int userId) {
-        this.userId = userId;
-    }*/
-
-    public void setExp(String exp) {
-        this.exp = exp;
+    public void setExperience(String experience) {
+        this.experience = experience;
     }
 
     public void setHeading(String heading) {
@@ -109,8 +115,8 @@ public class Resume {
         this.active = active;
     }
 
-    public void setLast_update(Date last_update) {
-        this.last_update = last_update;
+    public void setLastUpdate(LocalDate lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     @Override
@@ -120,14 +126,14 @@ public class Resume {
         Resume resume = (Resume) o;
         return resId == resume.resId &&
                 active == resume.active &&
-                Objects.equals(exp, resume.exp) &&
+                Objects.equals(experience, resume.experience) &&
                 Objects.equals(heading, resume.heading) &&
                 Objects.equals(contacts, resume.contacts) &&
-                Objects.equals(last_update, resume.last_update);
+                Objects.equals(lastUpdate, resume.lastUpdate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(resId, exp, heading, contacts, active, last_update);
+        return Objects.hash(resId, experience, heading, contacts, active, lastUpdate);
     }
 }

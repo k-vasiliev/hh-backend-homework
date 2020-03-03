@@ -1,17 +1,26 @@
 package ru.hh.nab.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class CreateVacancyDTO {
+
     @NotNull
+    @Size(min = 1, max = 250, message = "Vacancy title must be between 1 and 250 characters")
     private String title;
+
     @NotNull
     private String companyId;
+
     @NotNull
     private String salary;
+
     @NotNull
+    @Size(min = 1, max = 250, message = "Vacancy description must be between 1 and 250 characters")
     private String description;
+
     @NotNull
+    @Size(min = 1, max = 250, message = "Vacancy contacts must be between 1 and 250 characters")
     private String contacts;
 
     public String getTitle() {

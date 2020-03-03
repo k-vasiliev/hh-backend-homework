@@ -1,22 +1,24 @@
 package ru.hh.nab.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
-    public Users(String userName, String type, Date lastUpdate, boolean active) {
+    public User(String userName, String type, LocalDate lastUpdate, boolean active) {
         this.userName = userName;
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.active = active;
     }
 
-    public Users() {
+    public User() {
     }
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -56,9 +58,9 @@ public class Users {
     @Column(name = "type")
     private String type;
 
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "last_update")
-    private Date lastUpdate;
+    private LocalDate lastUpdate;
 
     @Column(name = "active")
     private boolean active;
@@ -75,7 +77,7 @@ public class Users {
         return type;
     }
 
-    public Date getLastUpdate() {
+    public LocalDate getLastUpdate() {
         return lastUpdate;
     }
 
@@ -95,7 +97,7 @@ public class Users {
         this.type = type;
     }
 
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(LocalDate lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

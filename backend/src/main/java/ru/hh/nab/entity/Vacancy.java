@@ -1,36 +1,56 @@
 package ru.hh.nab.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "vacancy")
 public class Vacancy {
 
-    public Vacancy(Company company, String heading, int salary, String description, String contacts, boolean active, Date last_update) {
+    public Vacancy(Company company, String header, int salary, String description,
+                   String contacts, boolean active, LocalDate lastUpdate) {
         this.company = company;
-        this.heading = heading;
+        this.header = header;
         this.salary = salary;
         this.description = description;
         this.contacts = contacts;
         this.active = active;
-        this.last_update = last_update;
+        this.lastUpdate = lastUpdate;
     }
 
     public Vacancy() {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
     private Company company;
+
+    @OneToMany(mappedBy = "vacancy", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Negotiation> negotiations = new HashSet<>();
+
+    public void addNegotiation(Negotiation negotiation) {
+        this.negotiations.add(negotiation);
+        negotiation.setVacancy(this);
+    }
+
+    public void removeNegotiation(Negotiation negotiation) {
+        this.negotiations.remove(negotiation);
+        negotiation.setVacancy(null);
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "vac_id")
+    @Column(name = "vacancy_id")
     private int vacId;
 
-    @Column(name = "heading")
-    private String heading;
+    @Column(name = "header")
+    private String header;
 
     @Column(name = "salary")
     private int salary;
@@ -44,9 +64,9 @@ public class Vacancy {
     @Column(name = "active")
     private boolean active;
 
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "last_update")
-    private Date last_update;
+    private LocalDate lastUpdate;
 
     public Company getCompany() {
         return company;
@@ -56,8 +76,8 @@ public class Vacancy {
         return vacId;
     }
 
-    public String getHeading() {
-        return heading;
+    public String getHeader() {
+        return header;
     }
 
     public int getSalary() {
@@ -76,8 +96,8 @@ public class Vacancy {
         return active;
     }
 
-    public Date getLast_update() {
-        return last_update;
+    public LocalDate getLastUpdate() {
+        return lastUpdate;
     }
 
     public void setCompany(Company company) {
@@ -88,8 +108,8 @@ public class Vacancy {
         this.vacId = vacId;
     }
 
-    public void setHeading(String heading) {
-        this.heading = heading;
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     public void setSalary(int salary) {
@@ -108,8 +128,8 @@ public class Vacancy {
         this.active = active;
     }
 
-    public void setLast_update(Date last_update) {
-        this.last_update = last_update;
+    public void setLast_update(LocalDate lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     @Override
@@ -120,14 +140,14 @@ public class Vacancy {
         return vacId == vacancy.vacId &&
                 salary == vacancy.salary &&
                 active == vacancy.active &&
-                Objects.equals(heading, vacancy.heading) &&
+                Objects.equals(header, vacancy.header) &&
                 Objects.equals(description, vacancy.description) &&
                 Objects.equals(contacts, vacancy.contacts) &&
-                Objects.equals(last_update, vacancy.last_update);
+                Objects.equals(lastUpdate, vacancy.lastUpdate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(vacId, heading, salary, description, contacts, active, last_update);
+        return Objects.hash(vacId, header, salary, description, contacts, active, lastUpdate);
     }
 }

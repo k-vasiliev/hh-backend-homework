@@ -1,7 +1,9 @@
 package ru.hh.nab.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -10,7 +12,7 @@ import java.util.Set;
 @Table(name = "company")
 public class Company {
 
-    public Company(Users users, String name, Date lastUpdate, boolean active) {
+    public Company(User users, String name, LocalDate lastUpdate, boolean active) {
         this.users = users;
         this.name = name;
         this.lastUpdate = lastUpdate;
@@ -41,19 +43,16 @@ public class Company {
     @Column(name = "name")
     private String name;
 
-    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "last_update")
-    private Date lastUpdate;
+    private LocalDate lastUpdate;
 
     @Column(name = "active")
     private boolean active;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Users users;
-
-    /*@ManyToOne
-    @JoinTable(name = "user", joinColumns = @JoinColumn(name = "user_id"))
-    private int userId;*/
+    @JoinColumn(name = "user_id")
+    private User users;
 
     public int getCompId() {
         return compId;
@@ -63,7 +62,7 @@ public class Company {
         return name;
     }
 
-    public Date getLastUpdate() {
+    public LocalDate getLastUpdate() {
         return lastUpdate;
     }
 
@@ -71,13 +70,9 @@ public class Company {
         return active;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return users;
     }
-
-    /*public int getUserId() {
-        return userId;
-    }*/
 
     public void setCompId(int compId) {
         this.compId = compId;
@@ -87,7 +82,7 @@ public class Company {
         this.name = name;
     }
 
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(LocalDate lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -95,13 +90,9 @@ public class Company {
         this.active = active;
     }
 
-    public void setUser(Users users) {
+    public void setUser(User users) {
         this.users = users;
     }
-
-    /*public void setUserId(int userId) {
-        this.userId = userId;
-    }*/
 
     @Override
     public boolean equals(Object o) {
