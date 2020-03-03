@@ -2,16 +2,14 @@ package ru.hh.backend.homework.dto;
 
 import ru.hh.backend.homework.entity.ResumeEntity;
 
-import java.util.Optional;
-
 public class NegotiationResponseDto {
     private Integer negotiationId;
-    private ResumeEntity resume;
+    private ResumeResponseDto resume;
 
     public NegotiationResponseDto() {
     }
 
-    public NegotiationResponseDto(Integer negotiationId, ResumeEntity resume) {
+    public NegotiationResponseDto(Integer negotiationId, ResumeResponseDto resume) {
         this.negotiationId = negotiationId;
         this.resume = resume;
     }
@@ -24,11 +22,11 @@ public class NegotiationResponseDto {
         this.negotiationId = negotiationId;
     }
 
-    public ResumeEntity getResume() {
+    public ResumeResponseDto getResume() {
         return resume;
     }
 
-    public void setResume(ResumeEntity resume) {
+    public void setResume(ResumeResponseDto resume) {
         this.resume = resume;
     }
 }

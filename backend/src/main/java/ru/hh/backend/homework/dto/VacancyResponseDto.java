@@ -10,12 +10,12 @@ public class VacancyResponseDto {
     private Integer vacancyId;
     private String title;
     private LocalDate creationDate;
-    private CompanyEntity company;
+    private CompanyResponseDto company;
 
     public VacancyResponseDto() {
     }
 
-    public VacancyResponseDto(Integer vacancyId, String title, LocalDate creationDate, CompanyEntity company) {
+    public VacancyResponseDto(Integer vacancyId, String title, LocalDate creationDate, CompanyResponseDto company) {
         this.vacancyId = vacancyId;
         this.title = title;
         this.creationDate = creationDate;
@@ -46,11 +46,11 @@ public class VacancyResponseDto {
         this.creationDate = creationDate;
     }
 
-    public CompanyEntity getCompany() {
+    public CompanyResponseDto getCompany() {
         return company;
     }
 
-    public void setCompany(CompanyEntity company) {
+    public void setCompany(CompanyResponseDto company) {
         this.company = company;
     }
 }

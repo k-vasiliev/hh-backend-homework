@@ -1,5 +1,6 @@
 package ru.hh.backend.homework.mapper;
 
+import ru.hh.backend.homework.dto.CompanyResponseDto;
 import ru.hh.backend.homework.dto.VacancyDetailsResponseDto;
 import ru.hh.backend.homework.dto.VacancyRequestDto;
 import ru.hh.backend.homework.dto.VacancyResponseDto;
@@ -29,8 +30,11 @@ public class VacancyMapper {
     }
 
     public VacancyResponseDto map(VacancyEntity vacancyEntity) {
-        return new VacancyResponseDto(vacancyEntity.getVacancyId(), vacancyEntity.getTitle(),
-                vacancyEntity.getCreationDate(), vacancyEntity.getCompanyEntity());
+        return new VacancyResponseDto(vacancyEntity.getVacancyId(),
+                vacancyEntity.getTitle(),
+                vacancyEntity.getCreationDate(),
+                new CompanyResponseDto(vacancyEntity.getCompanyEntity().getCompanyId(),
+                        vacancyEntity.getCompanyEntity().getName()));
     }
 
     public VacancyDetailsResponseDto mapDetails(VacancyEntity vacancyEntity) {
@@ -39,6 +43,7 @@ public class VacancyMapper {
                 vacancyEntity.getSalary(),
                 vacancyEntity.getDescription(),
                 vacancyEntity.getContacts(),
-                vacancyEntity.getCompanyEntity());
+                new CompanyResponseDto(vacancyEntity.getCompanyEntity().getCompanyId(),
+                        vacancyEntity.getCompanyEntity().getName()));
     }
 }

@@ -2,6 +2,7 @@ package ru.hh.backend.homework.mapper;
 
 import ru.hh.backend.homework.dto.NegotiationRequestDto;
 import ru.hh.backend.homework.dto.NegotiationResponseDto;
+import ru.hh.backend.homework.dto.ResumeResponseDto;
 import ru.hh.backend.homework.entity.NegotiationEntity;
 import ru.hh.backend.homework.service.ResumeService;
 import ru.hh.backend.homework.service.VacancyService;
@@ -27,6 +28,8 @@ public class NegotiationMapper {
 
     public NegotiationResponseDto map(NegotiationEntity negotiationEntity) {
         return new NegotiationResponseDto(negotiationEntity.getNegotiationId(),
-                negotiationEntity.getResumeEntity());
+                new ResumeResponseDto(negotiationEntity.getResumeEntity().getTitle(),
+                        negotiationEntity.getResumeEntity().getResumeId(),
+                        negotiationEntity.getResumeEntity().getCreationDate()));
     }
 }

@@ -36,7 +36,7 @@ public class UserDao {
     public List<UserEntity> getAllByType(UserType userType) {
         return getSessionFactory()
                 .getCurrentSession()
-                .createQuery("SELECT u FROM UserEntity u WHERE u.user_type = :userType", UserEntity.class)
+                .createQuery("SELECT u FROM UserEntity u WHERE u.userType = :userType", UserEntity.class)
                 .setParameter("userType", userType)
                 .getResultList();
     }
