@@ -5,7 +5,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Table(name = "company")
@@ -18,9 +17,6 @@ public class Company {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "users_id")
     private User user;
-
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Vacancy> vacancies;
 
     @Column (name = "title")
     private String title;
@@ -52,14 +48,6 @@ public class Company {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<Vacancy> getVacancies() {
-        return vacancies;
-    }
-
-    public void setVacancies(List<Vacancy> vacancies) {
-        this.vacancies = vacancies;
     }
 
     public String getTitle() {
