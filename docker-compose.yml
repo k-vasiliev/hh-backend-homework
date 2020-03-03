@@ -24,12 +24,12 @@ services:
     restart: always
     ports:
       - "80:80"
-#  hh-homework-backend:
-#    image: hh-homework-back
-#    hostname: hh-homework-backend
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#    restart: always
-#    ports:
-#      - "8080:8080"
+  hh-homework-backend:
+    image: hh-homework-back
+    hostname: hh-homework-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: always
+    ports:
+      - "8080:8080"

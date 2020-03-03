@@ -1,18 +1,23 @@
 package dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import entity.ResumeEntity;
 
 public class ResumeDto {
     @JsonProperty("title")
     private String resumeTitle;
+
+    @JsonProperty("id")
+    private Integer id;
     
     @JsonProperty("applicant")
     private ApplicantDto applicant;
 
-    public ResumeDto(String resumeTitle, String applicantName, String dateCreate) {
-        this.resumeTitle = resumeTitle;
-        this.applicant = new ApplicantDto(applicantName);
-        this.dateCreate = dateCreate;
+    public ResumeDto(ResumeEntity resume) {
+        this.id = resume.getId();
+        this.resumeTitle = resume.getTitle();
+        this.applicant = new ApplicantDto(resume.getUser().getName());
+        this.dateCreate = resume.getCreated().toString();
     }
 
     public String getResumeTitle() {

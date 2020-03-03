@@ -1,18 +1,14 @@
 package config;
 
-import dao.CompanyDao;
-import dao.ResumeDao;
 import entity.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.PostgreSQL10Dialect;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -20,14 +16,13 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
-public class ApplicationConfig {
+public class TestApplicationConfig {
 
 
     @Bean
     public DataSource dataSource() {
         System.out.println("Creating data source");
-        //return new DriverManagerDataSource("jdbc:postgresql://localhost:5432/hh","hh","hh");
-        return new DriverManagerDataSource("jdbc:postgresql://postgres/hh","hh","hh");
+        return new DriverManagerDataSource("jdbc:postgresql://localhost:5432/hh","hh","hh");
     }
 
 

@@ -1,7 +1,7 @@
 package service;
 
 import dao.CompanyDao;
-import entity.UsersEntity;
+import entity.CompanyEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,7 +16,13 @@ public class CompanyService {
     }
 
     @Transactional
-    public List<UsersEntity> getCompanies() {
+    public void addCompany(String companyName, Integer userId) {
+        CompanyEntity newCompany = new CompanyEntity(companyName, userId);
+        companyDao.createCompany(newCompany);
+    }
+
+    @Transactional
+    public List<CompanyEntity> getCompanies() {
         return companyDao.getCompanies();
     }
 }

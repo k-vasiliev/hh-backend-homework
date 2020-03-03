@@ -1,41 +1,28 @@
 package routes;
 
-import dao.ResumeDao;
 import dao.VacancyDao;
+import dto.NewVacancyDto;
+import dto.ResumeDto;
 import dto.VacancyDto;
-import entity.VacancyEntity;
-import service.ResumeMapper;
-import service.ResumeService;
+import dto.VacancyResponseDto;
 import service.VacancyService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Path("/api/vacancy")
 public class ApiVacancy {
-    private final VacancyDao vacancyDao;
     private final VacancyService vacancyService;
 
     @Inject
-    public ApiVacancy(VacancyDao vacancyDao, VacancyService vacancyService) {
-        this.vacancyDao = vacancyDao;
+    public ApiVacancy(VacancyService vacancyService) {
         this.vacancyService = vacancyService;
     }
 
-
-
-    @GET
-    @Path(value = "/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response vacancyById(@PathParam("id") Integer id) {
-        return Response.ok("OK").build();
-
-    }
 
     @GET
     @Path(value = "/")
@@ -49,5 +36,41 @@ public class ApiVacancy {
         return Response.ok(vacancies).build();
     }
 
+    @GET
+    @Path(value = "/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response vacancyById(@PathParam("id") Integer id) {
+        VacancyDto vacancy = new VacancyDto(vacancyService.getVacancyById(id));
+        return Response.ok(vacancy).build();
+    }
+
+    @GET
+    @Path(value = "/{id}/negotiations")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response vacancyNegotiations(@PathParam("id") Integer id) {
+        List<VacancyResponseDto> vacancyResponses = vacancyService.getVacancyResponses(id)
+                .stream()
+                .map(VacancyResponseDto::new)
+                .collect(Collectors.toList());
+
+        return Response.ok(vacancyResponses).build();
+    }
+
+    @POST
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addVacancy(NewVacancyDto newVacancy) {
+        Response.ResponseBuilder response;
+
+        try {
+            vacancyService.addVacancy(newVacancy);
+            response =  Response.ok("OK");
+        } catch (Exception E) {
+            response =  Response.status(Response.Status.CONFLICT);
+        }
+
+        return response.build();
+    }
 
 }

@@ -2,6 +2,7 @@ package service;
 
 import dao.CompanyDao;
 import dao.ResumeDao;
+import dto.NewResumeDto;
 import entity.ResumeEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +20,11 @@ public class ResumeService {
     @Transactional
     public List<ResumeEntity> getResumes() {
         return resumeDao.getResumes();
+    }
+
+    @Transactional
+    public void newResume(NewResumeDto resumeDto) {
+        ResumeEntity resume = new ResumeEntity(resumeDto);
+        resumeDao.newResume(resume);
     }
 }

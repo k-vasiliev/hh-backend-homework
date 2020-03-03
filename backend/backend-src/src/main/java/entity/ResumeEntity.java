@@ -1,7 +1,9 @@
 package entity;
 
 import dao.CompanyDao;
+import dto.NewResumeDto;
 import jdk.jshell.spi.ExecutionControl;
+import org.eclipse.jetty.server.Authentication;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,8 +11,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "resume")
 public class ResumeEntity {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name = "resume_id")
     private Integer id;
 
@@ -25,7 +28,7 @@ public class ResumeEntity {
     private String title;
 
 
-    @Column(name = "creation_time")
+    @Column(name = "creation_time", insertable =  false)
     private LocalDate created;
 
     @OneToOne(targetEntity = UsersEntity.class)
@@ -47,5 +50,22 @@ public class ResumeEntity {
     public LocalDate getCreated() {
         return created;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public ResumeEntity(Integer resumeId) {
+        this.id = resumeId;
+    }
+
+    public ResumeEntity(NewResumeDto resumeDto) {
+        contacts = resumeDto.getContacts();
+        title = resumeDto.getTitle();
+        experience = resumeDto.getExperience();
+        user = new UsersEntity(resumeDto.getUserId());
+    }
+
+    public ResumeEntity() {}
 
 }

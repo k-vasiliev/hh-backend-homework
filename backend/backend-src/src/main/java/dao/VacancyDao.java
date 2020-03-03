@@ -1,12 +1,11 @@
 package dao;
 
-import entity.ResumeEntity;
+import dto.NewVacancyDto;
 import entity.VacancyEntity;
+import entity.VacancyResponseEntity;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -26,5 +25,29 @@ public class VacancyDao {
         return sessionFactory.getCurrentSession()
                 .createQuery("Select a From VacancyEntity a", VacancyEntity.class)
                 .list();
+    }
+
+    public VacancyEntity getVacancyById(Integer id) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("Select a From VacancyEntity a Where a.id=:id", VacancyEntity.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
+    public List<VacancyResponseEntity> getVacancyResponses(Integer vacancyId) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("Select a From VacancyResponseEntity a Where a.vacancy.id=:id", VacancyResponseEntity.class)
+                .setParameter("id", vacancyId)
+                .list();
+    }
+
+    public void addNegotiation(Integer resumeId, Integer vacancyId) {
+        VacancyResponseEntity newResponse = new VacancyResponseEntity(resumeId, vacancyId);
+        sessionFactory.getCurrentSession().persist(newResponse);
+    }
+
+    public void addVacancy(NewVacancyDto vacancyDto) {
+        VacancyEntity vacancy= new VacancyEntity(vacancyDto);
+        sessionFactory.getCurrentSession().persist(vacancy);
     }
 }

@@ -1,13 +1,13 @@
 package entity;
 
-import javax.annotation.processing.Generated;
+import javax.annotation.Generated;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "vacancy_response")
 public class VacancyResponseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name ="vacancy_response_id")
     private Integer id;
 
@@ -16,6 +16,21 @@ public class VacancyResponseEntity {
     private VacancyEntity vacancy;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private UsersEntity user;
+    @JoinColumn(name = "resume_id", referencedColumnName = "resume_id")
+    private ResumeEntity resume;
+
+    public VacancyEntity getVacancy() {
+        return vacancy;
+    }
+
+    public ResumeEntity getResume() {
+        return resume;
+    }
+
+    public  VacancyResponseEntity(Integer resumeId, Integer vacancyId) {
+        vacancy = new VacancyEntity(vacancyId);
+        resume  = new ResumeEntity(resumeId);
+    }
+
+    public VacancyResponseEntity() {}
 }

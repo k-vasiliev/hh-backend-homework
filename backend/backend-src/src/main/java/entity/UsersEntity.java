@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class UsersEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer id;
 
@@ -44,4 +44,15 @@ public class UsersEntity {
     public String toString() {
         return id.toString()+" "+isCompany.toString() +" "+ name;
     }
+
+    public UsersEntity(Integer id) {
+        this.id = id;
+    }
+
+    public UsersEntity(String name, boolean isCompany) {
+        this.name = name;
+        this.isCompany = isCompany;
+    }
+
+    public UsersEntity() {}
 }

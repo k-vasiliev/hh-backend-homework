@@ -1,11 +1,9 @@
 package dao;
 
 import entity.ResumeEntity;
-import entity.UsersEntity;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -25,5 +23,9 @@ public class ResumeDao {
         return sessionFactory.getCurrentSession()
                 .createQuery("Select a From ResumeEntity a", ResumeEntity.class)
                 .list();
+    }
+
+    public void newResume(ResumeEntity resume) {
+        sessionFactory.getCurrentSession().persist(resume);
     }
 }

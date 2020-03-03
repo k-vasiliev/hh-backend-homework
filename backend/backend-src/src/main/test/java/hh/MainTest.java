@@ -1,16 +1,6 @@
 package hh;
 
-import dao.CompanyDao;
-import dao.ResumeDao;
-import entity.ResumeEntity;
-import entity.UsersEntity;
-import org.hibernate.SessionFactory;
 import org.junit.Test;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import service.CompanyService;
-import service.ResumeService;
-
-import java.util.List;
 
 /**
  * Unit test for simple App.
