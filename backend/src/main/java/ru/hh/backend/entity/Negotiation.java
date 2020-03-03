@@ -1,6 +1,7 @@
 package ru.hh.backend.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "negotiation")
@@ -19,6 +20,13 @@ public class Negotiation extends BaseEntity {
     private Resume resume;
 
     public Negotiation() {
+    }
+
+    public Negotiation(Vacancy vacancy, Resume resume, LocalDate date) {
+        this.vacancy = vacancy;
+        this.resume = resume;
+        super.creationDate = date;
+        super.lastUpdateDate = date;
     }
 
     public Integer getNegotiationId() {

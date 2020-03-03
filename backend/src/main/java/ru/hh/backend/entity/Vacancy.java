@@ -21,7 +21,7 @@ public class Vacancy extends BaseEntity {
     private Company company;
 
     @Column
-    private String salary;
+    private Integer salary;
 
     @Column
     private String description;
@@ -32,7 +32,7 @@ public class Vacancy extends BaseEntity {
     public Vacancy() {
     }
 
-    public Vacancy(String title, Company company, String salary, String description, String contacts, LocalDate date) {
+    public Vacancy(String title, Company company, Integer salary, String description, String contacts, LocalDate date) {
         this.title = title;
         this.company = company;
         this.salary = salary;
@@ -66,11 +66,11 @@ public class Vacancy extends BaseEntity {
         this.company = company;
     }
 
-    public String getSalary() {
+    public Integer getSalary() {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(Integer salary) {
         this.salary = salary;
     }
 

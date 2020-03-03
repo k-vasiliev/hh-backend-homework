@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @MappedSuperclass
-public class BaseEntity {
+public abstract class BaseEntity {
 
     @Column(name = "creation_date")
     protected LocalDate creationDate;
