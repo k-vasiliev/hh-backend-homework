@@ -2,15 +2,15 @@ package ru.hh.school.dto;
 
 public class CompanyRequestDto {
 
-    private String title;
-    private  Integer userId;
+    private String name;
+    private Integer userId;
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getUserId() {

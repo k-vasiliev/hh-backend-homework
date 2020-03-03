@@ -6,7 +6,7 @@ public class VacancyRequestDto {
 
     private Integer companyId;
     private String title;
-    private BigInteger compensation;
+    private BigInteger salary;
     private String description;
     private String contacts;
 
@@ -26,12 +26,12 @@ public class VacancyRequestDto {
         this.title = title;
     }
 
-    public BigInteger getCompensation() {
-        return compensation;
+    public BigInteger getSalary() {
+        return salary;
     }
 
-    public void setCompensation(BigInteger compensation) {
-        this.compensation = compensation;
+    public void setSalary(BigInteger salary) {
+        this.salary = salary;
     }
 
     public String getDescription() {

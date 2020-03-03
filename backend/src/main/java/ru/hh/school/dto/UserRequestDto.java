@@ -5,7 +5,7 @@ import ru.hh.school.entity.UserType;
 public class UserRequestDto {
 
     private String name;
-    private UserType userType;
+    private UserType type;
 
     public String getName() {
         return name;
@@ -15,11 +15,11 @@ public class UserRequestDto {
         this.name = name;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public UserType getType() {
+        return type;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setType(UserType type) {
+        this.type = type;
     }
 }

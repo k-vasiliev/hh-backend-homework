@@ -33,7 +33,7 @@ public class UserDao {
     }
 
     public List<User> getByType(UserType userType) {
-        return session().createQuery("FROM User WHERE userType = :userType", User.class)
+        return session().createQuery("FROM User u WHERE u.userType = :userType", User.class)
                 .setParameter("userType", userType)
                 .getResultList();
     }
@@ -45,10 +45,6 @@ public class UserDao {
 
     public void deleteAll() {
         session().createQuery("DELETE FROM User").executeUpdate();
-    }
-
-    public void update(User user) {
-        session().update(user);
     }
 
     private Session session() {

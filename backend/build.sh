@@ -1,4 +1,4 @@
-# mvn clean package
+mvn clean package
 
 docker image rm hh-homework-backend .
 docker build -t hh-homework-backend .

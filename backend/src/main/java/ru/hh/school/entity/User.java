@@ -29,9 +29,7 @@ public class User {
     @Column (name = "update_date")
     private Timestamp updateDate;
 
-    // ToDo: no-arg constructor
     public User (){
-
     }
 
     public Integer getId() {

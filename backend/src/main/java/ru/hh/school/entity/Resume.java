@@ -35,9 +35,7 @@ public class Resume {
     @Column (name = "update_date")
     private Timestamp updateDate;
 
-    // ToDo: no-arg constructor
     public Resume (){
-
     }
 
     public Integer getId() {

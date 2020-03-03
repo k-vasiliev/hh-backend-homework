@@ -1,6 +1,7 @@
 package ru.hh.school.resource;
 
 import ru.hh.school.dto.VacancyRequestDto;
+import ru.hh.school.dto.VacancyResponseDto;
 import ru.hh.school.entity.Vacancy;
 import ru.hh.school.service.VacancyService;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Path("/api/vacancy")
 public class VacancyResource {
 
-    private final VacancyService vacancyService;
+    private VacancyService vacancyService;
 
     @Inject
     public VacancyResource(VacancyService vacancyService) {
@@ -21,7 +22,7 @@ public class VacancyResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Vacancy> getAllVacancies() {
+    public List<VacancyResponseDto> getAllVacancies() {
         return vacancyService.getAll();
     }
 

@@ -1,6 +1,7 @@
 package ru.hh.school.resource;
 
 import ru.hh.school.dto.ResumeRequestDto;
+import ru.hh.school.dto.ResumeResponseDto;
 import ru.hh.school.entity.Resume;
 import ru.hh.school.service.ResumeService;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Path("/api/resume")
 public class ResumeResource {
 
-    private final ResumeService resumeService;
+    private ResumeService resumeService;
 
     @Inject
     public ResumeResource(ResumeService resumeService) {
@@ -21,7 +22,7 @@ public class ResumeResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Resume> getAllResumes() {
+    public List<ResumeResponseDto> getAllResumes() {
         return resumeService.getAll();
     }
 

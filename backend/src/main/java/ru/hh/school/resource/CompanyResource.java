@@ -1,6 +1,7 @@
 package ru.hh.school.resource;
 
 import ru.hh.school.dto.CompanyRequestDto;
+import ru.hh.school.dto.CompanyResponseDto;
 import ru.hh.school.entity.Company;
 import ru.hh.school.service.CompanyService;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Path("/api/company")
 public class CompanyResource {
 
-    private final CompanyService companyService;
+    private CompanyService companyService;
 
     @Inject
     public CompanyResource(CompanyService companyService) {
@@ -21,7 +22,7 @@ public class CompanyResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Company> getAllCompanies() {
+    public List<CompanyResponseDto> getAllCompanies() {
         return companyService.getAll();
     }
 

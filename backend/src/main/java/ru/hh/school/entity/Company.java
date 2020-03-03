@@ -29,9 +29,7 @@ public class Company {
     @Column (name = "update_date")
     private Timestamp updateDate;
 
-    // ToDo: no-arg constructor
     public Company (){
-
     }
 
     public Integer getId() {

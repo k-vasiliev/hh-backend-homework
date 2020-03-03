@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.ResumeDao;
 import ru.hh.school.dao.UserDao;
 import ru.hh.school.dto.ResumeRequestDto;
+import ru.hh.school.dto.ResumeResponseDto;
 import ru.hh.school.entity.Resume;
 import ru.hh.school.entity.User;
 import ru.hh.school.entity.UserType;
@@ -11,6 +12,7 @@ import ru.hh.school.entity.UserType;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Singleton
 public class ResumeService {
@@ -46,12 +48,23 @@ public class ResumeService {
     }
 
     @Transactional
-    public List<Resume> getAll() {
-        return resumeDao.getAll();
+    public List<ResumeResponseDto> getAll() {
+        return resumeDao.getAll().stream()
+                .map(ResumeService::mapped)
+                .collect(Collectors.toList());
     }
 
     @Transactional
     public List<Resume> getResumesForUserId(int userId) {
         return resumeDao.getByUserId(userId);
+    }
+
+    private static ResumeResponseDto mapped(Resume resume) {
+        ResumeResponseDto resumeDto = new ResumeResponseDto();
+        resumeDto.setId(resume.getId());
+        resumeDto.setTitle(resume.getTitle());
+        resumeDto.setApplicant(UserService.mapped(resume.getUser()));
+        resumeDto.setDateCreate(resume.getCreationDate().toString());
+        return resumeDto;
     }
 }

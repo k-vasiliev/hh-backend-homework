@@ -39,9 +39,7 @@ public class Vacancy {
     @Column (name = "update_date")
     private Timestamp updateDate;
 
-    // ToDo: no-arg constructor
     public Vacancy (){
-
     }
 
     public Integer getId() {
