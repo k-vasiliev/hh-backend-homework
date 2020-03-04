@@ -19,12 +19,12 @@ public class CompanyDao {
     }
 
     public CompanyEntity save(CompanyEntity companyEntity) {
-        getSessionFactory().getCurrentSession().save(companyEntity);
+        sessionFactory.getCurrentSession().save(companyEntity);
         return companyEntity;
     }
 
     public CompanyEntity get(Integer id) {
-        Session session = getSessionFactory().getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         CompanyEntity company = session
                 .createQuery("SELECT c FROM CompanyEntity c WHERE c.id = :id", CompanyEntity.class)
                 .setParameter("id", id)
@@ -33,13 +33,9 @@ public class CompanyDao {
     }
 
     public List<CompanyEntity> getAll() {
-        return getSessionFactory()
+        return sessionFactory
                 .getCurrentSession()
                 .createQuery("SELECT c FROM CompanyEntity c", CompanyEntity.class)
                 .getResultList();
-    }
-
-    private SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 }

@@ -19,12 +19,12 @@ public class ResumeDao {
     }
 
     public ResumeEntity save(ResumeEntity resumeEntity) {
-        getSessionFactory().getCurrentSession().save(resumeEntity);
+        sessionFactory.getCurrentSession().save(resumeEntity);
         return resumeEntity;
     }
 
     public ResumeEntity get(Integer id) {
-        Session session = getSessionFactory().getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         ResumeEntity resume = session
                 .createQuery("SELECT r FROM ResumeEntity r WHERE r.id = :id", ResumeEntity.class)
                 .setParameter("id", id)
@@ -33,13 +33,9 @@ public class ResumeDao {
     }
 
     public List<ResumeEntity> getAll() {
-        return getSessionFactory()
+        return sessionFactory
                 .getCurrentSession()
                 .createQuery("SELECT r FROM ResumeEntity r", ResumeEntity.class)
                 .getResultList();
-    }
-
-    private SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 }

@@ -17,20 +17,16 @@ public class NegotiationDao {
     }
 
     public NegotiationEntity save(NegotiationEntity negotiationEntity) {
-        getSessionFactory().getCurrentSession().save(negotiationEntity);
+        sessionFactory.getCurrentSession().save(negotiationEntity);
         return negotiationEntity;
     }
 
     public List<NegotiationEntity> getAllByVacancy(Integer vacancyId) {
-        return getSessionFactory()
+        return sessionFactory
                 .getCurrentSession()
                 .createQuery("SELECT n FROM NegotiationEntity n WHERE n.vacancy_id = :vacancyId"
                         , NegotiationEntity.class)
                 .setParameter("vacancyId", vacancyId)
                 .getResultList();
-    }
-
-    private SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 }

@@ -19,12 +19,12 @@ public class VacancyDao {
     }
 
     public VacancyEntity save(VacancyEntity vacancyEntity) {
-        getSessionFactory().getCurrentSession().save(vacancyEntity);
+        sessionFactory.getCurrentSession().save(vacancyEntity);
         return vacancyEntity;
     }
 
     public VacancyEntity get(Integer id) {
-        Session session = getSessionFactory().getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         VacancyEntity vacancy = session
                 .createQuery("SELECT v FROM VacancyEntity v WHERE v.id = :id", VacancyEntity.class)
                 .setParameter("id", id)
@@ -33,13 +33,9 @@ public class VacancyDao {
     }
 
     public List<VacancyEntity> getAll() {
-        return getSessionFactory()
+        return sessionFactory
                 .getCurrentSession()
                 .createQuery("SELECT v FROM VacancyEntity v", VacancyEntity.class)
                 .getResultList();
-    }
-
-    private SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 }

@@ -20,12 +20,12 @@ public class UserDao {
     }
 
     public UserEntity save(UserEntity userEntity) {
-        getSessionFactory().getCurrentSession().save(userEntity);
+        sessionFactory.getCurrentSession().save(userEntity);
         return userEntity;
     }
 
     public UserEntity get(Integer id) {
-        Session session = getSessionFactory().getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         UserEntity user = session
                 .createQuery("SELECT u FROM UserEntity u WHERE u.id = :id", UserEntity.class)
                 .setParameter("id", id)
@@ -34,14 +34,10 @@ public class UserDao {
     }
 
     public List<UserEntity> getAllByType(UserType userType) {
-        return getSessionFactory()
+        return sessionFactory
                 .getCurrentSession()
                 .createQuery("SELECT u FROM UserEntity u WHERE u.userType = :userType", UserEntity.class)
                 .setParameter("userType", userType)
                 .getResultList();
-    }
-
-    private SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 }
