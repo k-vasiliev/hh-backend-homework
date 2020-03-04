@@ -7,7 +7,6 @@ import ru.hh.backend.homework.entity.VacancyEntity;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
 public class VacancyDao {
@@ -25,11 +24,10 @@ public class VacancyDao {
 
     public VacancyEntity get(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        VacancyEntity vacancy = session
+        return session
                 .createQuery("SELECT v FROM VacancyEntity v WHERE v.id = :id", VacancyEntity.class)
                 .setParameter("id", id)
                 .getSingleResult();
-        return Optional.of(vacancy).orElseGet(null);
     }
 
     public List<VacancyEntity> getAll() {

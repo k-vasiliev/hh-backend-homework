@@ -7,7 +7,6 @@ import ru.hh.backend.homework.entity.ResumeEntity;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
 public class ResumeDao {
@@ -25,11 +24,10 @@ public class ResumeDao {
 
     public ResumeEntity get(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        ResumeEntity resume = session
+        return session
                 .createQuery("SELECT r FROM ResumeEntity r WHERE r.id = :id", ResumeEntity.class)
                 .setParameter("id", id)
                 .getSingleResult();
-        return Optional.of(resume).orElseGet(null);
     }
 
     public List<ResumeEntity> getAll() {

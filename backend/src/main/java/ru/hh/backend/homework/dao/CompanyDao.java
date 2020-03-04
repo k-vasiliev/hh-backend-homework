@@ -7,7 +7,6 @@ import ru.hh.backend.homework.entity.CompanyEntity;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
 public class CompanyDao {
@@ -25,11 +24,10 @@ public class CompanyDao {
 
     public CompanyEntity get(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        CompanyEntity company = session
+        return session
                 .createQuery("SELECT c FROM CompanyEntity c WHERE c.id = :id", CompanyEntity.class)
                 .setParameter("id", id)
                 .getSingleResult();
-        return Optional.of(company).orElseGet(null);
     }
 
     public List<CompanyEntity> getAll() {
