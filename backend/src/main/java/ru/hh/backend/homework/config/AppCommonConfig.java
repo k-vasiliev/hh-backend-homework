@@ -42,11 +42,9 @@ public class AppCommonConfig {
 
     @Bean
     public MappingConfig mappingConfig() {
-        return new MappingConfig(CompanyEntity.class,
-                NegotiationEntity.class,
-                ResumeEntity.class,
-                UserEntity.class,
-                VacancyEntity.class);
+        MappingConfig mappingConfig = new MappingConfig();
+        mappingConfig.addPackagesToScan("ru.hh.backend.homework.entity");
+        return mappingConfig;
     }
 
     @Bean
