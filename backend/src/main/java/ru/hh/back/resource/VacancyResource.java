@@ -1,10 +1,8 @@
 package ru.hh.back.resource;
 
-import ru.hh.back.dao.NegotiationDao;
-import ru.hh.back.dao.VacancyDao;
 import ru.hh.back.dto.VacancyRequestDto;
-import ru.hh.back.dto.VacancyResponseDto;
-import ru.hh.back.service.Mapper;
+import ru.hh.back.service.NegotiationService;
+import ru.hh.back.service.VacancyService;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,37 +12,34 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Path("/api/vacancy")
 public class VacancyResource {
-    private VacancyDao vacancyDao;
-    private NegotiationDao negotiationDao;
+    private VacancyService vacancyService;
+    private NegotiationService negotiationService;
 
-    public VacancyResource(VacancyDao vacancyDao, NegotiationDao negotiationDao) {
-        this.vacancyDao = vacancyDao;
-        this.negotiationDao = negotiationDao;
+    public VacancyResource(VacancyService vacancyService, NegotiationService negotiationDao) {
+        this.vacancyService = vacancyService;
+        this.negotiationService = negotiationDao;
     }
 
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<VacancyResponseDto> getVacancy() {
-        var vacancy = vacancyDao.getVacancy();
-        var vacancyGetDtos = vacancy.stream().map(Mapper::map).collect(Collectors.toList());
-        return vacancyGetDtos;
+    public Response getVacancy() {
+        var vacancy = vacancyService.getVacancy();
+        return Response.ok(vacancy).build();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVacancy(@PathParam("id") Integer id) {
-        var vacancy = vacancyDao.getVacancy(id);
-        if (vacancy.isEmpty()) {
+        var vacancy = vacancyService.getVacancy(id);
+        if (vacancy == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(Mapper.map(vacancy.get())).build();
+        return Response.ok(vacancy).build();
     }
 
     @POST
@@ -52,7 +47,7 @@ public class VacancyResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createVacancy(VacancyRequestDto vacancyDto) {
-        Integer vacancyId = vacancyDao.save(Mapper.map(vacancyDto));
+        Integer vacancyId = vacancyService.createVacancy(vacancyDto);
         return Response.ok(vacancyId).build();
     }
 
@@ -60,8 +55,7 @@ public class VacancyResource {
     @Path("/{id}/negotiations")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getNegotiation(@PathParam("id") Integer id) {
-        var negotiations = negotiationDao.getVacancyNegotiation(id);
-        var negotiationsDto = negotiations.stream().map(Mapper::map).collect(Collectors.toList());
-        return Response.ok(negotiationsDto).build();
+        var negotiations = negotiationService.getVacancyNegotiation(id);
+        return Response.ok(negotiations).build();
     }
 }

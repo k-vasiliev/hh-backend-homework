@@ -2,7 +2,6 @@ package ru.hh.back.dao;
 
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.hh.back.entity.VacancyEntity;
 
 import java.util.List;
@@ -16,7 +15,6 @@ public class VacancyDao {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional
     public List<VacancyEntity> getVacancy() {
         List<VacancyEntity> vacancyEntities = getSessionFactory().getCurrentSession()
                 .createQuery("From VacancyEntity", VacancyEntity.class)
@@ -24,12 +22,10 @@ public class VacancyDao {
         return vacancyEntities;
     }
 
-    @Transactional
     public Optional<VacancyEntity> getVacancy(Integer id) {
         return Optional.ofNullable(getSessionFactory().getCurrentSession().get(VacancyEntity.class, id));
     }
 
-    @Transactional
     public Integer save(VacancyEntity vacancy) {
         getSessionFactory().getCurrentSession().saveOrUpdate(vacancy);
         return vacancy.getId();

@@ -2,7 +2,6 @@ package ru.hh.back.dao;
 
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.hh.back.entity.UserEntity;
 import ru.hh.back.entity.UserType;
 
@@ -16,7 +15,6 @@ public class UserDao {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional
     public List<UserEntity> getUser(String type) {
         var userType = UserType.valueOf(type);
         List<UserEntity> users = getSessionFactory().getCurrentSession()
@@ -27,7 +25,6 @@ public class UserDao {
 
     }
 
-    @Transactional
     public Integer save(UserEntity user) {
         getSessionFactory().getCurrentSession().saveOrUpdate(user);
         return user.getId();

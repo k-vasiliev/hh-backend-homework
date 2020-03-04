@@ -2,7 +2,6 @@ package ru.hh.back.dao;
 
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.hh.back.entity.ResumeEntity;
 
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.List;
 public class ResumeDao {
     private final SessionFactory sessionFactory;
 
-    @Transactional
     public List<ResumeEntity> getResume() {
         List<ResumeEntity> resumes = getSessionFactory().getCurrentSession()
                 .createQuery("From ResumeEntity", ResumeEntity.class)
@@ -20,7 +18,6 @@ public class ResumeDao {
 
     }
 
-    @Transactional
     public Integer save(ResumeEntity resumeEntity) {
         getSessionFactory().getCurrentSession().saveOrUpdate(resumeEntity);
         return resumeEntity.getId();

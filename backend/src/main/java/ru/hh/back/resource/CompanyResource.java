@@ -1,8 +1,7 @@
 package ru.hh.back.resource;
 
-import ru.hh.back.dao.CompanyDao;
 import ru.hh.back.dto.CompanyDto;
-import ru.hh.back.service.Mapper;
+import ru.hh.back.service.CompanyService;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -11,23 +10,21 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.stream.Collectors;
 
 @Path("/api/company")
 public class CompanyResource {
 
-    private CompanyDao companyDao;
-    public CompanyResource(CompanyDao companyDao){
-        this.companyDao =  companyDao;
+    private CompanyService companyService;
+    public CompanyResource(CompanyService service){
+        this.companyService =  service;
     }
 
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCompany() {
-        var companies = companyDao.getCompany();
-        var usersDto = companies.stream().map(Mapper::map).collect(Collectors.toList());
-        return Response.ok(usersDto).build();
+        var companies = companyService.getCompany();
+        return Response.ok(companies).build();
     }
 
     @POST
@@ -35,7 +32,7 @@ public class CompanyResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createCompany(CompanyDto company) {
-        Integer userId = companyDao.save(Mapper.map(company));
+        Integer userId = companyService.saveCompany(company);
         return Response.ok(userId).build();
     }
 }

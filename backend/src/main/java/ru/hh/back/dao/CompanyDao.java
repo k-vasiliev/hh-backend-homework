@@ -2,7 +2,6 @@ package ru.hh.back.dao;
 
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.hh.back.entity.CompanyEntity;
 
 import java.util.List;
@@ -15,7 +14,6 @@ public class CompanyDao {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional
     public List<CompanyEntity> getCompany() {
         List<CompanyEntity> companies = getSessionFactory().getCurrentSession()
                 .createQuery("From CompanyEntity", CompanyEntity.class)
@@ -24,7 +22,6 @@ public class CompanyDao {
 
     }
 
-    @Transactional
     public Integer save(CompanyEntity company) {
         getSessionFactory().getCurrentSession().saveOrUpdate(company);
         return company.getId();

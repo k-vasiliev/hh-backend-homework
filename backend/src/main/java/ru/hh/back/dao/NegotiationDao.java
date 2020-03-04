@@ -2,7 +2,6 @@ package ru.hh.back.dao;
 
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.hh.back.entity.NegotiationEntity;
 
 import java.util.List;
@@ -15,8 +14,6 @@ public class NegotiationDao {
         this.sessionFactory = sessionFactory;
     }
 
-
-    @Transactional
     public List<NegotiationEntity> getVacancyNegotiation(Integer vacancyId) {
         List<NegotiationEntity> negotiations = getSessionFactory().getCurrentSession()
                 .createQuery("SELECT n From NegotiationEntity n WHERE n.vacancy.id = :vacancyId",
@@ -26,7 +23,6 @@ public class NegotiationDao {
         return negotiations;
     }
 
-    @Transactional
     public Integer save(NegotiationEntity negotiation) {
         getSessionFactory().getCurrentSession().saveOrUpdate(negotiation);
         return negotiation.getId();

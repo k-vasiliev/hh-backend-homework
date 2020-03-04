@@ -13,6 +13,11 @@ import ru.hh.back.entity.NegotiationEntity;
 import ru.hh.back.entity.ResumeEntity;
 import ru.hh.back.entity.UserEntity;
 import ru.hh.back.entity.VacancyEntity;
+import ru.hh.back.service.CompanyService;
+import ru.hh.back.service.NegotiationService;
+import ru.hh.back.service.ResumeService;
+import ru.hh.back.service.UserService;
+import ru.hh.back.service.VacancyService;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.starter.NabCommonConfig;
@@ -33,6 +38,11 @@ import ru.hh.nab.hibernate.NabHibernateCommonConfig;
         ResumeDao.class,
         UserDao.class,
         VacancyDao.class,
+        CompanyService.class,
+        NegotiationService.class,
+        ResumeService.class,
+        UserService.class,
+        VacancyService.class
 })
 public class BackCommonConfig {
     @Bean
