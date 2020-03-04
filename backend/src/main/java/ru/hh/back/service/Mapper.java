@@ -1,30 +1,32 @@
 package ru.hh.back.service;
 
 import ru.hh.back.dto.CompanyDto;
-import ru.hh.back.dto.NegotiationCreateDto;
-import ru.hh.back.dto.NegotiationGetDto;
-import ru.hh.back.dto.ResumeCreateDto;
-import ru.hh.back.dto.ResumeGetDto;
+import ru.hh.back.dto.NegotiationRequestDto;
+import ru.hh.back.dto.NegotiationResponseDto;
+import ru.hh.back.dto.ResumeRequestDto;
+import ru.hh.back.dto.ResumeResponseDto;
 import ru.hh.back.dto.UserDto;
-import ru.hh.back.dto.VacancyCreateDto;
-import ru.hh.back.dto.VacancyGetDto;
+import ru.hh.back.dto.VacancyRequestDto;
+import ru.hh.back.dto.VacancyResponseDto;
 import ru.hh.back.entity.CompanyEntity;
 import ru.hh.back.entity.NegotiationEntity;
 import ru.hh.back.entity.ResumeEntity;
 import ru.hh.back.entity.UserEntity;
 import ru.hh.back.entity.VacancyEntity;
 
+import java.time.LocalDate;
+
 public class Mapper {
 
     public static UserDto map(UserEntity userEntity) {
-        return new UserDto(userEntity.getId(), userEntity.getName(), userEntity.getType());
+        return new UserDto(userEntity.getId(), userEntity.getName(), userEntity.getType().toString());
     }
 
-    public static CompanyDto map(CompanyEntity companyEntity){
-        return new CompanyDto(companyEntity.getId(), companyEntity.getName());
+    public static CompanyDto map(CompanyEntity companyEntity) {
+        return new CompanyDto(companyEntity.getId(), companyEntity.getName(), companyEntity.getOwner().getId());
     }
 
-    public static CompanyEntity map(CompanyDto companyDto){
+    public static CompanyEntity map(CompanyDto companyDto) {
         var companyEntity = new CompanyEntity();
         companyEntity.setName(companyDto.getName());
         var user = new UserEntity();
@@ -33,28 +35,29 @@ public class Mapper {
         return companyEntity;
     }
 
-    public static ResumeGetDto map(ResumeEntity resumeEntity) {
-        var resumeGetDto = new ResumeGetDto();
+    public static ResumeResponseDto map(ResumeEntity resumeEntity) {
+        var resumeGetDto = new ResumeResponseDto();
         resumeGetDto.setId(resumeEntity.getId());
         resumeGetDto.setTitle(resumeEntity.getTitle());
         resumeGetDto.setDateCreate(resumeEntity.getCreationDate().toString());
-        resumeGetDto.setApplicant(new ResumeGetDto.Applicant(resumeEntity.getUser().getName()));
+        resumeGetDto.setApplicant(new ResumeResponseDto.Applicant(resumeEntity.getUser().getName()));
         return resumeGetDto;
     }
 
-    public static ResumeEntity map(ResumeCreateDto resumeCreateDto) {
+    public static ResumeEntity map(ResumeRequestDto resumeRequestDto) {
         var resume = new ResumeEntity();
-        resume.setTitle(resumeCreateDto.getTitle());
-        resume.setContacts(resumeCreateDto.getContacts());
-        resume.setWorkExperience(resumeCreateDto.getWorkExperience());
+        resume.setTitle(resumeRequestDto.getTitle());
+        resume.setContacts(resumeRequestDto.getContacts());
+        resume.setWorkExperience(resumeRequestDto.getWorkExperience());
         var userEntity = new UserEntity();
-        userEntity.setId(resumeCreateDto.getUserId());
+        userEntity.setId(resumeRequestDto.getUserId());
         resume.setUser(userEntity);
+        resume.setCreationDate(LocalDate.now());
         return resume;
     }
 
-    public static VacancyGetDto map(VacancyEntity vacancy) {
-        return new VacancyGetDto(vacancy.getTitle(),
+    public static VacancyResponseDto map(VacancyEntity vacancy) {
+        return new VacancyResponseDto(vacancy.getId(), vacancy.getTitle(),
                 vacancy.getCompany().getName(),
                 vacancy.getSalary(),
                 vacancy.getDescription(),
@@ -62,32 +65,32 @@ public class Mapper {
         );
     }
 
-    public static VacancyEntity map(VacancyCreateDto vacancy) {
-        var vac = new VacancyEntity();
-        vac.setContacts(vacancy.getContacts());
-        vac.setDescription(vacancy.getDescription());
-        vac.setTitle(vacancy.getTitle());
-        vac.setSalary(vac.getSalary());
+    public static VacancyEntity map(VacancyRequestDto vacancy) {
+        var vacancyEntity = new VacancyEntity();
+        vacancyEntity.setContacts(vacancy.getContacts());
+        vacancyEntity.setDescription(vacancy.getDescription());
+        vacancyEntity.setTitle(vacancy.getTitle());
+        vacancyEntity.setSalary(vacancy.getSalary());
         var company = new CompanyEntity();
         company.setId(vacancy.getCompanyId());
-        vac.setCompany(company);
-        return vac;
+        vacancyEntity.setCompany(company);
+        return vacancyEntity;
     }
 
-    public static NegotiationGetDto map(NegotiationEntity negotiationEntity){
-        var negotiation = new NegotiationGetDto();
+    public static NegotiationResponseDto map(NegotiationEntity negotiationEntity) {
+        var negotiation = new NegotiationResponseDto();
         negotiation.setResumeId(negotiationEntity.getResume().getId());
         negotiation.setVacancyId(negotiationEntity.getVacancy().getId());
         negotiation.setResume(map(negotiationEntity.getResume()));
         return negotiation;
     }
 
-    public static NegotiationEntity map(NegotiationCreateDto negotiationCreateDto) {
+    public static NegotiationEntity map(NegotiationRequestDto negotiationRequestDto) {
         var entity = new NegotiationEntity();
         var resume = new ResumeEntity();
-        resume.setId(negotiationCreateDto.getResumeId());
+        resume.setId(negotiationRequestDto.getResumeId());
         var vacancy = new VacancyEntity();
-        vacancy.setId(negotiationCreateDto.getVacancyId());
+        vacancy.setId(negotiationRequestDto.getVacancyId());
         entity.setResume(resume);
         entity.setVacancy(vacancy);
         return entity;

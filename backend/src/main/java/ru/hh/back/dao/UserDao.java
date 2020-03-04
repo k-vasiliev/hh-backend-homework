@@ -4,29 +4,27 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.back.entity.UserEntity;
+import ru.hh.back.entity.UserType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class UserDao {
     private final SessionFactory sessionFactory;
+
     public UserDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Transactional
     public List<UserEntity> getUser(String type) {
-        try {
-            List<UserEntity> users = getSessionFactory().getCurrentSession()
-                    .createQuery("SELECT u From UserEntity u WHERE u.type = :type", UserEntity.class)
-                    .setParameter("type", type)
-                    .list();
-            return users;
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+        var userType = UserType.valueOf(type);
+        List<UserEntity> users = getSessionFactory().getCurrentSession()
+                .createQuery("SELECT u From UserEntity u WHERE u.type = :type", UserEntity.class)
+                .setParameter("type", userType)
+                .list();
+        return users;
+
     }
 
     @Transactional

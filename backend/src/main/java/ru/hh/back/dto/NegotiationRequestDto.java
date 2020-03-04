@@ -1,6 +1,6 @@
 package ru.hh.back.dto;
 
-public class NegotiationCreateDto {
+public class NegotiationRequestDto {
     private Integer resumeId;
     private Integer vacancyId;
 

@@ -3,6 +3,7 @@ package ru.hh.back.resource;
 import ru.hh.back.dao.UserDao;
 import ru.hh.back.dto.UserDto;
 import ru.hh.back.entity.UserEntity;
+import ru.hh.back.entity.UserType;
 import ru.hh.back.service.Mapper;
 
 // import javax.inject.Inject;
@@ -22,7 +23,7 @@ public class UserResource {
     private final UserDao userDao;
 
     //@Inject
-    public UserResource(UserDao userDao){
+    public UserResource(UserDao userDao) {
         this.userDao = userDao;
     }
 
@@ -40,7 +41,8 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(UserDto user) {
-        Integer userId = userDao.save(new UserEntity(user.getName(), user.getType()));
+        // UserType.valueOf(user.getType())
+        Integer userId = userDao.save(new UserEntity(user.getName(), UserType.valueOf(user.getType())));
         return Response.ok(userId).build();
     }
 }

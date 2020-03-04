@@ -1,6 +1,6 @@
 package ru.hh.back.dto;
 
-public class ResumeCreateDto {
+public class ResumeRequestDto {
     private String title;
     private Integer userId;
     private String workExperience;

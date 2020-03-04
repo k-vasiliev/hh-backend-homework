@@ -1,6 +1,6 @@
 package ru.hh.back.dto;
 
-public class VacancyCreateDto {
+public class VacancyRequestDto {
     private String title;
     private Integer companyId;
     private Integer salary;

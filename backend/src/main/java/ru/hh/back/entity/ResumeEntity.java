@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "resume")
@@ -20,15 +20,15 @@ public class ResumeEntity {
     @Column(name = "title", nullable = false)
     private String title;
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
-    @Column(name = "workExperience", nullable = false)
+    @Column(name = "work_experience", nullable = false)
     private String workExperience;
     @Column(name = "contacts", nullable = false)
     private String contacts;
     @CreationTimestamp
-    @Column(name = "creationDate", nullable = false)
-    private Date creationDate;
+    @Column(name = "creation_date", nullable = false)
+    private LocalDate creationDate;
 
     public ResumeEntity() {
 
@@ -74,11 +74,11 @@ public class ResumeEntity {
         this.contacts = contacts;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 }

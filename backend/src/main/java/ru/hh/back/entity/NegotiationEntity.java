@@ -15,11 +15,11 @@ public class NegotiationEntity {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "resumeId")
+    @JoinColumn(name = "resume_id")
     private ResumeEntity resume;
 
     @ManyToOne
-    @JoinColumn(name = "vacancyId")
+    @JoinColumn(name = "vacancy_id")
     private VacancyEntity vacancy;
 
     public NegotiationEntity() {

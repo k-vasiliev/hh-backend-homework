@@ -17,7 +17,7 @@ public class VacancyEntity {
     @Column(name = "title", nullable = false)
     private String title;
     @OneToOne
-    @JoinColumn(name = "companyId")
+    @JoinColumn(name = "company_id")
     private CompanyEntity company;
     @Column(name = "salary", nullable = false)
     private Integer salary;

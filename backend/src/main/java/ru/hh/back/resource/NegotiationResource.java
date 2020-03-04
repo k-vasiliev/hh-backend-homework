@@ -1,10 +1,10 @@
 package ru.hh.back.resource;
 
 import ru.hh.back.dao.NegotiationDao;
-import ru.hh.back.dto.NegotiationCreateDto;
+import ru.hh.back.dto.NegotiationRequestDto;
 import ru.hh.back.service.Mapper;
-
 import javax.ws.rs.Consumes;
+
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -19,11 +19,13 @@ public class NegotiationResource {
         this.negotiationDao = negotiationDao;
     }
 
+
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createNegotiation(NegotiationCreateDto negotiation) {
+    public Response createNegotiation(NegotiationRequestDto negotiation) {
+        // return Response.ok().build();
         Integer negotiationId = negotiationDao.save(Mapper.map(negotiation));
         return Response.ok(negotiationId).build();
     }

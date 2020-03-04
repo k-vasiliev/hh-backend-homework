@@ -1,20 +1,22 @@
 package ru.hh.back.dto;
 
-public class VacancyGetDto {
+public class VacancyResponseDto {
     private String title;
     private Company company;
     private Integer salary;
     private String description;
     private String contacts;
+    private Integer vacancyId;
 
     public String getTitle() {
         return title;
     }
-    public VacancyGetDto(){
+    public VacancyResponseDto(){
 
     }
 
-    public VacancyGetDto(String title, String companyName, Integer salary, String description, String contacts) {
+    public VacancyResponseDto(Integer vacancyId, String title, String companyName, Integer salary, String description, String contacts) {
+        this.vacancyId = vacancyId;
         this.title = title;
         this.company = new Company(companyName);
         this.salary = salary;
@@ -71,5 +73,13 @@ public class VacancyGetDto {
 
     public void setContacts(String contacts) {
         this.contacts = contacts;
+    }
+
+    public Integer getVacancyId() {
+        return vacancyId;
+    }
+
+    public void setVacancyId(Integer vacancyId) {
+        this.vacancyId = vacancyId;
     }
 }

@@ -1,6 +1,6 @@
 package ru.hh.back.dto;
 
-public class ResumeGetDto {
+public class ResumeResponseDto {
     private Integer id;
 
     private String title;

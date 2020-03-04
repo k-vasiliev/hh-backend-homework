@@ -4,9 +4,15 @@ public class CompanyDto {
     private String name;
     private Integer id;
     private Integer userId;
-    public CompanyDto(Integer id, String  name) {
-        this.id=id;
+
+    public CompanyDto(Integer id, String name, Integer userId) {
+        this.id = id;
         this.name = name;
+        this.userId = userId;
+    }
+
+    public CompanyDto() {
+
     }
 
     public String getName() {

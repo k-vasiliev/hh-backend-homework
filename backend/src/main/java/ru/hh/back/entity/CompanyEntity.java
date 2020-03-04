@@ -52,7 +52,7 @@ public class CompanyEntity {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "ownerUserId")
+    @JoinColumn(name = "owner_user_id")
     private UserEntity owner;
 
 

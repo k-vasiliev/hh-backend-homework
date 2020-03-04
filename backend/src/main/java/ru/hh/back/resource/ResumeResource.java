@@ -1,7 +1,7 @@
 package ru.hh.back.resource;
 
 import ru.hh.back.dao.ResumeDao;
-import ru.hh.back.dto.ResumeCreateDto;
+import ru.hh.back.dto.ResumeRequestDto;
 import ru.hh.back.service.Mapper;
 
 import javax.ws.rs.Consumes;
@@ -35,7 +35,7 @@ public class ResumeResource {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createResume(ResumeCreateDto resumeEntity) {
+    public Response createResume(ResumeRequestDto resumeEntity) {
         Integer resumeId = resumeDao.save(Mapper.map(resumeEntity));
         return Response.ok(resumeId).build();
     }

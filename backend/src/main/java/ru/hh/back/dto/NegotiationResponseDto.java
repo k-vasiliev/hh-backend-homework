@@ -1,15 +1,15 @@
 package ru.hh.back.dto;
 
-public class NegotiationGetDto {
+public class NegotiationResponseDto {
     private Integer resumeId;
     private Integer vacancyId;
-    private ResumeGetDto resume;
+    private ResumeResponseDto resume;
 
-    public ResumeGetDto getResume() {
+    public ResumeResponseDto getResume() {
         return resume;
     }
 
-    public void setResume(ResumeGetDto resume) {
+    public void setResume(ResumeResponseDto resume) {
         this.resume = resume;
     }
 
