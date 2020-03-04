@@ -1,5 +1,7 @@
 package ru.hh.backend.homework.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.backend.homework.dao.UserDao;
 import ru.hh.backend.homework.entity.UserEntity;
@@ -12,6 +14,7 @@ import java.util.List;
 @Singleton
 public class UserService {
     private final UserDao userDao;
+    private static Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Inject
     public UserService(UserDao userDao) {
@@ -20,6 +23,7 @@ public class UserService {
 
     @Transactional
     public UserEntity save(UserEntity userEntity) {
+        logger.info("User saved");
         return userDao.save(userEntity);
     }
 
