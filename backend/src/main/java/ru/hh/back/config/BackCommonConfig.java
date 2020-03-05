@@ -49,6 +49,7 @@ public class BackCommonConfig {
     public MappingConfig mappingConfig() {
         return new MappingConfig(CompanyEntity.class, NegotiationEntity.class, ResumeEntity.class, UserEntity.class, VacancyEntity.class);
     }
+
     @Bean
     DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings settings) {
         return dataSourceFactory.create("postgres", false, settings);

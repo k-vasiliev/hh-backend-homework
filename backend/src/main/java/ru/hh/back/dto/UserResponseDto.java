@@ -1,24 +1,24 @@
 package ru.hh.back.dto;
 
-public class UserDto {
-    private Integer userId;
+public class UserResponseDto {
+    private Integer id;
     private String name;
     private String type;
-    public UserDto() {
+    public UserResponseDto() {
     }
 
-    public UserDto(Integer userId, String name, String type) {
+    public UserResponseDto(Integer id, String name, String type) {
         this.name = name;
         this.type = type;
-        this.userId = userId;
+        this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

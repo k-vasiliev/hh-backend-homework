@@ -6,7 +6,8 @@ public class VacancyResponseDto {
     private Integer salary;
     private String description;
     private String contacts;
-    private Integer vacancyId;
+    private Integer id;
+    private String dateCreate;
 
     public String getTitle() {
         return title;
@@ -15,13 +16,14 @@ public class VacancyResponseDto {
 
     }
 
-    public VacancyResponseDto(Integer vacancyId, String title, String companyName, Integer salary, String description, String contacts) {
-        this.vacancyId = vacancyId;
+    public VacancyResponseDto(Integer id, String title, String companyName, Integer salary, String description, String contacts, String dateCreate) {
+        this.id = id;
         this.title = title;
         this.company = new Company(companyName);
         this.salary = salary;
         this.description = description;
         this.contacts = contacts;
+        this.dateCreate = dateCreate;
     }
 
     public class Company {
@@ -37,6 +39,14 @@ public class VacancyResponseDto {
         public void setName(String name) {
             this.name = name;
         }
+    }
+
+    public String getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(String dateCreate) {
+        this.dateCreate = dateCreate;
     }
 
     public void setTitle(String title) {
@@ -75,11 +85,11 @@ public class VacancyResponseDto {
         this.contacts = contacts;
     }
 
-    public Integer getVacancyId() {
-        return vacancyId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setVacancyId(Integer vacancyId) {
-        this.vacancyId = vacancyId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

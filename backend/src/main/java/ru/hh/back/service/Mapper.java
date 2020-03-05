@@ -5,7 +5,7 @@ import ru.hh.back.dto.NegotiationRequestDto;
 import ru.hh.back.dto.NegotiationResponseDto;
 import ru.hh.back.dto.ResumeRequestDto;
 import ru.hh.back.dto.ResumeResponseDto;
-import ru.hh.back.dto.UserDto;
+import ru.hh.back.dto.UserResponseDto;
 import ru.hh.back.dto.VacancyRequestDto;
 import ru.hh.back.dto.VacancyResponseDto;
 import ru.hh.back.entity.CompanyEntity;
@@ -18,8 +18,8 @@ import java.time.LocalDate;
 
 public class Mapper {
 
-    public static UserDto map(UserEntity userEntity) {
-        return new UserDto(userEntity.getId(), userEntity.getName(), userEntity.getType().toString());
+    public static UserResponseDto map(UserEntity userEntity) {
+        return new UserResponseDto(userEntity.getId(), userEntity.getName(), userEntity.getType().toString());
     }
 
     public static CompanyDto map(CompanyEntity companyEntity) {
@@ -61,7 +61,8 @@ public class Mapper {
                 vacancy.getCompany().getName(),
                 vacancy.getSalary(),
                 vacancy.getDescription(),
-                vacancy.getContacts()
+                vacancy.getContacts(),
+                vacancy.getCreationDate().toString()
         );
     }
 
@@ -71,6 +72,7 @@ public class Mapper {
         vacancyEntity.setDescription(vacancy.getDescription());
         vacancyEntity.setTitle(vacancy.getTitle());
         vacancyEntity.setSalary(vacancy.getSalary());
+        vacancyEntity.setCreationDate(LocalDate.now());
         var company = new CompanyEntity();
         company.setId(vacancy.getCompanyId());
         vacancyEntity.setCompany(company);

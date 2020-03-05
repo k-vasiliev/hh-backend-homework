@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/api/company")
+@Path("/company")
 public class CompanyResource {
 
     private CompanyService companyService;

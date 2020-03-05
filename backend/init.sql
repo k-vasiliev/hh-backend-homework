@@ -27,7 +27,8 @@ CREATE TABLE vacancy (
     company_id integer REFERENCES company(id) NOT NULL,
     salary integer,
     description varchar(200) NOT NULL,
-    contacts varchar(200) NOT NULL
+    contacts varchar(200) NOT NULL,
+    creation_date timestamp NOT NULL
 );
 
 CREATE TABLE negotiation (

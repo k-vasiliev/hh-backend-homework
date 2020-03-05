@@ -2,17 +2,19 @@ package ru.hh.back.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "vacancy")
 public class VacancyEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "title", nullable = false)
     private String title;
@@ -25,9 +27,19 @@ public class VacancyEntity {
     private String description;
     @Column(name = "contacts")
     private String contacts;
+    @Column(name = "creation_date")
+    private LocalDate creationDate;
 
     public VacancyEntity() {
 
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
     public Integer getId() {

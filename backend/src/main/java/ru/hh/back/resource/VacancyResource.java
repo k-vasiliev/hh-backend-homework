@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/api/vacancy")
+@Path("/vacancy")
 public class VacancyResource {
     private VacancyService vacancyService;
     private NegotiationService negotiationService;
