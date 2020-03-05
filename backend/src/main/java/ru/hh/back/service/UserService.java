@@ -19,7 +19,7 @@ public class UserService {
 
     @Transactional
     public List<UserDto> getUsers(String type) {
-        var users = userDao.getUser(type);
+        var users = userDao.getUser(type.toUpperCase());
         return users.stream().map(Mapper::map).collect(Collectors.toList());
     }
 

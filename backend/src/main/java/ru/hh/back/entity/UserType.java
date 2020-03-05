@@ -2,8 +2,8 @@ package ru.hh.back.entity;
 
 public enum UserType {
 
-    applicant("applicant"),
-    employer("employer");
+    APPLICANT("APPLICANT"),
+    EMPLOYER("EMPLOYER");
 
 
     private final String name;

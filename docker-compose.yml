@@ -32,3 +32,5 @@ services:
     restart: always
     ports:
       - "80:80"
+    links:
+      - hh-homework-backend          

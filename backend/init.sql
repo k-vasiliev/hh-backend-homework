@@ -1,5 +1,5 @@
-create database hh;
-\c hh
+-- create database hh;
+-- \c hh
 CREATE TABLE users (
     id serial PRIMARY KEY,
     name varchar(200) NOT NULL,
@@ -36,6 +36,6 @@ CREATE TABLE negotiation (
     vacancy_id integer REFERENCES vacancy(id) NOT NULL
 );
 
-create user hh with encrypted password 'hh';
-grant all privileges on database hh to hh;
-grant all privileges on all tables in schema public to hh;
+-- create user hh with encrypted password 'hh';
+-- grant all privileges on database hh to hh;
+-- grant all privileges on all tables in schema public to hh;
