@@ -9,8 +9,6 @@ services:
       - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
-    # healthcheck:
-    #   test: "exit 0"
     environment:
       POSTGRES_PASSWORD: hh
       POSTGRES_DB: hh
@@ -42,11 +40,3 @@ services:
       - "80:80"
     # links:
     #   - hh-homework-backend 
-
-  # autoheal:
-  #   restart: always
-  #   image: willfarrell/autoheal
-  #   environment:
-  #     - AUTOHEAL_CONTAINER_LABEL=all
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock    

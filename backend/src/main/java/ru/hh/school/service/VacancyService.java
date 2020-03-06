@@ -30,7 +30,6 @@ public class VacancyService {
         Company company = companyDao.get(vacancyDto.getCompanyId());
         Vacancy vacancy = new Vacancy();
         vacancy.setTitle(vacancyDto.getTitle());
-//        vacancy.setCompany();
         vacancy.setDescription(vacancyDto.getDescription());
         vacancy.setContacts(vacancyDto.getContacts());
         vacancy.setCompensation(vacancyDto.getSalary());

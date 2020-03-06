@@ -2,14 +2,8 @@ package ru.hh.school.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.hh.school.resource.CompanyResource;
-import ru.hh.school.resource.ResumeResource;
-import ru.hh.school.resource.UserResource;
-import ru.hh.school.resource.VacancyResource;
-import ru.hh.school.service.CompanyService;
-import ru.hh.school.service.ResumeService;
-import ru.hh.school.service.UserService;
-import ru.hh.school.service.VacancyService;
+import ru.hh.school.resource.*;
+import ru.hh.school.service.*;
 
 @Configuration
 public class JerseyConfig {
@@ -32,5 +26,10 @@ public class JerseyConfig {
     @Bean
     public VacancyResource vacancyResource(VacancyService vacancyService) {
         return new VacancyResource(vacancyService);
+    }
+
+    @Bean
+    public NegotiationResource negotiationResource(NegotiationService negotiationService) {
+        return new NegotiationResource(negotiationService);
     }
 }

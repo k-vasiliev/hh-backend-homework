@@ -43,23 +43,13 @@ public class ResumeService {
     }
 
     @Transactional
-    public Resume getBy(int resumeId) {
-        return resumeDao.get(resumeId);
-    }
-
-    @Transactional
     public List<ResumeResponseDto> getAll() {
         return resumeDao.getAll().stream()
                 .map(ResumeService::mapped)
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    public List<Resume> getResumesForUserId(int userId) {
-        return resumeDao.getByUserId(userId);
-    }
-
-    private static ResumeResponseDto mapped(Resume resume) {
+    protected static ResumeResponseDto mapped(Resume resume) {
         ResumeResponseDto resumeDto = new ResumeResponseDto();
         resumeDto.setId(resume.getId());
         resumeDto.setTitle(resume.getTitle());

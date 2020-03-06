@@ -1,9 +1,6 @@
--- CREATE TYPE user_type AS ENUM ('EMPLOYER', 'APPLICANT');
-
 CREATE TABLE users(
      users_id SERIAL PRIMARY KEY,
      name VARCHAR(256),
-     -- user_type user_type NOT NULL,
      user_type VARCHAR(16) NOT NULL,
      creation_date TIMESTAMP NOT NULL,
      update_date TIMESTAMP NOT NULL
@@ -39,6 +36,16 @@ CREATE TABLE vacancy(
      creation_date TIMESTAMP NOT NULL,
      update_date TIMESTAMP NOT NULL,
      FOREIGN KEY (company_id) REFERENCES company(company_id)
+);
+
+CREATE TABLE negotiation(
+     negotiation_id SERIAL PRIMARY KEY,
+     resume_id INTEGER NOT NULL,
+     vacancy_id INTEGER NOT NULL,
+     creation_date TIMESTAMP NOT NULL,
+     update_date TIMESTAMP NOT NULL,
+     FOREIGN KEY (resume_id) REFERENCES resume(resume_id),
+     FOREIGN KEY (vacancy_id) REFERENCES vacancy(vacancy_id)
 );
 
 INSERT INTO users (name, user_type, creation_date, update_date) VALUES
