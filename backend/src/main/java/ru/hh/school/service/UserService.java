@@ -21,6 +21,7 @@ public class UserService {
   public UserService(UserDao userDao) {
     this.userDao = userDao;
   }
+
   @Transactional
   public void saveNew(UserRequestDto userDto) {
     User user = new User();
@@ -29,15 +30,10 @@ public class UserService {
     //TODO проверить, чтобы добавлялось время
     userDao.create(user);
   }
+
   @Transactional
   public List<UserResponseDto> getUsersByType(UserType userType) {
     return userDao.getByType(userType).stream()
-            .map(UserService::mapped)
-            .collect(Collectors.toList());
-  }
-  @Transactional
-  public List<UserResponseDto> getAll() {
-    return userDao.getAll().stream()
             .map(UserService::mapped)
             .collect(Collectors.toList());
   }

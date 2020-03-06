@@ -26,12 +26,6 @@ public class VacancyDao {
         return session().get(Vacancy.class, id);
     }
 
-    public List<Vacancy> getByCompanyId(Integer companyId) {
-        return session().createQuery("FROM Vacancy WHERE companyId=:companyId", Vacancy.class)
-                .setParameter("companyId", companyId)
-                .getResultList();
-    }
-
     public List<Vacancy> getAll() {
         return session().createQuery("FROM Vacancy", Vacancy.class)
                 .getResultList();

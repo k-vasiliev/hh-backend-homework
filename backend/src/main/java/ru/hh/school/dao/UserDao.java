@@ -23,11 +23,6 @@ public class UserDao {
         return user;
     }
 
-    public List<User> getAll() {
-        return session().createQuery("FROM User", User.class)
-                .getResultList();
-    }
-
     public User get(Integer id) {
         return session().get(User.class, id);
     }
@@ -38,13 +33,9 @@ public class UserDao {
                 .getResultList();
     }
 
-    public void deleteBy(Integer id) {
-      session().createQuery("DELETE FROM User WHERE id = :id_to_delete")
-              .setParameter("id_to_delete", id).executeUpdate();
-    }
-
-    public void deleteAll() {
-        session().createQuery("DELETE FROM User").executeUpdate();
+    public List<User> getAll() {
+        return session().createQuery("FROM User", User.class)
+                .getResultList();
     }
 
     private Session session() {

@@ -1,16 +1,15 @@
 package ru.hh.school.service;
 
 import org.springframework.transaction.annotation.Transactional;
-import ru.hh.school.dao.NegotiationDao;
-import ru.hh.school.dao.ResumeDao;
-import ru.hh.school.dao.VacancyDao;
+import ru.hh.school.dao.*;
 import ru.hh.school.dto.NegotiationRequestDto;
-import ru.hh.school.entity.Negotiation;
-import ru.hh.school.entity.Resume;
-import ru.hh.school.entity.Vacancy;
+import ru.hh.school.dto.NegotiationResponseDto;
+import ru.hh.school.entity.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Singleton
 public class NegotiationService {
@@ -37,5 +36,19 @@ public class NegotiationService {
         negotiation.setResume(resume);
         negotiation.setVacancy(vacancy);
         negotiationDao.create(negotiation);
+    }
+
+    @Transactional
+    public List<NegotiationResponseDto> getNegotiationsByVacancyId(Integer vacancyId) {
+        return negotiationDao.getByVacancyId(vacancyId).stream()
+                .map(NegotiationService::mapped)
+                .collect(Collectors.toList());
+    }
+
+    private static NegotiationResponseDto mapped(Negotiation negotiation) {
+        NegotiationResponseDto negotiationDto = new NegotiationResponseDto();
+        negotiationDto.setId(negotiation.getId());
+        negotiationDto.setResume(ResumeService.mapped(negotiation.getResume()));
+        return negotiationDto;
     }
 }

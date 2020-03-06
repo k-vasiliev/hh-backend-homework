@@ -26,12 +26,6 @@ public class ResumeDao {
         return session().get(Resume.class, id);
     }
 
-    public List<Resume> getByUserId(Integer userId) {
-        return session().createQuery("FROM Resume WHERE userId=:userId", Resume.class)
-                        .setParameter("userId", userId)
-                        .getResultList();
-    }
-
     public List<Resume> getAll() {
         return session().createQuery("FROM Resume", Resume.class)
                 .getResultList();

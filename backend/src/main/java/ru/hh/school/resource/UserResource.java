@@ -23,7 +23,7 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UserResponseDto> getList(@QueryParam("type") String type) {
+    public List<UserResponseDto> getAllUsersByType(@QueryParam("type") String type) {
         return userService.getUsersByType(UserType.valueOf(type.toUpperCase((Locale.ENGLISH))));
     }
 

@@ -24,8 +24,8 @@ public class JerseyConfig {
     }
 
     @Bean
-    public VacancyResource vacancyResource(VacancyService vacancyService) {
-        return new VacancyResource(vacancyService);
+    public VacancyResource vacancyResource(VacancyService vacancyService, NegotiationService negotiationService) {
+        return new VacancyResource(vacancyService, negotiationService);
     }
 
     @Bean

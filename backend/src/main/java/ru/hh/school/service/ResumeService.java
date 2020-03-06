@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Singleton
 public class ResumeService {
+
     private final ResumeDao resumeDao;
     private final UserDao userDao;
 

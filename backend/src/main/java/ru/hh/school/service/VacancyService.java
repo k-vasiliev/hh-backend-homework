@@ -3,7 +3,7 @@ package ru.hh.school.service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.CompanyDao;
 import ru.hh.school.dao.VacancyDao;
-import ru.hh.school.dto.CompanyResponseDto;
+import ru.hh.school.dto.VacancyPopupResponseDto;
 import ru.hh.school.dto.VacancyRequestDto;
 import ru.hh.school.dto.VacancyResponseDto;
 import ru.hh.school.entity.Company;
@@ -25,6 +25,7 @@ public class VacancyService {
         this.vacancyDao = vacancyDao;
         this.companyDao = companyDao;
     }
+
     @Transactional
     public void saveNew(VacancyRequestDto vacancyDto) {
         Company company = companyDao.get(vacancyDto.getCompanyId());
@@ -37,11 +38,17 @@ public class VacancyService {
         //TODO проверить, чтобы добавлялось время
         vacancyDao.create(vacancy);
     }
+
     @Transactional
     public List<VacancyResponseDto> getAll() {
         return vacancyDao.getAll().stream()
                 .map(VacancyService::mapped)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public VacancyPopupResponseDto getVacancyById(Integer vacancyId) {
+        return mapped2(vacancyDao.get(vacancyId));
     }
 
     private static VacancyResponseDto mapped(Vacancy vacancy) {
@@ -50,6 +57,16 @@ public class VacancyService {
         vacancyDto.setTitle(vacancy.getTitle());
         vacancyDto.setCompany(CompanyService.mapped(vacancy.getCompany()));
         vacancyDto.setDateCreate(vacancy.getCreationDate().toString());
+        return vacancyDto;
+    }
+
+    private static VacancyPopupResponseDto mapped2(Vacancy vacancy) {
+        VacancyPopupResponseDto vacancyDto = new VacancyPopupResponseDto();
+        vacancyDto.setId(vacancy.getId());
+        vacancyDto.setSalary(vacancy.getCompensation());
+        vacancyDto.setCompany(CompanyService.mapped(vacancy.getCompany()));
+        vacancyDto.setDescription(vacancy.getDescription());
+        vacancyDto.setContacts(vacancy.getContacts());
         return vacancyDto;
     }
 
