@@ -28,7 +28,7 @@ public class UserDao {
     }
 
     public List<User> getByType(UserType userType) {
-        return session().createQuery("FROM User u WHERE u.userType = :userType", User.class)
+        return session().createQuery("FROM User WHERE userType = :userType", User.class)
                 .setParameter("userType", userType)
                 .getResultList();
     }

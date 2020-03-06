@@ -1,9 +1,9 @@
 package ru.hh.school.resource;
 
-import ru.hh.school.dto.NegotiationResponseDto;
-import ru.hh.school.dto.VacancyPopupResponseDto;
-import ru.hh.school.dto.VacancyRequestDto;
-import ru.hh.school.dto.VacancyResponseDto;
+import ru.hh.school.dto.response.NegotiationResponseDto;
+import ru.hh.school.dto.response.VacancyPopupResponseDto;
+import ru.hh.school.dto.request.VacancyRequestDto;
+import ru.hh.school.dto.response.VacancyResponseDto;
 import ru.hh.school.service.NegotiationService;
 import ru.hh.school.service.VacancyService;
 

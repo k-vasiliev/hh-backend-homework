@@ -1,8 +1,7 @@
 package ru.hh.school.resource;
 
-import ru.hh.school.dto.ResumeRequestDto;
-import ru.hh.school.dto.ResumeResponseDto;
-import ru.hh.school.entity.Resume;
+import ru.hh.school.dto.request.ResumeRequestDto;
+import ru.hh.school.dto.response.ResumeResponseDto;
 import ru.hh.school.service.ResumeService;
 
 import javax.inject.Inject;

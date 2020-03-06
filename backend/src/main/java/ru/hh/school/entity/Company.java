@@ -1,14 +1,11 @@
 package ru.hh.school.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
-import java.sql.Timestamp;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "company")
-public class Company {
+public class Company extends CommonDateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "company_id",  updatable = false)
@@ -18,16 +15,9 @@ public class Company {
     @JoinColumn (name = "users_id")
     private User user;
 
+    @NotNull
     @Column (name = "title")
     private String title;
-
-    @CreationTimestamp
-    @Column (name = "creation_date")
-    private Timestamp creationDate;
-
-    @UpdateTimestamp
-    @Column (name = "update_date")
-    private Timestamp updateDate;
 
     public Company (){
     }
@@ -54,21 +44,5 @@ public class Company {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Timestamp updateDate) {
-        this.updateDate = updateDate;
     }
 }

@@ -1,8 +1,7 @@
 package ru.hh.school.resource;
 
-import ru.hh.school.dto.CompanyRequestDto;
-import ru.hh.school.dto.CompanyResponseDto;
-import ru.hh.school.entity.Company;
+import ru.hh.school.dto.request.CompanyRequestDto;
+import ru.hh.school.dto.response.CompanyResponseDto;
 import ru.hh.school.service.CompanyService;
 
 import javax.inject.Inject;

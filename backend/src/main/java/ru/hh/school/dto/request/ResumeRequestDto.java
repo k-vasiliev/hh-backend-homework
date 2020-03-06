@@ -1,4 +1,4 @@
-package ru.hh.school.dto;
+package ru.hh.school.dto.request;
 
 public class ResumeRequestDto {
 

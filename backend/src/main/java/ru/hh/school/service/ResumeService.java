@@ -3,8 +3,8 @@ package ru.hh.school.service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.ResumeDao;
 import ru.hh.school.dao.UserDao;
-import ru.hh.school.dto.ResumeRequestDto;
-import ru.hh.school.dto.ResumeResponseDto;
+import ru.hh.school.dto.request.ResumeRequestDto;
+import ru.hh.school.dto.response.ResumeResponseDto;
 import ru.hh.school.entity.Resume;
 import ru.hh.school.entity.User;
 import ru.hh.school.entity.UserType;
@@ -35,12 +35,8 @@ public class ResumeService {
             resume.setTitle(resumeDto.getTitle());
             resume.setWorkExperience(resumeDto.getWorkExperience());
             resume.setContacts(resumeDto.getContacts());
-            //TODO проверить, чтобы добавлялось время
             resumeDao.create(resume);
         }
-//        else {
-//            throw new WebApplicationException(Response.Status.NOT_FOUND);
-//        }
     }
 
     @Transactional

@@ -2,8 +2,8 @@ package ru.hh.school.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.*;
-import ru.hh.school.dto.NegotiationRequestDto;
-import ru.hh.school.dto.NegotiationResponseDto;
+import ru.hh.school.dto.request.NegotiationRequestDto;
+import ru.hh.school.dto.response.NegotiationResponseDto;
 import ru.hh.school.entity.*;
 
 import javax.inject.Inject;
@@ -29,9 +29,6 @@ public class NegotiationService {
     public void saveNew(NegotiationRequestDto negotiationDto) {
         Resume resume = resumeDao.get(negotiationDto.getResumeId());
         Vacancy vacancy = vacancyDao.get(negotiationDto.getVacancyId());
-        if (vacancy == null || resume == null) {
-
-        }
         Negotiation negotiation = new Negotiation();
         negotiation.setResume(resume);
         negotiation.setVacancy(vacancy);

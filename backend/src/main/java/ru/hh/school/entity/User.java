@@ -1,33 +1,23 @@
 package ru.hh.school.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
-import java.sql.Timestamp;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends CommonDateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "users_id", updatable = false)
     private Integer id;
 
+    @NotNull
     @Column (name = "name")
     private String name;
 
     @Column (name = "user_type")
     @Enumerated(EnumType.STRING)
     private UserType userType;
-
-    @CreationTimestamp
-    @Column (name = "creation_date")
-    private Timestamp creationDate;
-
-    @UpdateTimestamp
-    @Column (name = "update_date")
-    private Timestamp updateDate;
 
     public User (){
     }
@@ -55,21 +45,4 @@ public class User {
     public void setUserType(UserType userType) {
         this.userType = userType;
     }
-
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Timestamp creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Timestamp updateDate) {
-        this.updateDate = updateDate;
-    }
-
 }

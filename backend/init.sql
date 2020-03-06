@@ -1,6 +1,6 @@
 CREATE TABLE users(
      users_id SERIAL PRIMARY KEY,
-     name VARCHAR(256),
+     name VARCHAR(256) NOT NULL,
      user_type VARCHAR(16) NOT NULL,
      creation_date TIMESTAMP NOT NULL,
      update_date TIMESTAMP NOT NULL
@@ -9,9 +9,9 @@ CREATE TABLE users(
 CREATE TABLE resume(
      resume_id SERIAL PRIMARY KEY,
      users_id INTEGER NOT NULL,
-     title VARCHAR(256) DEFAULT ''::VARCHAR NOT NULL,
+     title VARCHAR(256) NOT NULL,
      work_experience TEXT,
-     contacts TEXT,
+     contacts TEXT NOT NULL,
      creation_date TIMESTAMP NOT NULL,
      update_date TIMESTAMP NOT NULL,
      FOREIGN KEY (users_id) REFERENCES users(users_id)
@@ -20,7 +20,7 @@ CREATE TABLE resume(
 CREATE TABLE company(
      company_id SERIAL PRIMARY KEY,
      users_id INTEGER NOT NULL,
-     title VARCHAR(256) DEFAULT ''::VARCHAR NOT NULL,
+     title VARCHAR(256) NOT NULL,
      creation_date TIMESTAMP NOT NULL,
      update_date TIMESTAMP NOT NULL,
      FOREIGN KEY (users_id) REFERENCES users(users_id)
@@ -29,10 +29,10 @@ CREATE TABLE company(
 CREATE TABLE vacancy(
      vacancy_id SERIAL PRIMARY KEY,
      company_id INTEGER NOT NULL,
-     title VARCHAR(256) DEFAULT ''::VARCHAR NOT NULL,
+     title VARCHAR(256) NOT NULL,
      compensation bigint DEFAULT 0,
      description TEXT,
-     contacts TEXT,
+     contacts TEXT NOT NULL,
      creation_date TIMESTAMP NOT NULL,
      update_date TIMESTAMP NOT NULL,
      FOREIGN KEY (company_id) REFERENCES company(company_id)

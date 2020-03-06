@@ -1,6 +1,6 @@
 package ru.hh.school.resource;
 
-import ru.hh.school.dto.NegotiationRequestDto;
+import ru.hh.school.dto.request.NegotiationRequestDto;
 import ru.hh.school.service.NegotiationService;
 
 import javax.inject.Inject;

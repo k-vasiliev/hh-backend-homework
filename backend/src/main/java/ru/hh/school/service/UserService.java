@@ -2,8 +2,8 @@ package ru.hh.school.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.UserDao;
-import ru.hh.school.dto.UserRequestDto;
-import ru.hh.school.dto.UserResponseDto;
+import ru.hh.school.dto.request.UserRequestDto;
+import ru.hh.school.dto.response.UserResponseDto;
 import ru.hh.school.entity.User;
 import ru.hh.school.entity.UserType;
 
@@ -27,7 +27,6 @@ public class UserService {
     User user = new User();
     user.setName(userDto.getName());
     user.setUserType(userDto.getType());
-    //TODO проверить, чтобы добавлялось время
     userDao.create(user);
   }
 

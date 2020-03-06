@@ -3,9 +3,9 @@ package ru.hh.school.service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.CompanyDao;
 import ru.hh.school.dao.VacancyDao;
-import ru.hh.school.dto.VacancyPopupResponseDto;
-import ru.hh.school.dto.VacancyRequestDto;
-import ru.hh.school.dto.VacancyResponseDto;
+import ru.hh.school.dto.response.VacancyPopupResponseDto;
+import ru.hh.school.dto.request.VacancyRequestDto;
+import ru.hh.school.dto.response.VacancyResponseDto;
 import ru.hh.school.entity.Company;
 import ru.hh.school.entity.Vacancy;
 
@@ -35,7 +35,6 @@ public class VacancyService {
         vacancy.setContacts(vacancyDto.getContacts());
         vacancy.setCompensation(vacancyDto.getSalary());
         vacancy.setCompany(company);
-        //TODO проверить, чтобы добавлялось время
         vacancyDao.create(vacancy);
     }
 

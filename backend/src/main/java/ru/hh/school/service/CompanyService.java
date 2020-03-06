@@ -3,8 +3,8 @@ package ru.hh.school.service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.CompanyDao;
 import ru.hh.school.dao.UserDao;
-import ru.hh.school.dto.CompanyRequestDto;
-import ru.hh.school.dto.CompanyResponseDto;
+import ru.hh.school.dto.request.CompanyRequestDto;
+import ru.hh.school.dto.response.CompanyResponseDto;
 import ru.hh.school.entity.Company;
 import ru.hh.school.entity.User;
 import ru.hh.school.entity.UserType;
@@ -33,7 +33,6 @@ public class CompanyService {
             Company company = new Company();
             company.setTitle(companyDto.getName());
             company.setUser(user);
-            //TODO проверить, чтобы добавлялось время
             companyDao.create(company);
         }
     }

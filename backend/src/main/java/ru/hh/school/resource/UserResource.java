@@ -1,7 +1,7 @@
 package ru.hh.school.resource;
 
-import ru.hh.school.dto.UserRequestDto;
-import ru.hh.school.dto.UserResponseDto;
+import ru.hh.school.dto.request.UserRequestDto;
+import ru.hh.school.dto.response.UserResponseDto;
 import ru.hh.school.entity.UserType;
 import ru.hh.school.service.UserService;
 

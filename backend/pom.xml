@@ -10,9 +10,17 @@
     <packaging>jar</packaging>
     <name>backend-hw</name>
 
+    <developers>
+        <developer>
+            <name>Petryashev Nikolay</name>
+            <roles>
+                <role>owner</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <properties>
-<!--        <postgresql.version>42.2.10.jre7</postgresql.version>-->
         <nab.version>4.22.20</nab.version>
     </properties>
 
@@ -55,24 +63,12 @@
                 </executions>
             </plugin>
 
-
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-resources-plugin</artifactId>-->
-<!--                <version>2.7</version>-->
-<!--                <configuration>-->
-<!--                    <encoding>UTF-8</encoding>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-<!--                    <source>11</source>-->
-<!--                    <target>11</target>-->
-<!--                    <encoding>UTF-8</encoding>-->
+                    <encoding>UTF-8</encoding>
                     <release>11</release>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
@@ -100,22 +96,6 @@
                 </configuration>
             </plugin>
 
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-install-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <skip>true</skip>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-deploy-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <skip>true</skip>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -131,25 +111,6 @@
 
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.postgresql</groupId>-->
-<!--            <artifactId>postgresql</artifactId>-->
-<!--            <version>${postgresql.version}</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.hibernate</groupId>-->
-<!--            <artifactId>hibernate-core</artifactId>-->
-<!--            <version>5.4.0.Final</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.opentable.components</groupId>-->
-<!--            <artifactId>otj-pg-embedded</artifactId>-->
-<!--            <version>0.13.0</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-
         <!--testing-->
 <!--        <dependency>-->
 <!--            <groupId>junit</groupId>-->
