@@ -1,3 +1,3 @@
-mvn clean package
+mvn clean package &&
 
-docker image build -t hh-homework-backend .
+docker image build . -t hh-homework-backend

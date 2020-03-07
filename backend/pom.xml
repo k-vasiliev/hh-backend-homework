@@ -73,7 +73,7 @@
                         <transformer
                                 implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                             <manifestEntries>
-                                <Main-Class>ru.hh.school.App</Main-Class>
+                                <Main-Class>ru.hh.homework.at_least_some_backend.Main</Main-Class>
                             </manifestEntries>
                         </transformer>
                     </transformers>
