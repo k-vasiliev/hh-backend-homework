@@ -16,7 +16,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
-public class TestApplicationConfig {
+public class LocalApplicationConfig {
 
 
     @Bean

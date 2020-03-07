@@ -1,6 +1,7 @@
 package dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import config.ApplicationConfig;
 
 public class ApplicantDto {
 
@@ -18,5 +19,7 @@ public class ApplicantDto {
    public ApplicantDto(String name) {
       this.name = name;
    }
+
+   public ApplicantDto() {}
 
 }

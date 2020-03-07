@@ -1,17 +1,13 @@
-package routes;
+package controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import dto.CompanyDto;
 import dto.NewCompanyInfo;
-import dto.UserDto;
 import service.CompanyService;
-import service.UserService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 

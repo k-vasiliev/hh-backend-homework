@@ -1,8 +1,7 @@
-package routes;
+package controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import dto.NewUserDto;
 import dto.UserDto;
-import service.ResumeService;
 import service.UserService;
 
 import javax.inject.Inject;
@@ -21,28 +20,17 @@ public class ApiUser {
         this.userService = userService;
     }
 
-    static class CreateUserData {
-        @JsonProperty("name")
-        private String name;
-
-        @JsonProperty("type")
-        private String type;
-
-        boolean isCompany() {
-            return type.equals("APPLICANT") ? false : true;
-        }
-    }
 
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createUser(CreateUserData userData) {
+    public Response createUser(NewUserDto userData) {
         Response.ResponseBuilder response;
 
         try {
-            userService.addUser(userData.name, userData.isCompany());
-            response =  Response.ok("OK");
+            Integer uid = userService.addUser(userData.getName(), userData.isCompany());
+            response =  Response.ok(uid);
         } catch (Exception E) {
             response =  Response.status(Response.Status.CONFLICT);
         }

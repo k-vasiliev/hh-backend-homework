@@ -41,10 +41,6 @@ public class UsersEntity {
         isCompany = company;
     }
 
-    public String toString() {
-        return id.toString()+" "+isCompany.toString() +" "+ name;
-    }
-
     public UsersEntity(Integer id) {
         this.id = id;
     }

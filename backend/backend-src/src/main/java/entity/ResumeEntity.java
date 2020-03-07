@@ -35,10 +35,6 @@ public class ResumeEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UsersEntity user;
 
-    public String toString() {
-        return "RESUME : " + id + " " + contacts + " " + experience + " " + user.getName() + " "+created.toString();
-    }
-
     public String getTitle() {
         return title;
     }

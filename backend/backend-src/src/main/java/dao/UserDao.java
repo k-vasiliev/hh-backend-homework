@@ -1,5 +1,6 @@
 package dao;
 
+import entity.ResumeEntity;
 import entity.UsersEntity;
 import entity.VacancyResponseEntity;
 import jdk.jshell.spi.ExecutionControl;
@@ -18,8 +19,9 @@ public class UserDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public void createUser(UsersEntity newUser) {
+    public Integer createUser(UsersEntity newUser) {
         sessionFactory.getCurrentSession().save(newUser);
+        return newUser.getId();
     }
 
     public List<UsersEntity> getUsers(boolean isCompany) {
@@ -28,5 +30,13 @@ public class UserDao {
                 .setParameter("type", isCompany)
                 .list();
 
+    }
+
+
+    public UsersEntity getUserById(Integer id) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("Select a From UsersEntity a Where a.id=:id", UsersEntity.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

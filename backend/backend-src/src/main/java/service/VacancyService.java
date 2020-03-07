@@ -35,14 +35,12 @@ public class VacancyService {
     }
 
     @Transactional
-    public boolean addNegotiation(Integer resumeId, Integer vacancyId) {
-        vacancyDao.addNegotiation(resumeId, vacancyId);
-
-        return true;
+    public Integer addNegotiation(Integer resumeId, Integer vacancyId) {
+        return vacancyDao.addNegotiation(resumeId, vacancyId);
     }
 
     @Transactional
-    public void addVacancy(NewVacancyDto newVacancy) {
-        vacancyDao.addVacancy(newVacancy);
+    public Integer addVacancy(NewVacancyDto newVacancy) {
+        return vacancyDao.addVacancy(newVacancy);
     }
 }

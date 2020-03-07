@@ -13,11 +13,19 @@ public class ResumeDto {
     @JsonProperty("applicant")
     private ApplicantDto applicant;
 
+    @JsonProperty("dateCreate")
+    private String dateCreate;
+
+    public ResumeDto() { }
+
     public ResumeDto(ResumeEntity resume) {
         this.id = resume.getId();
         this.resumeTitle = resume.getTitle();
         this.applicant = new ApplicantDto(resume.getUser().getName());
-        this.dateCreate = resume.getCreated().toString();
+        if (resume.getCreated() != null)
+            this.dateCreate = resume.getCreated().toString();
+        else
+            this.dateCreate = "Incorrect DB TIMESTAMP handling";
     }
 
     public String getResumeTitle() {
@@ -44,6 +52,4 @@ public class ResumeDto {
         this.dateCreate = dateCreate;
     }
 
-    @JsonProperty("dateCreate")
-    private String dateCreate;
 }

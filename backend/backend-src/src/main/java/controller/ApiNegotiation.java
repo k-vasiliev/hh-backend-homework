@@ -1,7 +1,6 @@
-package routes;
+package controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jdk.net.SocketFlow;
 import service.VacancyService;
 
 import javax.inject.Inject;
@@ -34,12 +33,8 @@ public class ApiNegotiation {
     public Response addResponse(AddNegotiationRequest addRequest) {
         Response.ResponseBuilder response;
 
-        try {
-            vacancyService.addNegotiation(addRequest.resumeId, addRequest.vacancyId);
-            response =  Response.ok("OK");
-        } catch (Exception E) {
-            response =  Response.status(Response.Status.CONFLICT);
-        }
+        Integer vacancyId = vacancyService.addNegotiation(addRequest.resumeId, addRequest.vacancyId);
+        response =  Response.ok(vacancyId);
 
         return response.build();
     }

@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "vacancy_response")
 public class VacancyResponseEntity {
+
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name ="vacancy_response_id")
@@ -21,6 +22,10 @@ public class VacancyResponseEntity {
 
     public VacancyEntity getVacancy() {
         return vacancy;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public ResumeEntity getResume() {

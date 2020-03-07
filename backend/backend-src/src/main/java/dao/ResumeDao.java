@@ -20,12 +20,22 @@ public class ResumeDao {
     }
 
     public List<ResumeEntity> getResumes() {
-        return sessionFactory.getCurrentSession()
+        var ret = sessionFactory.getCurrentSession()
                 .createQuery("Select a From ResumeEntity a", ResumeEntity.class)
                 .list();
+
+        return ret;
     }
 
-    public void newResume(ResumeEntity resume) {
+    public Integer newResume(ResumeEntity resume) {
         sessionFactory.getCurrentSession().persist(resume);
+        return resume.getId();
+    }
+
+    public ResumeEntity getResumeById(Integer id) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("Select a From ResumeEntity a Where a.id=:id", ResumeEntity.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 }

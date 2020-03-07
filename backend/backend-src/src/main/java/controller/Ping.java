@@ -1,4 +1,4 @@
-package routes;
+package controller;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;

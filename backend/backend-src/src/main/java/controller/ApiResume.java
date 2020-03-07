@@ -1,10 +1,11 @@
-package routes;
+package controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import dao.ResumeDao;
 import dto.NewResumeDto;
 import dto.ResumeDto;
+import entity.ResumeEntity;
+import entity.UsersEntity;
 import service.ResumeService;
+import service.UserService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Path("/api/resume")
 public class ApiResume {
-    private final ResumeService   resumeService;
+    private final ResumeService     resumeService;
 
     @Inject
     public ApiResume(ResumeService resumeService) {
@@ -26,14 +27,16 @@ public class ApiResume {
     @Path(value = "/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response resumeById(@PathParam("id") Integer id) {
-        return Response.ok("ok").build();
+        ResumeDto resumeDto = new ResumeDto(resumeService.getResumeById(id));
+        return Response.ok(resumeDto).build();
     }
 
     @GET
     @Path(value = "/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response resumeAll() {
-        List<ResumeDto> resumes = resumeService.getResumes()
+        List<ResumeEntity> resumeList = resumeService.getResumes();
+        List<ResumeDto> resumes = resumeList
                 .stream()
                 .map(ResumeDto::new)
                 .collect(Collectors.toList());
@@ -45,8 +48,11 @@ public class ApiResume {
     @Path(value="/")
     @Consumes(MediaType.APPLICATION_JSON)
     public  Response addResume(NewResumeDto resume) {
-        resumeService.newResume(resume);
-       return Response.ok().build();
+       Integer resumeId = resumeService.newResume(resume);
+       if (resumeId == -1)
+           return Response.status(Response.Status.BAD_REQUEST).build();
+
+       return Response.ok(resumeId).build();
     }
 
 }

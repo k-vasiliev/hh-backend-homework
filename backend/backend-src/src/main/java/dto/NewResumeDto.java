@@ -1,5 +1,6 @@
 package dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NewResumeDto {
@@ -20,6 +21,7 @@ public class NewResumeDto {
         return title;
     }
 
+    @JsonIgnore
     public String getExperience() {
         return workExperience;
     }
@@ -27,4 +29,14 @@ public class NewResumeDto {
     public Integer getUserId() {
         return userId;
     }
+
+    public NewResumeDto(String contacts, String title, Integer userId, String workExperience) {
+        this.contacts = contacts;
+        this.title = title;
+        this.userId = userId;
+        this.workExperience = workExperience;
+    }
+
+
+    public NewResumeDto() {}
 }

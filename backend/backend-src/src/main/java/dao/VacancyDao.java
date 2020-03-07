@@ -41,13 +41,15 @@ public class VacancyDao {
                 .list();
     }
 
-    public void addNegotiation(Integer resumeId, Integer vacancyId) {
+    public Integer addNegotiation(Integer resumeId, Integer vacancyId) {
         VacancyResponseEntity newResponse = new VacancyResponseEntity(resumeId, vacancyId);
         sessionFactory.getCurrentSession().persist(newResponse);
+        return newResponse.getId();
     }
 
-    public void addVacancy(NewVacancyDto vacancyDto) {
+    public Integer addVacancy(NewVacancyDto vacancyDto) {
         VacancyEntity vacancy= new VacancyEntity(vacancyDto);
         sessionFactory.getCurrentSession().persist(vacancy);
+        return vacancy.getId();
     }
 }

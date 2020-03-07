@@ -1,8 +1,6 @@
-package routes;
+package controller;
 
-import dao.VacancyDao;
 import dto.NewVacancyDto;
-import dto.ResumeDto;
 import dto.VacancyDto;
 import dto.VacancyResponseDto;
 import service.VacancyService;
@@ -64,8 +62,8 @@ public class ApiVacancy {
         Response.ResponseBuilder response;
 
         try {
-            vacancyService.addVacancy(newVacancy);
-            response =  Response.ok("OK");
+            Integer vacancyId = vacancyService.addVacancy(newVacancy);
+            response =  Response.ok(vacancyId);
         } catch (Exception E) {
             response =  Response.status(Response.Status.CONFLICT);
         }

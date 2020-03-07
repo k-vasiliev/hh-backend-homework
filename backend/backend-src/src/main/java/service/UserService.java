@@ -17,14 +17,19 @@ public class UserService {
     }
 
     @Transactional
-    public void addUser(String name, boolean isCompany) {
+    public Integer addUser(String name, boolean isCompany) {
         UsersEntity newUser = new UsersEntity(name, isCompany);
-        userDao.createUser(newUser);
+        return userDao.createUser(newUser);
     }
 
     @Transactional
     public List<UsersEntity> getUsers(boolean isCompany) {
         return userDao.getUsers(isCompany);
+    }
+
+    @Transactional
+    public UsersEntity getUserById(Integer id) {
+        return userDao.getUserById(id);
     }
 
 }
