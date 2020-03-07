@@ -8,6 +8,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/api/negotiation")
 public class NegotiationResource {
@@ -21,7 +22,8 @@ public class NegotiationResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(NegotiationRequestDto negotiationDto) {
+    public Response createNegotiation(NegotiationRequestDto negotiationDto) {
         negotiationService.saveNew(negotiationDto);
+        return Response.ok().build();
     }
 }

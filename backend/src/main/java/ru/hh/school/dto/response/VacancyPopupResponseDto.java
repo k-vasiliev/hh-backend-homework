@@ -2,21 +2,11 @@ package ru.hh.school.dto.response;
 
 import java.math.BigInteger;
 
-public class VacancyPopupResponseDto {
+public class VacancyPopupResponseDto extends VacancyResponseDto {
 
-    private Integer id;
     private BigInteger salary;
     private String description;
     private String contacts;
-    private CompanyResponseDto company;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public BigInteger getSalary() {
         return salary;
@@ -40,13 +30,5 @@ public class VacancyPopupResponseDto {
 
     public void setContacts(String contacts) {
         this.contacts = contacts;
-    }
-
-    public CompanyResponseDto getCompany() {
-        return company;
-    }
-
-    public void setCompany(CompanyResponseDto company) {
-        this.company = company;
     }
 }

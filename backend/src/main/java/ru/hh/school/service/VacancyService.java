@@ -11,6 +11,7 @@ import ru.hh.school.entity.Vacancy;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,45 +29,52 @@ public class VacancyService {
 
     @Transactional
     public void saveNew(VacancyRequestDto vacancyDto) {
-        Company company = companyDao.get(vacancyDto.getCompanyId());
+        Company company = companyDao.get(vacancyDto.getCompanyId())
+                .orElseThrow(NotFoundException::new);
+        vacancyDao.create(mapToEntity(vacancyDto, company));
+    }
+
+    @Transactional
+    public List<VacancyResponseDto> getAll() {
+        return vacancyDao.getAll().stream()
+                .map(VacancyService::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public VacancyPopupResponseDto getVacancyDtoById(Integer vacancyId) {
+        return mapPopupToDto(vacancyDao.get(vacancyId).orElseThrow(NotFoundException::new));
+    }
+
+    private Vacancy mapToEntity(VacancyRequestDto vacancyDto, Company company) {
         Vacancy vacancy = new Vacancy();
         vacancy.setTitle(vacancyDto.getTitle());
         vacancy.setDescription(vacancyDto.getDescription());
         vacancy.setContacts(vacancyDto.getContacts());
         vacancy.setCompensation(vacancyDto.getSalary());
         vacancy.setCompany(company);
-        vacancyDao.create(vacancy);
+        return vacancy;
     }
 
-    @Transactional
-    public List<VacancyResponseDto> getAll() {
-        return vacancyDao.getAll().stream()
-                .map(VacancyService::mapped)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public VacancyPopupResponseDto getVacancyById(Integer vacancyId) {
-        return mapped2(vacancyDao.get(vacancyId));
-    }
-
-    private static VacancyResponseDto mapped(Vacancy vacancy) {
+    private static VacancyResponseDto mapToDto(Vacancy vacancy) {
         VacancyResponseDto vacancyDto = new VacancyResponseDto();
-        vacancyDto.setId(vacancy.getId());
+        mapCommonFieldsToDto(vacancy, vacancyDto);
         vacancyDto.setTitle(vacancy.getTitle());
-        vacancyDto.setCompany(CompanyService.mapped(vacancy.getCompany()));
         vacancyDto.setDateCreate(vacancy.getCreationDate().toString());
         return vacancyDto;
     }
 
-    private static VacancyPopupResponseDto mapped2(Vacancy vacancy) {
+    private static VacancyPopupResponseDto mapPopupToDto(Vacancy vacancy) {
         VacancyPopupResponseDto vacancyDto = new VacancyPopupResponseDto();
-        vacancyDto.setId(vacancy.getId());
+        mapCommonFieldsToDto(vacancy, vacancyDto);
         vacancyDto.setSalary(vacancy.getCompensation());
-        vacancyDto.setCompany(CompanyService.mapped(vacancy.getCompany()));
         vacancyDto.setDescription(vacancy.getDescription());
         vacancyDto.setContacts(vacancy.getContacts());
         return vacancyDto;
     }
 
+    private static void mapCommonFieldsToDto(Vacancy vacancy, VacancyResponseDto vacancyDto) {
+        vacancyDto.setId(vacancy.getId());
+        vacancyDto.setCompany(CompanyService.mapToDto(vacancy.getCompany()));
+    }
 }

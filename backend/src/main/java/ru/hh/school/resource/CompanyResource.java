@@ -5,8 +5,10 @@ import ru.hh.school.dto.response.CompanyResponseDto;
 import ru.hh.school.service.CompanyService;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/api/company")
@@ -21,14 +23,16 @@ public class CompanyResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<CompanyResponseDto> getAllCompanies() {
-        return companyService.getAll();
+    public Response getAllCompanies() {
+        List<CompanyResponseDto> companiesDto = companyService.getAll();
+        return Response.ok(companiesDto).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(CompanyRequestDto companyDto) {
+    public Response createCompany(CompanyRequestDto companyDto) {
         companyService.saveNew(companyDto);
+        return Response.ok().build();
     }
 }
 

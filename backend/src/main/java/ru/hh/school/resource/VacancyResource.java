@@ -10,6 +10,7 @@ import ru.hh.school.service.VacancyService;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/api/vacancy")
@@ -26,27 +27,31 @@ public class VacancyResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<VacancyResponseDto> getAllVacancies() {
-        return vacancyService.getAll();
+    public Response getAllVacancies() {
+        List<VacancyResponseDto> vacanciesDto = vacancyService.getAll();
+        return Response.ok(vacanciesDto).build();
     }
 
     @GET
     @Path("/{vacancyId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public VacancyPopupResponseDto getVacancy(@PathParam("vacancyId") Integer vacancyId) {
-        return vacancyService.getVacancyById(vacancyId);
+    public Response getVacancy(@PathParam("vacancyId") Integer vacancyId) {
+        VacancyPopupResponseDto vacancyPopupDto = vacancyService.getVacancyDtoById(vacancyId);
+        return Response.ok(vacancyPopupDto).build();
     }
 
     @GET
     @Path("/{vacancyId}/negotiations")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<NegotiationResponseDto> getNegotiationsVacancy(@PathParam("vacancyId") Integer vacancyId) {
-        return negotiationService.getNegotiationsByVacancyId(vacancyId);
+    public Response getNegotiationsVacancy(@PathParam("vacancyId") Integer vacancyId) {
+        List<NegotiationResponseDto> negotiationsDto = negotiationService.getNegotiationsDtoByVacancyId(vacancyId);
+        return Response.ok(negotiationsDto).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(VacancyRequestDto vacancyDto) {
+    public Response createVacancy(VacancyRequestDto vacancyDto) {
         vacancyService.saveNew(vacancyDto);
+        return Response.ok().build();
     }
 }

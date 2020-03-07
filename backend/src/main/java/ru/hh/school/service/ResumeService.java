@@ -11,6 +11,9 @@ import ru.hh.school.entity.UserType;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,29 +31,34 @@ public class ResumeService {
 
     @Transactional
     public void saveNew(ResumeRequestDto resumeDto) {
-        User user = userDao.get(resumeDto.getUserId());
-        if (user.getUserType() == UserType.APPLICANT) {
-            Resume resume = new Resume();
-            resume.setUser(user);
-            resume.setTitle(resumeDto.getTitle());
-            resume.setWorkExperience(resumeDto.getWorkExperience());
-            resume.setContacts(resumeDto.getContacts());
-            resumeDao.create(resume);
+        User user = userDao.get(resumeDto.getUserId()).orElseThrow(NotFoundException::new);
+        if (user.getUserType() != UserType.APPLICANT) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+        resumeDao.create(mapToEntity(resumeDto, user));
     }
 
     @Transactional
     public List<ResumeResponseDto> getAll() {
         return resumeDao.getAll().stream()
-                .map(ResumeService::mapped)
+                .map(ResumeService::mapToDto)
                 .collect(Collectors.toList());
     }
 
-    protected static ResumeResponseDto mapped(Resume resume) {
+    private Resume mapToEntity(ResumeRequestDto resumeDto, User user) {
+        Resume resume = new Resume();
+        resume.setUser(user);
+        resume.setTitle(resumeDto.getTitle());
+        resume.setWorkExperience(resumeDto.getWorkExperience());
+        resume.setContacts(resumeDto.getContacts());
+        return resume;
+    }
+
+    protected static ResumeResponseDto mapToDto(Resume resume) {
         ResumeResponseDto resumeDto = new ResumeResponseDto();
         resumeDto.setId(resume.getId());
         resumeDto.setTitle(resume.getTitle());
-        resumeDto.setApplicant(UserService.mapped(resume.getUser()));
+        resumeDto.setApplicant(UserService.mapToDto(resume.getUser()));
         resumeDto.setDateCreate(resume.getCreationDate().toString());
         return resumeDto;
     }

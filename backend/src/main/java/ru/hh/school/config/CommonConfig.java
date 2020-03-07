@@ -39,7 +39,7 @@ public class CommonConfig {
 
     @Bean
     public MappingConfig mappingConfig() {
-        return new MappingConfig( Company.class, Resume.class, Negotiation.class, User.class, Vacancy.class);
+        return new MappingConfig(Company.class, Resume.class, Negotiation.class, User.class, Vacancy.class);
     }
 
     @Bean

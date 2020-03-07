@@ -24,24 +24,27 @@ public class UserService {
 
   @Transactional
   public void saveNew(UserRequestDto userDto) {
-    User user = new User();
-    user.setName(userDto.getName());
-    user.setUserType(userDto.getType());
-    userDao.create(user);
+    userDao.create(mapToEntity(userDto));
   }
 
   @Transactional
-  public List<UserResponseDto> getUsersByType(UserType userType) {
+  public List<UserResponseDto> getUsersDtoByType(UserType userType) {
     return userDao.getByType(userType).stream()
-            .map(UserService::mapped)
+            .map(UserService::mapToDto)
             .collect(Collectors.toList());
   }
 
-  protected static UserResponseDto mapped(User user) {
+  private User mapToEntity(UserRequestDto userDto) {
+    User user = new User();
+    user.setName(userDto.getName());
+    user.setUserType(userDto.getType());
+    return user;
+  }
+
+  protected static UserResponseDto mapToDto(User user) {
     UserResponseDto userDto = new UserResponseDto();
     userDto.setId(user.getId());
     userDto.setName(user.getName());
     return userDto;
   }
-
 }

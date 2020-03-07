@@ -8,6 +8,7 @@ import ru.hh.school.entity.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,25 +28,31 @@ public class NegotiationService {
 
     @Transactional
     public void saveNew(NegotiationRequestDto negotiationDto) {
-        Resume resume = resumeDao.get(negotiationDto.getResumeId());
-        Vacancy vacancy = vacancyDao.get(negotiationDto.getVacancyId());
-        Negotiation negotiation = new Negotiation();
-        negotiation.setResume(resume);
-        negotiation.setVacancy(vacancy);
-        negotiationDao.create(negotiation);
+        Resume resume = resumeDao.get(negotiationDto.getResumeId())
+                .orElseThrow(NotFoundException::new);
+        Vacancy vacancy = vacancyDao.get(negotiationDto.getVacancyId())
+                .orElseThrow(NotFoundException::new);
+        negotiationDao.create(mapToEntity(resume, vacancy));
     }
 
     @Transactional
-    public List<NegotiationResponseDto> getNegotiationsByVacancyId(Integer vacancyId) {
+    public List<NegotiationResponseDto> getNegotiationsDtoByVacancyId(Integer vacancyId) {
         return negotiationDao.getByVacancyId(vacancyId).stream()
-                .map(NegotiationService::mapped)
+                .map(NegotiationService::mapToDto)
                 .collect(Collectors.toList());
     }
 
-    private static NegotiationResponseDto mapped(Negotiation negotiation) {
+    private Negotiation mapToEntity(Resume resume, Vacancy vacancy) {
+        Negotiation negotiation = new Negotiation();
+        negotiation.setResume(resume);
+        negotiation.setVacancy(vacancy);
+        return negotiation;
+    }
+
+    private static NegotiationResponseDto mapToDto(Negotiation negotiation) {
         NegotiationResponseDto negotiationDto = new NegotiationResponseDto();
         negotiationDto.setId(negotiation.getId());
-        negotiationDto.setResume(ResumeService.mapped(negotiation.getResume()));
+        negotiationDto.setResume(ResumeService.mapToDto(negotiation.getResume()));
         return negotiationDto;
     }
 }

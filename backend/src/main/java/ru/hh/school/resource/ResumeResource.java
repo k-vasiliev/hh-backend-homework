@@ -7,6 +7,7 @@ import ru.hh.school.service.ResumeService;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/api/resume")
@@ -21,13 +22,15 @@ public class ResumeResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ResumeResponseDto> getAllResumes() {
-        return resumeService.getAll();
+    public Response getAllResumes() {
+        List<ResumeResponseDto> resumesDto = resumeService.getAll();
+        return Response.ok(resumesDto).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(ResumeRequestDto resumeDto) {
+    public Response createResume(ResumeRequestDto resumeDto) {
         resumeService.saveNew(resumeDto);
+        return Response.ok().build();
     }
 }

@@ -7,6 +7,7 @@ import ru.hh.school.entity.Vacancy;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.Optional;
 
 @Named
 public class VacancyDao {
@@ -22,8 +23,11 @@ public class VacancyDao {
         return vacancy;
     }
 
-    public Vacancy get(Integer id) {
-        return session().get(Vacancy.class, id);
+    public Optional<Vacancy> get(Integer id) {
+        Vacancy vacancy = session().createQuery("FROM Vacancy WHERE id = :id", Vacancy.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        return Optional.of(vacancy);
     }
 
     public List<Vacancy> getAll() {

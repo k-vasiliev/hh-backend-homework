@@ -52,7 +52,7 @@ INSERT INTO users (name, user_type, creation_date, update_date) VALUES
     ('Павел Иванов', 'APPLICANT', now(), now()),
     ('Татьяна Семеновна', 'APPLICANT', now(), now()),
     ('Сергей Сидоров', 'APPLICANT', now(), now()),
-    ('Александр Петров', 'APPLICANT', now(), now());
+    ('Александр Петров', 'EMPLOYER', now(), now());
 
 INSERT INTO resume (title, users_id, work_experience, contacts, creation_date, update_date) VALUES
     ('Программист Java', 1, '3 года', 'hh1@mail.com', now(), now()),

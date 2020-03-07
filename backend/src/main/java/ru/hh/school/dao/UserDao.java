@@ -8,6 +8,7 @@ import ru.hh.school.entity.UserType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.Optional;
 
 @Named
 public class UserDao {
@@ -23,8 +24,11 @@ public class UserDao {
         return user;
     }
 
-    public User get(Integer id) {
-        return session().get(User.class, id);
+    public Optional<User> get(Integer id) {
+        User user = session().createQuery("FROM User WHERE id = :id", User.class)
+        .setParameter("id", id)
+        .getSingleResult();
+        return Optional.of(user);
     }
 
     public List<User> getByType(UserType userType) {

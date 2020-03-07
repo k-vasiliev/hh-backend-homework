@@ -7,6 +7,7 @@ import ru.hh.school.entity.Resume;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.Optional;
 
 @Named
 public class ResumeDao {
@@ -22,8 +23,11 @@ public class ResumeDao {
         return resume;
     }
 
-    public Resume get(Integer id) {
-        return session().get(Resume.class, id);
+    public Optional<Resume> get(Integer id) {
+        Resume resume = session().createQuery("FROM Resume WHERE id = :id", Resume.class)
+                .setParameter("id", id)
+                .getSingleResult();
+        return Optional.of(resume);
     }
 
     public List<Resume> getAll() {

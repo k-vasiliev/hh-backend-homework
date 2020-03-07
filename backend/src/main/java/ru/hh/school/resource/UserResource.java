@@ -8,6 +8,7 @@ import ru.hh.school.service.UserService;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,13 +24,18 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UserResponseDto> getAllUsersByType(@QueryParam("type") String type) {
-        return userService.getUsersByType(UserType.valueOf(type.toUpperCase((Locale.ENGLISH))));
+    public Response getAllUsersByType(@QueryParam("type") String type) {
+        if (!type.equalsIgnoreCase("applicant") && !type.equalsIgnoreCase("employer")) {
+            throw new IllegalArgumentException("User type is not defined!");
+        }
+        List<UserResponseDto> usersDto = userService.getUsersDtoByType(UserType.valueOf(type.toUpperCase((Locale.ENGLISH))));
+        return Response.ok(usersDto).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void create(UserRequestDto userDto) {
+    public Response createUser(UserRequestDto userDto) {
         userService.saveNew(userDto);
+        return Response.ok().build();
     }
 }
