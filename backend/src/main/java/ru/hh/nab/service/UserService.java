@@ -2,9 +2,13 @@ package ru.hh.nab.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.nab.dao.UserDAO;
+import ru.hh.nab.dto.ResponseUserDTO;
 import ru.hh.nab.entity.User;
+import ru.hh.nab.entity.UserType;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserService {
 
@@ -15,8 +19,8 @@ public class UserService {
     }
 
     @Transactional
-    public User addUser(String name, String type) {
-        return userDAO.addUser(name, type);
+    public User addUser(String name, UserType type) {
+        return userDAO.addUser(new User(name, type, LocalDate.now(), true));
     }
 
     @Transactional
@@ -25,8 +29,10 @@ public class UserService {
     }
 
     @Transactional
-    public List<User> getAllUsersByType(String type) {
-        return userDAO.getAllUsersByType(type);
+    public List<ResponseUserDTO> getAllUsersResponseByType(UserType type) {
+        return userDAO.getAllUsersByType(type).stream()
+                .map(user -> new ResponseUserDTO(user.getUserName(), user.getUserId()))
+                .collect(Collectors.toList());
     }
 
     @Transactional

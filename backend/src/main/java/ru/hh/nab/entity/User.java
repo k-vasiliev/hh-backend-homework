@@ -1,7 +1,5 @@
 package ru.hh.nab.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -11,7 +9,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
-    public User(String userName, String type, LocalDate lastUpdate, boolean active) {
+    public User(String userName, UserType type, LocalDate lastUpdate, boolean active) {
         this.userName = userName;
         this.type = type;
         this.lastUpdate = lastUpdate;
@@ -56,9 +54,9 @@ public class User {
     private String userName;
 
     @Column(name = "type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private UserType type;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "last_update")
     private LocalDate lastUpdate;
 
@@ -73,16 +71,20 @@ public class User {
         return userName;
     }
 
-    public String getType() {
-        return type;
-    }
-
     public LocalDate getLastUpdate() {
         return lastUpdate;
     }
 
+    public UserType getType() {
+        return type;
+    }
+
     public boolean isActive() {
         return active;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
     }
 
     public void setUserId(int userId) {
@@ -93,10 +95,6 @@ public class User {
         this.userName = userName;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public void setLastUpdate(LocalDate lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
@@ -104,4 +102,5 @@ public class User {
     public void setActive(boolean active) {
         this.active = active;
     }
+
 }

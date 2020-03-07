@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Collections;
 import java.util.List;
 
 @Path("/resume")
@@ -32,12 +33,30 @@ public class ResumeResource {
         return service.getAllResume();
     }
 
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ResponseResumeDTO getResumeById(@PathParam("id") int id) {
+        return service.getResponseResumeById(id);
+    }
+
     @POST
     @Consumes(value = "application/json")
-    public Resume createResume(@Valid @RequestBody CreateResumeDTO body) {
-        logger.info("Create Resume");
-        return service.createResume(Integer.valueOf(body.getUserId()),
-                body.getWorkExperience(), body.getTitle(), body.getContacts());
+    public List<Resume> createResume(@Valid @RequestBody CreateResumeDTO body) {
+        List<Resume> resume = Collections.emptyList();
+        try {
+            resume = Collections.singletonList(
+                    service.createResume(Integer.valueOf(body.getUserId()),
+                            body.getWorkExperience(), body.getTitle(), body.getContacts())
+            );
+            logger.info(String.format(
+                    "Create Resume by Title: %s, UserId: %s",
+                    body.getTitle(), body.getUserId()
+                    ));
+        } catch (RuntimeException e) {
+            logger.error(e.getMessage());
+        }
+        return resume;
     }
 
 }

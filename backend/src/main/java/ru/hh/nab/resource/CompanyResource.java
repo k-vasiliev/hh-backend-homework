@@ -12,8 +12,8 @@ import javax.inject.Singleton;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Path("/company")
 @Singleton
@@ -30,15 +30,32 @@ public class CompanyResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ResponseCompanyDTO> getAllCompany() {
-        return companyService.getAllCompany().stream()
-                .map(company -> new ResponseCompanyDTO(company).build())
-                .collect(Collectors.toList());
+        return companyService.getAllCompany();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ResponseCompanyDTO getCompanyById(@PathParam("id") int id) {
+        Company company = companyService.getCompanyById(id);
+        return new ResponseCompanyDTO(company.getName(), company.getCompanyId());
     }
 
     @POST
     @Consumes(value = "application/json")
-    public Company createCompany(@Valid @RequestBody CreateCompanyDTO body) {
-        logger.info("Create Company");
-        return companyService.createCompany(Integer.valueOf(body.getUserId()), body.getName());
+    public List<Company> createCompany(@Valid @RequestBody CreateCompanyDTO body) {
+        List<Company> company = Collections.emptyList();
+        try {
+            company = Collections.singletonList(
+                    companyService.createCompany(Integer.valueOf(body.getUserId()), body.getName())
+            );
+            logger.info(String.format(
+                    "Create Company by CompanyName: %s, UserId: %s",
+                    body.getName(), body.getUserId()
+            ));
+        } catch (RuntimeException e) {
+            logger.error(e.getMessage());
+        }
+        return company;
     }
 }

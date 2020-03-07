@@ -1,21 +1,21 @@
 package ru.hh.nab.dao;
 
-import java.time.LocalDate;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import ru.hh.nab.entity.User;
+import ru.hh.nab.entity.UserType;
 
 @Repository
 public class UserDAO {
+
     private final SessionFactory sessionFactory;
 
     public UserDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public User addUser(String name, String type) {
-        User user = new User(name, type, LocalDate.now(), true);
+    public User addUser(User user) {
         sessionFactory.getCurrentSession().save(user);
         return user;
     }
@@ -26,7 +26,7 @@ public class UserDAO {
                 .getResultList();
     }
 
-    public List<User> getAllUsersByType(String type) {
+    public List<User> getAllUsersByType(UserType type) {
         return sessionFactory.getCurrentSession()
                 .createQuery("from User where type = :paramType and active = true", User.class)
                 .setParameter("paramType", type)
@@ -35,8 +35,7 @@ public class UserDAO {
 
     public User getUsersById(int id) {
         return sessionFactory.getCurrentSession()
-                .createQuery("from User where userId = :paramId", User.class)
-                .setParameter("paramId", id)
-                .getSingleResult();
+                .byId(User.class).load(id);
     }
+
 }

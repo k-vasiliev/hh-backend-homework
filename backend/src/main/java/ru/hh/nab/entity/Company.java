@@ -1,7 +1,5 @@
 package ru.hh.nab.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -38,12 +36,11 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_id")
-    private int compId;
+    private int companyId;
 
     @Column(name = "name")
     private String name;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "last_update")
     private LocalDate lastUpdate;
 
@@ -54,8 +51,8 @@ public class Company {
     @JoinColumn(name = "user_id")
     private User users;
 
-    public int getCompId() {
-        return compId;
+    public int getCompanyId() {
+        return companyId;
     }
 
     public String getName() {
@@ -74,8 +71,8 @@ public class Company {
         return users;
     }
 
-    public void setCompId(int compId) {
-        this.compId = compId;
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 
     public void setName(String name) {
@@ -99,7 +96,7 @@ public class Company {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Company company = (Company) o;
-        return compId == company.compId &&
+        return companyId == company.companyId &&
                 active == company.active &&
                 Objects.equals(name, company.name) &&
                 Objects.equals(lastUpdate, company.lastUpdate);
@@ -107,6 +104,6 @@ public class Company {
 
     @Override
     public int hashCode() {
-        return Objects.hash(compId, name, lastUpdate, active);
+        return Objects.hash(companyId, name, lastUpdate, active);
     }
 }

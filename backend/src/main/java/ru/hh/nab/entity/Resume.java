@@ -1,7 +1,5 @@
 package ru.hh.nab.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -45,7 +43,7 @@ public class Resume {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "resume_id")
-    private int resId;
+    private int resumeId;
 
     @Column(name = "experience")
     private String experience;
@@ -59,12 +57,11 @@ public class Resume {
     @Column(name = "active")
     private boolean active;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "last_update")
     private LocalDate lastUpdate;
 
-    public int getResId() {
-        return resId;
+    public int getResumeId() {
+        return resumeId;
     }
 
     public User getUser() {
@@ -91,8 +88,8 @@ public class Resume {
         return lastUpdate;
     }
 
-    public void setResId(int resId) {
-        this.resId = resId;
+    public void setResumeId(int resumeId) {
+        this.resumeId = resumeId;
     }
 
     public void setUser(User user) {
@@ -124,7 +121,7 @@ public class Resume {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        return resId == resume.resId &&
+        return resumeId == resume.resumeId &&
                 active == resume.active &&
                 Objects.equals(experience, resume.experience) &&
                 Objects.equals(heading, resume.heading) &&
@@ -134,6 +131,6 @@ public class Resume {
 
     @Override
     public int hashCode() {
-        return Objects.hash(resId, experience, heading, contacts, active, lastUpdate);
+        return Objects.hash(resumeId, experience, heading, contacts, active, lastUpdate);
     }
 }

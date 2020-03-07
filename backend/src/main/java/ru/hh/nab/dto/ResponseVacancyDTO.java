@@ -1,6 +1,6 @@
 package ru.hh.nab.dto;
 
-import ru.hh.nab.entity.Company;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -10,6 +10,7 @@ public class ResponseVacancyDTO {
 
     private String companyName;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate lastUpdate;
 
     private ResponseCompanyDTO company;

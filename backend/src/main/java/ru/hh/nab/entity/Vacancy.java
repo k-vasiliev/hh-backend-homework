@@ -1,8 +1,5 @@
 package ru.hh.nab.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -47,7 +44,7 @@ public class Vacancy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vacancy_id")
-    private int vacId;
+    private int vacancyId;
 
     @Column(name = "header")
     private String header;
@@ -64,7 +61,6 @@ public class Vacancy {
     @Column(name = "active")
     private boolean active;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "last_update")
     private LocalDate lastUpdate;
 
@@ -72,8 +68,8 @@ public class Vacancy {
         return company;
     }
 
-    public int getVacId() {
-        return vacId;
+    public int getVacancyId() {
+        return vacancyId;
     }
 
     public String getHeader() {
@@ -104,8 +100,8 @@ public class Vacancy {
         this.company = company;
     }
 
-    public void setVacId(int vacId) {
-        this.vacId = vacId;
+    public void setVacancyId(int vacancyId) {
+        this.vacancyId = vacancyId;
     }
 
     public void setHeader(String header) {
@@ -137,7 +133,7 @@ public class Vacancy {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vacancy vacancy = (Vacancy) o;
-        return vacId == vacancy.vacId &&
+        return vacancyId == vacancy.vacancyId &&
                 salary == vacancy.salary &&
                 active == vacancy.active &&
                 Objects.equals(header, vacancy.header) &&
@@ -148,6 +144,6 @@ public class Vacancy {
 
     @Override
     public int hashCode() {
-        return Objects.hash(vacId, header, salary, description, contacts, active, lastUpdate);
+        return Objects.hash(vacancyId, header, salary, description, contacts, active, lastUpdate);
     }
 }

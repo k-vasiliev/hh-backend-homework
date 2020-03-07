@@ -1,5 +1,7 @@
 package ru.hh.nab.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 public class ResponseResumeDTO {
@@ -8,6 +10,7 @@ public class ResponseResumeDTO {
 
     private String name;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate lastUpdate;
 
     private Integer resumeId;

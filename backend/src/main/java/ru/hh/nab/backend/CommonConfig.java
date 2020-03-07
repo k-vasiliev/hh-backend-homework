@@ -11,10 +11,7 @@ import ru.hh.nab.datasource.DataSourceType;
 import ru.hh.nab.entity.*;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.hibernate.NabHibernateCommonConfig;
-import ru.hh.nab.service.CompanyService;
-import ru.hh.nab.service.ResumeService;
-import ru.hh.nab.service.UserService;
-import ru.hh.nab.service.VacancyService;
+import ru.hh.nab.service.*;
 import ru.hh.nab.starter.NabCommonConfig;
 
 @Configuration
@@ -29,7 +26,8 @@ import ru.hh.nab.starter.NabCommonConfig;
         ResumeService.class,
         UserService.class,
         CompanyService.class,
-        VacancyService.class
+        VacancyService.class,
+        NegotiationService.class
 })
 public class CommonConfig {
 
@@ -37,7 +35,6 @@ public class CommonConfig {
     public MappingConfig mappingConfig() {
         MappingConfig mappingConfig = new MappingConfig();
         mappingConfig.addPackagesToScan("ru.hh.nab.entity");
-        mappingConfig.addPackagesToScan("ru.hh.nab.dto");
         return mappingConfig;
     }
 

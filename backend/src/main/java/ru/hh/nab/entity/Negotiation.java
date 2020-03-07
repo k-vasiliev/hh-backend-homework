@@ -1,7 +1,5 @@
 package ru.hh.nab.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -25,15 +23,14 @@ public class Negotiation {
     @Column(name = "negotiation_id")
     private int negotiationId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "resume_id")
     private Resume resume;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vacancy_id")
     private Vacancy vacancy;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "last_update")
     LocalDate lastUpdate;
 
