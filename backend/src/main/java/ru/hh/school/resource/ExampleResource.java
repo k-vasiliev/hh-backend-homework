@@ -17,4 +17,6 @@ public class ExampleResource {
   public void dummy() {
     logger.info("Do nothing");
   }
+
+
 }
