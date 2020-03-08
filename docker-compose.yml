@@ -15,9 +15,9 @@ services:
 
   hh-homework-backend:
     image: hh-homework-backend
-    #depends_on:
-      #postgres:
-        #condition: service_healthy
+    depends_on:
+      postgres:
+        condition: service_started #service_healthy
     restart: always
     ports:
       - "8080:8080"
