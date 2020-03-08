@@ -6,6 +6,7 @@ import ru.hh.backend.mapper.ResumeMapper;
 import ru.hh.backend.service.ResumeService;
 
 import javax.inject.Singleton;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,8 +33,8 @@ public class ResumeResource {
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Response createResume(ResumeDtoRequest resumeDtoRequest) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createResume(@Valid ResumeDtoRequest resumeDtoRequest) {
         try {
             return Response.ok(
                     resumeService.save(resumeMapper.map(resumeDtoRequest))

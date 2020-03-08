@@ -7,6 +7,7 @@ import ru.hh.backend.entity.Company;
 import ru.hh.backend.service.UserService;
 
 import javax.inject.Singleton;
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Singleton
@@ -22,7 +23,7 @@ public class CompanyMapper {
         return new CompanyDtoResponse(company.getCompanyId(), company.getName());
     }
 
-    public Company map(CompanyDtoRequest companyDtoRequest) throws NotFoundException {
+    public Company map(@Valid CompanyDtoRequest companyDtoRequest) throws NotFoundException {
         return new Company(
                 companyDtoRequest.getName(),
                 userService.getUser(companyDtoRequest.getUserId()),

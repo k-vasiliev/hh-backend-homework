@@ -9,6 +9,7 @@ import ru.hh.backend.service.NegotiationService;
 import ru.hh.backend.service.VacancyService;
 
 import javax.inject.Singleton;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -52,7 +53,7 @@ public class VacancyResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createVacancy(VacancyDtoRequest vacancyDtoRequest) {
+    public Response createVacancy(@Valid VacancyDtoRequest vacancyDtoRequest) {
         try {
             return Response.ok(
                 vacancyService.save(vacancyMapper.map(vacancyDtoRequest))

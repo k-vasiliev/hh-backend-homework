@@ -1,8 +1,13 @@
 package ru.hh.backend.dto;
 
-public class CompanyDtoRequest {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+public class CompanyDtoRequest {
+    @NotNull
+    @Size(min = 1, max = 150)
     private String name;
+    @NotNull
     private Integer userId;
 
     public CompanyDtoRequest() {

@@ -6,6 +6,7 @@ import ru.hh.backend.mapper.NegotiationMapper;
 import ru.hh.backend.service.NegotiationService;
 
 import javax.inject.Singleton;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -28,7 +29,7 @@ public class NegotiationResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createNegotiation(NegotiationDtoRequest negotiationDtoRequest) {
+    public Response createNegotiation(@Valid NegotiationDtoRequest negotiationDtoRequest) {
         try {
             return Response.ok(
                     negotiationService.save(negotiationMapper.map(negotiationDtoRequest))

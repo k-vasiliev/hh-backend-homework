@@ -5,6 +5,7 @@ import ru.hh.backend.mapper.UserMapper;
 import ru.hh.backend.service.UserService;
 
 import javax.inject.Singleton;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,7 +33,7 @@ public class UserResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUser(UserDtoRequest userDtoRequest) {
+    public Response createUser(@Valid UserDtoRequest userDtoRequest) {
         return Response.ok(
                 userService.save(userMapper.map(userDtoRequest))
         ).build();
