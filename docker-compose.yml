@@ -12,12 +12,17 @@ services:
       POSTGRES_PASSWORD: hh
       POSTGRES_DB: hh
       POSTGRES_USER: hh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hh"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   hh-homework-backend:
     image: hh-homework-backend
     depends_on:
       postgres:
-        condition: service_started #service_healthy
+        condition: service_healthy
     restart: always
     ports:
       - "8080:8080"
