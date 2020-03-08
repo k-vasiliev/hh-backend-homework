@@ -9,6 +9,7 @@ import ru.hh.nab.hibernate.NabHibernateProdConfig;
 @Import({
         NabProdConfig.class,
         NabHibernateProdConfig.class,
-        Hibernate.class
+        Hibernate.class,
+        Services.class
 })
 public class General { }
