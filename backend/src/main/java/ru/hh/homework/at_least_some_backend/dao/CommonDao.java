@@ -50,17 +50,16 @@ public abstract class CommonDao<TEntity>
 
     public List<TEntity> queryAllEntities()
     {
-        return queryEntities((cBuilder, cQuery, root) ->
-                cQuery.select(root)
+        return queryEntities((cBuilder, cQuery, root) -> cQuery
+                .select(root)
         );
     }
 
     public TEntity queryEntityById(Long id)
     {
-        return Utils.firstOrNull(queryEntities((cBuilder, cQuery, root) ->
-                cQuery
-                        .select(root)
-                        .where(cBuilder.equal(root.get("id"), id))
+        return Utils.firstOrNull(queryEntities((cBuilder, cQuery, root) -> cQuery
+                .select(root)
+                .where(cBuilder.equal(root.get("id"), id))
         ));
     }
 }

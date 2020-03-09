@@ -1,10 +1,15 @@
 package ru.hh.homework.at_least_some_backend.entity;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import ru.hh.homework.at_least_some_backend.Utils;
+
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "hh_user")
+@TypeDef(name = "postgres_enum", typeClass = PostgresEnum.class)
 public class HHUser
 {
     @Column(name = "hh_user_id") @Id @GeneratedValue
@@ -13,7 +18,7 @@ public class HHUser
     @Column(name = "hh_user_name")
     private String name;
 
-    @Column(name = "hh_user_type") @Enumerated(EnumType.STRING)
+    @Column(name = "hh_user_type") @Enumerated(EnumType.STRING) @Type(type = "postgres_enum")
     private UserType type;
 
     @Column(name = "hh_user_creation_timestamp")

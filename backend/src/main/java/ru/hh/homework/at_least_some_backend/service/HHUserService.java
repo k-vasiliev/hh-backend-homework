@@ -3,6 +3,7 @@ package ru.hh.homework.at_least_some_backend.service;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
+import java.util.List;
 
 import ru.hh.homework.at_least_some_backend.dao.HHUserDao;
 import ru.hh.homework.at_least_some_backend.entity.HHUser;
@@ -18,4 +19,7 @@ public class HHUserService
     {
         return dao.queryEntityById(id);
     }
+
+    @Transactional
+    public List<HHUser> queryAllByType(HHUser.UserType type) { return dao.queryAllByType(type); }
 }
