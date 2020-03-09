@@ -22,4 +22,7 @@ public class HHUserService
 
     @Transactional
     public List<HHUser> queryAllByType(HHUser.UserType type) { return dao.queryAllByType(type); }
+
+    @Transactional
+    public void insertUser(HHUser newUser) { dao.saveEntity(newUser); }
 }

@@ -1,7 +1,9 @@
 package ru.hh.homework.at_least_some_backend.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.UpdateTimestamp;
 import ru.hh.homework.at_least_some_backend.Utils;
 
 import javax.persistence.*;
@@ -12,7 +14,7 @@ import java.time.OffsetDateTime;
 @TypeDef(name = "postgres_enum", typeClass = PostgresEnum.class)
 public class HHUser
 {
-    @Column(name = "hh_user_id") @Id @GeneratedValue
+    @Column(name = "hh_user_id") @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "hh_user_name")
@@ -21,10 +23,10 @@ public class HHUser
     @Column(name = "hh_user_type") @Enumerated(EnumType.STRING) @Type(type = "postgres_enum")
     private UserType type;
 
-    @Column(name = "hh_user_creation_timestamp")
+    @Column(name = "hh_user_creation_timestamp") @CreationTimestamp
     private OffsetDateTime creationDateTime;
 
-    @Column(name = "hh_user_last_update_timestamp")
+    @Column(name = "hh_user_last_update_timestamp") @UpdateTimestamp
     private OffsetDateTime lastUpdateDateTime;
 
     public enum UserType { EMPLOYER, APPLICANT }

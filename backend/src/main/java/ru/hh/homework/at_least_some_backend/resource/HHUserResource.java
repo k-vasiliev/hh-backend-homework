@@ -41,4 +41,13 @@ public class HHUserResource
                 .map(HHUserDto::entityToResponseDto)
                 .collect(Collectors.toList());
     }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void insertUser(HHUserDto dto)
+    {
+        service.insertUser(
+                HHUserDto.requestDtoToNewEntity(dto)
+        );
+    }
 }

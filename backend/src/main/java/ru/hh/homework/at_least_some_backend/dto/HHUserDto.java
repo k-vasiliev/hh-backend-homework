@@ -2,6 +2,8 @@ package ru.hh.homework.at_least_some_backend.dto;
 
 import ru.hh.homework.at_least_some_backend.entity.HHUser;
 
+import java.time.OffsetDateTime;
+
 public class HHUserDto
 {
     private Long id;
@@ -16,6 +18,20 @@ public class HHUserDto
 
     public HHUser.UserType getType() { return type; }
     public void setType(HHUser.UserType type) { this.type = type; }
+
+    public static HHUser requestDtoToNewEntity(HHUserDto dto)
+    {
+        if (dto == null) return null;
+
+        var entity = new HHUser();
+
+        entity.setName(dto.getName());
+        entity.setType(dto.getType());
+        // entity.setCreationDateTime(OffsetDateTime.now());
+        // entity.setLastUpdateDateTime(OffsetDateTime.now());
+
+        return entity;
+    }
 
     public static HHUserDto entityToResponseDto(HHUser entity)
     {
