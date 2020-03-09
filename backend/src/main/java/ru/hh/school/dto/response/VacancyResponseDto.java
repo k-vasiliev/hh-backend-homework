@@ -7,35 +7,27 @@ public class VacancyResponseDto {
     private String dateCreate;
     private CompanyResponseDto company;
 
-    public Integer getId() {
-        return id;
+    public VacancyResponseDto(Integer id, String title, String dateCreate, CompanyResponseDto company) {
+        this.id = id;
+        this.title = title;
+        this.dateCreate = dateCreate;
+        this.company = company;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDateCreate() {
         return dateCreate;
-    }
-
-    public void setDateCreate(String dateCreate) {
-        this.dateCreate = dateCreate;
     }
 
     public CompanyResponseDto getCompany() {
         return company;
     }
 
-    public void setCompany(CompanyResponseDto company) {
-        this.company = company;
-    }
 }

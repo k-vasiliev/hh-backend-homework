@@ -46,16 +46,10 @@ public class CompanyService {
     }
 
     private Company mapToEntity(CompanyRequestDto companyDto, User user) {
-        Company company = new Company();
-        company.setTitle(companyDto.getName());
-        company.setUser(user);
-        return company;
+        return new Company(user, companyDto.getName());
     }
 
     protected static CompanyResponseDto mapToDto(Company company) {
-        CompanyResponseDto companyDto = new CompanyResponseDto();
-        companyDto.setId(company.getId());
-        companyDto.setName(company.getTitle());
-        return companyDto;
+        return new CompanyResponseDto(company.getTitle(), company.getId());
     }
 }

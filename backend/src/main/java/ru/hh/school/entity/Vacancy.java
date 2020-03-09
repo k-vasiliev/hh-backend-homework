@@ -1,7 +1,6 @@
 package ru.hh.school.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 @Entity
@@ -16,8 +15,7 @@ public class Vacancy extends CommonDateEntity {
     @JoinColumn (name = "company_id")
     private Company company;
 
-    @NotNull
-    @Column (name = "title")
+    @Column (name = "title", nullable = false)
     private String title;
 
     @Column (name = "compensation")
@@ -26,11 +24,18 @@ public class Vacancy extends CommonDateEntity {
     @Column (name = "description")
     private String description;
 
-    @NotNull
-    @Column (name = "contacts")
+    @Column (name = "contacts", nullable = false)
     private String contacts;
 
     public Vacancy (){
+    }
+
+    public Vacancy(Company company, String title, BigInteger compensation, String description, String contacts) {
+        this.company = company;
+        this.title = title;
+        this.compensation = compensation;
+        this.description = description;
+        this.contacts = contacts;
     }
 
     public Integer getId() {
@@ -45,39 +50,19 @@ public class Vacancy extends CommonDateEntity {
         return company;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public BigInteger getCompensation() {
         return compensation;
     }
 
-    public void setCompensation(BigInteger compensation) {
-        this.compensation = compensation;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getContacts() {
         return contacts;
-    }
-
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
     }
 }

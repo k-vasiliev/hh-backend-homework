@@ -46,20 +46,18 @@ public class ResumeService {
     }
 
     private Resume mapToEntity(ResumeRequestDto resumeDto, User user) {
-        Resume resume = new Resume();
-        resume.setUser(user);
-        resume.setTitle(resumeDto.getTitle());
-        resume.setWorkExperience(resumeDto.getWorkExperience());
-        resume.setContacts(resumeDto.getContacts());
-        return resume;
+        return new Resume(
+                user,
+                resumeDto.getTitle(),
+                resumeDto.getWorkExperience(),
+                resumeDto.getContacts());
     }
 
     protected static ResumeResponseDto mapToDto(Resume resume) {
-        ResumeResponseDto resumeDto = new ResumeResponseDto();
-        resumeDto.setId(resume.getId());
-        resumeDto.setTitle(resume.getTitle());
-        resumeDto.setApplicant(UserService.mapToDto(resume.getUser()));
-        resumeDto.setDateCreate(resume.getCreationDate().toString());
-        return resumeDto;
+        return new ResumeResponseDto(
+                resume.getId(),
+                resume.getTitle(),
+                resume.getCreationDate().toString(),
+                UserService.mapToDto(resume.getUser()));
     }
 }

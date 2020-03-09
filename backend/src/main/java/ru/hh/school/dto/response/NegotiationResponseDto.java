@@ -5,19 +5,17 @@ public class NegotiationResponseDto {
     private Integer id;
     private ResumeResponseDto resume;
 
-    public Integer getId() {
-        return id;
+    public NegotiationResponseDto(Integer id, ResumeResponseDto resume) {
+        this.id = id;
+        this.resume = resume;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
     public ResumeResponseDto getResume() {
         return resume;
     }
 
-    public void setResume(ResumeResponseDto resume) {
-        this.resume = resume;
-    }
 }

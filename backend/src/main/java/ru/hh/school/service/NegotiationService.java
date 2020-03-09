@@ -43,16 +43,12 @@ public class NegotiationService {
     }
 
     private Negotiation mapToEntity(Resume resume, Vacancy vacancy) {
-        Negotiation negotiation = new Negotiation();
-        negotiation.setResume(resume);
-        negotiation.setVacancy(vacancy);
-        return negotiation;
+        return new Negotiation(resume, vacancy);
     }
 
     private static NegotiationResponseDto mapToDto(Negotiation negotiation) {
-        NegotiationResponseDto negotiationDto = new NegotiationResponseDto();
-        negotiationDto.setId(negotiation.getId());
-        negotiationDto.setResume(ResumeService.mapToDto(negotiation.getResume()));
-        return negotiationDto;
+        return new NegotiationResponseDto(
+                negotiation.getId(),
+                ResumeService.mapToDto(negotiation.getResume()));
     }
 }

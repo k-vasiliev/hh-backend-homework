@@ -1,7 +1,6 @@
 package ru.hh.school.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "resume")
@@ -15,18 +14,23 @@ public class Resume extends CommonDateEntity {
     @JoinColumn (name = "users_id")
     private User user;
 
-    @NotNull
-    @Column (name = "title")
+    @Column (name = "title", nullable = false)
     private String title;
 
     @Column (name = "work_experience")
     private String workExperience;
 
-    @NotNull
-    @Column (name = "contacts")
+    @Column (name = "contacts", nullable = false)
     private String contacts;
 
     public Resume (){
+    }
+
+    public Resume(User user, String title, String workExperience, String contacts) {
+        this.user = user;
+        this.title = title;
+        this.workExperience = workExperience;
+        this.contacts = contacts;
     }
 
     public Integer getId() {
@@ -41,31 +45,15 @@ public class Resume extends CommonDateEntity {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getWorkExperience() {
         return workExperience;
     }
 
-    public void setWorkExperience(String workExperience) {
-        this.workExperience = workExperience;
-    }
-
     public String getContacts() {
         return contacts;
-    }
-
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
     }
 }

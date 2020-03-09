@@ -1,41 +1,32 @@
 package ru.hh.school.dto.request;
 
-public class ResumeRequestDto {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+public class ResumeRequestDto {
+    @NotNull
     private Integer userId;
+    @NotNull
+    @Size(min = 1, max = 256)
     private String title;
     private String workExperience;
+    @NotNull
     private String contacts;
 
     public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getWorkExperience() {
         return workExperience;
     }
 
-    public void setWorkExperience(String workExperience) {
-        this.workExperience = workExperience;
-    }
-
     public String getContacts() {
         return contacts;
     }
 
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
-    }
 }

@@ -35,16 +35,10 @@ public class UserService {
   }
 
   private User mapToEntity(UserRequestDto userDto) {
-    User user = new User();
-    user.setName(userDto.getName());
-    user.setUserType(userDto.getType());
-    return user;
+    return new User(userDto.getName(), userDto.getType());
   }
 
   protected static UserResponseDto mapToDto(User user) {
-    UserResponseDto userDto = new UserResponseDto();
-    userDto.setId(user.getId());
-    userDto.setName(user.getName());
-    return userDto;
+    return new UserResponseDto(user.getName(), user.getId());
   }
 }

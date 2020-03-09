@@ -21,6 +21,11 @@ public class Negotiation extends CommonDateEntity {
     public Negotiation() {
     }
 
+    public Negotiation(Resume resume, Vacancy vacancy) {
+        this.resume = resume;
+        this.vacancy = vacancy;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -33,15 +38,7 @@ public class Negotiation extends CommonDateEntity {
         return resume;
     }
 
-    public void setResume(Resume resume) {
-        this.resume = resume;
-    }
-
     public Vacancy getVacancy() {
         return vacancy;
-    }
-
-    public void setVacancy(Vacancy vacancy) {
-        this.vacancy = vacancy;
     }
 }

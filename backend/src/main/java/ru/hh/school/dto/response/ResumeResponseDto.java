@@ -7,35 +7,27 @@ public class ResumeResponseDto {
     private String dateCreate;
     private UserResponseDto applicant;
 
-    public Integer getId() {
-        return id;
+    public ResumeResponseDto(Integer id, String title, String dateCreate, UserResponseDto applicant) {
+        this.id = id;
+        this.title = title;
+        this.dateCreate = dateCreate;
+        this.applicant = applicant;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDateCreate() {
         return dateCreate;
-    }
-
-    public void setDateCreate(String dateCreate) {
-        this.dateCreate = dateCreate;
     }
 
     public UserResponseDto getApplicant() {
         return applicant;
     }
 
-    public void setApplicant(UserResponseDto applicant) {
-        this.applicant = applicant;
-    }
 }

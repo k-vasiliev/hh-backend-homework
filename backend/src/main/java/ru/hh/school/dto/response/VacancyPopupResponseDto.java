@@ -8,27 +8,23 @@ public class VacancyPopupResponseDto extends VacancyResponseDto {
     private String description;
     private String contacts;
 
-    public BigInteger getSalary() {
-        return salary;
+    public VacancyPopupResponseDto(Integer id, String title, String dateCreate, CompanyResponseDto company, BigInteger salary, String description, String contacts) {
+        super(id, title, dateCreate, company);
+        this.salary = salary;
+        this.description = description;
+        this.contacts = contacts;
     }
 
-    public void setSalary(BigInteger salary) {
-        this.salary = salary;
+    public BigInteger getSalary() {
+        return salary;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getContacts() {
         return contacts;
     }
 
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
-    }
 }

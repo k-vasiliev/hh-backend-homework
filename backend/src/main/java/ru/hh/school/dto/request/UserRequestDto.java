@@ -2,24 +2,23 @@ package ru.hh.school.dto.request;
 
 import ru.hh.school.entity.UserType;
 
-public class UserRequestDto {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+public class UserRequestDto {
+    @NotNull
+    @Size(min = 1, max = 256)
     private String name;
+    @NotNull
+    @Size(min = 1, max = 16)
     private UserType type;
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public UserType getType() {
         return type;
     }
 
-    public void setType(UserType type) {
-        this.type = type;
-    }
 }

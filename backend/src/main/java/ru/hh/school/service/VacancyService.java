@@ -47,34 +47,30 @@ public class VacancyService {
     }
 
     private Vacancy mapToEntity(VacancyRequestDto vacancyDto, Company company) {
-        Vacancy vacancy = new Vacancy();
-        vacancy.setTitle(vacancyDto.getTitle());
-        vacancy.setDescription(vacancyDto.getDescription());
-        vacancy.setContacts(vacancyDto.getContacts());
-        vacancy.setCompensation(vacancyDto.getSalary());
-        vacancy.setCompany(company);
-        return vacancy;
+        return new Vacancy(
+                company,
+                vacancyDto.getTitle(),
+                vacancyDto.getSalary(),
+                vacancyDto.getDescription(),
+                vacancyDto.getContacts());
     }
 
     private static VacancyResponseDto mapToDto(Vacancy vacancy) {
-        VacancyResponseDto vacancyDto = new VacancyResponseDto();
-        mapCommonFieldsToDto(vacancy, vacancyDto);
-        vacancyDto.setTitle(vacancy.getTitle());
-        vacancyDto.setDateCreate(vacancy.getCreationDate().toString());
-        return vacancyDto;
+        return new VacancyResponseDto(
+                vacancy.getId(),
+                vacancy.getTitle(),
+                vacancy.getCreationDate().toString(),
+                CompanyService.mapToDto(vacancy.getCompany()));
     }
 
     private static VacancyPopupResponseDto mapPopupToDto(Vacancy vacancy) {
-        VacancyPopupResponseDto vacancyDto = new VacancyPopupResponseDto();
-        mapCommonFieldsToDto(vacancy, vacancyDto);
-        vacancyDto.setSalary(vacancy.getCompensation());
-        vacancyDto.setDescription(vacancy.getDescription());
-        vacancyDto.setContacts(vacancy.getContacts());
-        return vacancyDto;
-    }
-
-    private static void mapCommonFieldsToDto(Vacancy vacancy, VacancyResponseDto vacancyDto) {
-        vacancyDto.setId(vacancy.getId());
-        vacancyDto.setCompany(CompanyService.mapToDto(vacancy.getCompany()));
+        return new VacancyPopupResponseDto(
+                vacancy.getId(),
+                vacancy.getTitle(),
+                vacancy.getCreationDate().toString(),
+                CompanyService.mapToDto(vacancy.getCompany()),
+                vacancy.getCompensation(),
+                vacancy.getDescription(),
+                vacancy.getContacts());
     }
 }

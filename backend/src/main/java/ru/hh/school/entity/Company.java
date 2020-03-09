@@ -1,7 +1,6 @@
 package ru.hh.school.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "company")
@@ -15,11 +14,15 @@ public class Company extends CommonDateEntity {
     @JoinColumn (name = "users_id")
     private User user;
 
-    @NotNull
-    @Column (name = "title")
+    @Column (name = "title", nullable = false)
     private String title;
 
     public Company (){
+    }
+
+    public Company(User user, String title) {
+        this.user = user;
+        this.title = title;
     }
 
     public Integer getId() {
@@ -34,15 +37,7 @@ public class Company extends CommonDateEntity {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 }
