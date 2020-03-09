@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
+import ru.hh.nab.datasource.DataSourceType;
 import ru.hh.nab.hibernate.NabHibernateProdConfig;
 import ru.hh.nab.starter.NabProdConfig;
 
@@ -15,7 +16,7 @@ import javax.sql.DataSource;
 public class ProdConfig {
 
     @Bean
-    public DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings fileSettings) {
-        return dataSourceFactory.create("master", false, fileSettings);
+    DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings settings) {
+        return dataSourceFactory.create(DataSourceType.MASTER, false, settings);
     }
 }

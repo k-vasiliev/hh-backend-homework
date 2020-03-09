@@ -1,6 +1,11 @@
 package tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.hh.nab.starter.NabApplication;
+import ru.hh.nab.starter.server.jetty.JettyServer;
+import ru.hh.school.config.ProdConfig;
 import ru.hh.school.dto.NewResumeDto;
 import ru.hh.school.dto.ResumeDto;
 import ru.hh.school.dto.UserDto;
@@ -13,6 +18,8 @@ import ru.hh.school.Main;
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
 import tests.dto.TestNewUserDto;
 
+import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -78,25 +85,17 @@ public class MainTest
 
     }
 
-
-
     @Test
     public void userApiTest() throws Exception {
         /*
         EmbeddedPostgres postgres = startPostgres();
-        // Spring
-        AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
-        applicationContext.register(LocalApplicationConfig.class);
-        applicationContext.scan("ru/hh/school/dao", "ru/hh/school/controller", "ru/hh/school/service");
-        applicationContext.refresh();
-
-        // Init DB
-        SessionFactory sessionFactory = applicationContext.getBean("sessionFactory", SessionFactory.class);
-        TestHelper.initDb(sessionFactory);
+        TestHelper  helper= new TestHelper();
 
         //Start Server
-        Server srv = Main.createHHServer(applicationContext, 8080);
-        srv.start();
+        System.setProperty("settingsDir", "src/main/resources/etc");
+        NabApplication app = Main.createApp();
+        JettyServer srv = app.run(ProdConfig.class);
+
 
         Client client = ClientBuilder.newClient();
 
@@ -106,9 +105,8 @@ public class MainTest
         } finally {
             // Stop server
             client.close();
-            srv.stop();
-            srv.join();
             postgres.stop();
+            srv.stop();
         }
          */
     }

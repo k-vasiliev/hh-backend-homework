@@ -4,6 +4,10 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import ru.hh.nab.common.properties.FileSettings;
+import ru.hh.nab.datasource.DataSourceFactory;
+import ru.hh.nab.datasource.DataSourceType;
+import ru.hh.nab.hibernate.NabHibernateCommonConfig;
 import ru.hh.nab.hibernate.NabSessionFactoryBean;
 import ru.hh.nab.hibernate.NabSessionFactoryBuilderFactory;
 import ru.hh.nab.hibernate.transaction.DataSourceContextTransactionManager;
@@ -14,6 +18,14 @@ import org.springframework.context.annotation.Import;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.starter.NabCommonConfig;
 import ru.hh.school.controller.*;
+import ru.hh.school.dao.CompanyDao;
+import ru.hh.school.dao.ResumeDao;
+import ru.hh.school.dao.UserDao;
+import ru.hh.school.dao.VacancyDao;
+import ru.hh.school.service.CompanyService;
+import ru.hh.school.service.ResumeService;
+import ru.hh.school.service.UserService;
+import ru.hh.school.service.VacancyService;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -30,20 +42,19 @@ import java.util.Properties;
         ApiResume.class,
         ApiUser.class,
         ApiVacancy.class,
-        NabCommonConfig.class
+        CompanyDao.class,
+        ResumeDao.class,
+        UserDao.class,
+        VacancyDao.class,
+        CompanyService.class,
+        ResumeService.class,
+        UserService.class,
+        VacancyService.class,
+        NabCommonConfig.class,
+        NabHibernateCommonConfig.class
 })
 public class CommonConfig {
 
-    @Bean
-    DataSource dataSource() {
-        DataSource hikariDataSource = new HikariDataSource() {
-            @Override
-            public Connection getConnection() throws SQLException {
-                return connection;
-            }
-        };
-        return hikariDataSource;
-    }
 
     @Bean
     public MappingConfig mappingConfig() {
@@ -52,35 +63,10 @@ public class CommonConfig {
         return mappingConfig;
     }
 
-
     @Bean
-    NabSessionFactoryBean.ServiceSupplier<?> nabSessionFactoryBuilderServiceSupplier() {
-        return new NabSessionFactoryBean.ServiceSupplier<NabSessionFactoryBuilderFactory.BuilderService>() {
-            @Override
-            public Class<NabSessionFactoryBuilderFactory.BuilderService> getClazz() {
-                return NabSessionFactoryBuilderFactory.BuilderService.class;
-            }
-
-            @Override
-            public NabSessionFactoryBuilderFactory.BuilderService get() {
-                return new NabSessionFactoryBuilderFactory.BuilderService();
-            }
-        };
+    DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings settings) {
+        return dataSourceFactory.create(DataSourceType.MASTER, false, settings);
     }
 
-    @Bean
-    DataSourceContextTransactionManager transactionManager(SessionFactory sessionFactory, DataSource routingDataSource) {
-        HibernateTransactionManager simpleTransactionManager = new HibernateTransactionManager(sessionFactory);
-        simpleTransactionManager.setDataSource(routingDataSource);
-        return new DataSourceContextTransactionManager(simpleTransactionManager);
-    }
-
-    @Bean
-    NabSessionFactoryBean sessionFactoryBean(DataSource dataSource, NabSessionFactoryBean.ServiceSupplier supplier) throws IOException {
-        var props = new Properties();
-        props.load(CommonConfig.class.getResourceAsStream("src/etc/hibernate.properties"));
-        return new NabSessionFactoryBean(dataSource, props,
-                new BootstrapServiceRegistryBuilder(), List.of(supplier), List.of());
-    }
 
 }

@@ -3,6 +3,7 @@ package tests;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -12,6 +13,9 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class TestHelper {
+    @Autowired
+    SessionFactory  factory;
+
     private static final Path SCRIPTS_DIR = Path.of("src","main", "resources");
 
     public static void executeScript(SessionFactory streamFactory, String scriptFileName) {
