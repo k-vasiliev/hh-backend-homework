@@ -7,7 +7,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ru.hh.homework.at_least_some_backend.Utils;
-import ru.hh.homework.at_least_some_backend.dto.HHUserDto;
+import ru.hh.homework.at_least_some_backend.dto.insert.HHInsertUserDto;
+import ru.hh.homework.at_least_some_backend.dto.query.HHQueryUserDto;
 import ru.hh.homework.at_least_some_backend.entity.HHUser;
 import ru.hh.homework.at_least_some_backend.service.HHUserService;
 
@@ -26,28 +27,28 @@ public class HHUserResource
     public Response get(@QueryParam("id") Long id)
     {
         return Utils.dtoToResponse(
-                HHUserDto.entityToResponseDto(service.queryById(id))
+                HHQueryUserDto.fromEntity(service.queryById(id))
         );
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<HHUserDto> getAllOfType(@QueryParam("type") String typeStr) throws WebApplicationException
+    public List<HHQueryUserDto> getAllOfType(@QueryParam("type") String typeStr) throws WebApplicationException
     {
         var type = Utils.requireEnum(HHUser.UserType.class, typeStr, "type");
 
         return service.queryAllByType(type)
                 .stream()
-                .map(HHUserDto::entityToResponseDto)
+                .map(HHQueryUserDto::fromEntity)
                 .collect(Collectors.toList());
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertUser(HHUserDto dto)
+    public void insertUser(HHInsertUserDto dto)
     {
         service.insertUser(
-                HHUserDto.requestDtoToNewEntity(dto)
+                HHInsertUserDto.toNewEntity(dto)
         );
     }
 }
