@@ -47,8 +47,8 @@ public class HHUserResource
     @Consumes(MediaType.APPLICATION_JSON)
     public void insertUser(HHInsertUserDto dto)
     {
-        service.insertUser(
-                HHInsertUserDto.toNewEntity(dto)
+        service.saveEntity(
+                service.createEntity(dto)
         );
     }
 }

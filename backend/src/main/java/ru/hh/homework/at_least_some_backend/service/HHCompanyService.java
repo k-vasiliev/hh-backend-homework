@@ -9,34 +9,27 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
-import java.util.List;
 
 @Singleton
-public class HHCompanyService
+public class HHCompanyService extends HHEntityService<HHCompany, HHInsertCompanyDto>
 {
     @Inject
     private HHCompanyDao dao;
     @Inject
     private HHUserService userService;
 
-    @Transactional
-    public HHCompany queryById(Long id)
-    {
-        return dao.queryEntityById(id);
-    }
+    @Override
+    protected HHCompanyDao getDao() { return dao; }
 
-    @Transactional
-    public List<HHCompany> queryAll() { return dao.queryAllEntities(); }
-
-    @Transactional
-    public void insertCompany(HHCompany newCompany) { dao.saveEntity(newCompany); }
+    protected HHUserService getUserService() { return userService; }
 
     /*
     Создание сущности компании, даже до ее сохранения, требует запроса сущности пользователя.
     Мне кажется, что будет логично, если именно сервис будет ходить в другой сервис.
      */
+    @Override
     @Transactional
-    public HHCompany createCompany(HHInsertCompanyDto dto)
+    public HHCompany createEntity(HHInsertCompanyDto dto)
     {
         if (dto == null) return null;
 
@@ -46,7 +39,7 @@ public class HHCompanyService
         var userId = dto.getUserId();
         if (userId == null) throw new BadRequestException("'userId' must be not null.");
 
-        var user = userService.queryById(userId);
+        var user = getUserService().queryById(userId);
         if (user == null) throw new BadRequestException("Couldn't find user with the specified 'userId'.");
         if (user.getType() != HHUser.UserType.EMPLOYER) throw new BadRequestException("The user must be of type 'EMPLOYER'.");
 

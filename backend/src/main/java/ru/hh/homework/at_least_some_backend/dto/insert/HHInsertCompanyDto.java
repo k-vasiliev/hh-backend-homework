@@ -1,6 +1,8 @@
 package ru.hh.homework.at_least_some_backend.dto.insert;
 
-public class HHInsertCompanyDto
+import ru.hh.homework.at_least_some_backend.entity.HHCompany;
+
+public class HHInsertCompanyDto extends InsertDto<HHCompany>
 {
     private String name;
     private Long userId;

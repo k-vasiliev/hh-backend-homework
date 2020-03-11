@@ -9,8 +9,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import ru.hh.homework.at_least_some_backend.Utils;
+import ru.hh.homework.at_least_some_backend.entity.HHEntity;
 
-public abstract class CommonDao<TEntity>
+public abstract class CommonDao<TEntity extends HHEntity>
 {
     protected interface QueryDefinition<T> { void apply(CriteriaBuilder cBuilder, CriteriaQuery<T> cQuery, Root<T> root); }
 

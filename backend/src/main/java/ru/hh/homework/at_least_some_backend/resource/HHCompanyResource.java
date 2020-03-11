@@ -32,8 +32,8 @@ public class HHCompanyResource
     @Consumes(MediaType.APPLICATION_JSON)
     public void insertNewCompany(HHInsertCompanyDto dto)
     {
-        service.insertCompany(
-                service.createCompany(dto)
+        service.saveEntity(
+                service.createEntity(dto)
         );
     }
 }
