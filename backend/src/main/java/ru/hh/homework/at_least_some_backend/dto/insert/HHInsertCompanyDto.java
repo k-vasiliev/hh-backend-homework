@@ -1,0 +1,13 @@
+package ru.hh.homework.at_least_some_backend.dto.insert;
+
+public class HHInsertCompanyDto
+{
+    private String name;
+    private Long userId;
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
+}
