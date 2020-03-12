@@ -5,9 +5,11 @@ import ru.hh.homework.at_least_some_backend.dto.insert.HHInsertVacancyDto;
 import ru.hh.homework.at_least_some_backend.entity.HHVacancy;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
 
+@Singleton
 public class HHVacancyService extends HHEntityService<HHVacancy, HHInsertVacancyDto>
 {
     @Inject

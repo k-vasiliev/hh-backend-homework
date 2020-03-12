@@ -5,11 +5,13 @@ import ru.hh.homework.at_least_some_backend.dto.query.HHQueryResumeDto;
 import ru.hh.homework.at_least_some_backend.service.HHResumeService;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Singleton
 @Path("/resume")
 public class HHResumeResource
 {

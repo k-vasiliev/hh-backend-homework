@@ -6,9 +6,11 @@ import ru.hh.homework.at_least_some_backend.entity.HHResume;
 import ru.hh.homework.at_least_some_backend.entity.HHUser;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
 
+@Singleton
 public class HHResumeService extends HHEntityService<HHResume, HHInsertResumeDto>
 {
     @Inject
