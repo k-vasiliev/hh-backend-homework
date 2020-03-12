@@ -1,11 +1,13 @@
 package ru.hh.homework.at_least_some_backend.dto.insert;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.hh.homework.at_least_some_backend.entity.HHResume;
 
 public class HHInsertResumeDto extends InsertDto<HHResume>
 {
     private String title;
     private Long userId;
+    @JsonProperty("workExperience")
     private String experience;
     private String contacts;
 
