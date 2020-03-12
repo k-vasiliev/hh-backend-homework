@@ -37,7 +37,7 @@
         },
         rules: {
           resumeId: [
-            { required: true, message: 'Выберите пользователя', trigger: 'change' }
+            { required: true, message: 'Выберите резюме', trigger: 'change' }
           ]
         },
         resumes: []
