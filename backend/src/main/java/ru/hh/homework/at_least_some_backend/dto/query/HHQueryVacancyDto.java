@@ -6,10 +6,14 @@ import ru.hh.homework.at_least_some_backend.entity.HHVacancy;
 
 public class HHQueryVacancyDto
 {
+    private Long id;
     private String title;
     private HHQueryCompanyDto company;
     @JsonProperty("dateCreate")
     private String createdAt;
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
@@ -26,6 +30,7 @@ public class HHQueryVacancyDto
 
         var dto = new HHQueryVacancyDto();
 
+        dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
         dto.setCompany(HHQueryCompanyDto.fromEntity(entity.getCompany()));
 

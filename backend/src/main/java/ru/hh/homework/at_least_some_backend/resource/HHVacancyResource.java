@@ -1,6 +1,7 @@
 package ru.hh.homework.at_least_some_backend.resource;
 
 import ru.hh.homework.at_least_some_backend.dto.insert.HHInsertVacancyDto;
+import ru.hh.homework.at_least_some_backend.dto.query.HHQueryVacancyBodyDto;
 import ru.hh.homework.at_least_some_backend.dto.query.HHQueryVacancyDto;
 import ru.hh.homework.at_least_some_backend.service.HHVacancyService;
 
@@ -24,6 +25,16 @@ public class HHVacancyResource
                 .stream()
                 .map(HHQueryVacancyDto::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @GET
+    @Path("{vacancy_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public HHQueryVacancyBodyDto getVacancyBody(@PathParam("vacancy_id") Long id)
+    {
+        return HHQueryVacancyBodyDto.fromEntity(
+                service.queryById(id)
+        );
     }
 
     @POST
