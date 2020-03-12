@@ -5,15 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 
-import ru.hh.homework.at_least_some_backend.entity.HHCompany;
-import ru.hh.homework.at_least_some_backend.entity.HHResume;
-import ru.hh.homework.at_least_some_backend.entity.HHVacancy;
+import ru.hh.homework.at_least_some_backend.entity.*;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
 import ru.hh.nab.hibernate.MappingConfig;
-
-import ru.hh.homework.at_least_some_backend.entity.HHUser;
 
 @Configuration
 public class Hibernate
@@ -31,7 +27,8 @@ public class Hibernate
                 HHUser.class,
                 HHCompany.class,
                 HHResume.class,
-                HHVacancy.class
+                HHVacancy.class,
+                HHNegotiation.class
         );
     }
 }

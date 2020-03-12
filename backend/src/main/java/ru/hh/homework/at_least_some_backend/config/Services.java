@@ -2,15 +2,9 @@ package ru.hh.homework.at_least_some_backend.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import ru.hh.homework.at_least_some_backend.dao.HHCompanyDao;
-import ru.hh.homework.at_least_some_backend.dao.HHResumeDao;
-import ru.hh.homework.at_least_some_backend.dao.HHUserDao;
-import ru.hh.homework.at_least_some_backend.dao.HHVacancyDao;
+import ru.hh.homework.at_least_some_backend.dao.*;
 import ru.hh.homework.at_least_some_backend.resource.*;
-import ru.hh.homework.at_least_some_backend.service.HHCompanyService;
-import ru.hh.homework.at_least_some_backend.service.HHResumeService;
-import ru.hh.homework.at_least_some_backend.service.HHUserService;
-import ru.hh.homework.at_least_some_backend.service.HHVacancyService;
+import ru.hh.homework.at_least_some_backend.service.*;
 
 @Configuration
 @Import({
@@ -29,6 +23,10 @@ import ru.hh.homework.at_least_some_backend.service.HHVacancyService;
         HHVacancyDao.class,
         HHVacancyService.class,
         HHVacancyResource.class,
+
+        HHNegotiationDao.class,
+        HHNegotiationService.class,
+        HHNegotiationResource.class,
 
         HelloWorldResource.class
 })

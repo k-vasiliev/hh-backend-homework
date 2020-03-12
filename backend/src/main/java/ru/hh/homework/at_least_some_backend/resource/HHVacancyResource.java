@@ -1,6 +1,7 @@
 package ru.hh.homework.at_least_some_backend.resource;
 
 import ru.hh.homework.at_least_some_backend.dto.insert.HHInsertVacancyDto;
+import ru.hh.homework.at_least_some_backend.dto.query.HHQueryNegotiationDto;
 import ru.hh.homework.at_least_some_backend.dto.query.HHQueryVacancyBodyDto;
 import ru.hh.homework.at_least_some_backend.dto.query.HHQueryVacancyDto;
 import ru.hh.homework.at_least_some_backend.service.HHVacancyService;
@@ -18,6 +19,8 @@ public class HHVacancyResource
 {
     @Inject
     private HHVacancyService service;
+    @Inject
+    private HHNegotiationResource negotiationResource;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -46,5 +49,20 @@ public class HHVacancyResource
         service.saveEntity(
                 service.createEntity(dto)
         );
+    }
+
+    /* Jersey не дает поставить путь "vacancy/{vacancy_id}/negotiations" в другой ресурс (игнорирует)
+    поскольку "/vacancy" уже занят этим ресурсом (здесь). Но фронт хочет сюда.
+    Два варианта: ресурс ходит в другой ресурс или в чужой сервис.
+    Выбираю первый, поскольку
+        1) разделение ответственности;
+        2) инкапсуляция: логику обращения ресурса к сервису в случае изменений нужно будет поменять только там.
+     */
+    @GET
+    @Path("{vacancy_id}/negotiations")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<HHQueryNegotiationDto> getVacancyNegotiations(@PathParam("vacancy_id") Long vacancyId)
+    {
+        return negotiationResource.getNegotiationsForVacancy(vacancyId);
     }
 }

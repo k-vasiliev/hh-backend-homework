@@ -40,6 +40,14 @@ CREATE TABLE hh_vacancy(
     contacts                VARCHAR         NOT NULL
 );
 
+CREATE TABLE hh_negotiation(
+    id                      BIGSERIAL       PRIMARY KEY,
+    created_at              TIMESTAMPTZ     NOT NULL,
+    updated_at              TIMESTAMPTZ     NOT NULL,
+    vacancy_id              BIGINT          REFERENCES hh_vacancy(id),
+    resume_id               BIGINT          REFERENCES hh_resume(id)
+);
+
 INSERT INTO hh_user(name, type, created_at, updated_at) VALUES
     ('user #1 emp', 'EMPLOYER', now(), now()),
     ('user #2 emp', 'EMPLOYER', now(), now()),
