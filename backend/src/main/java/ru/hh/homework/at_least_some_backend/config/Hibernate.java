@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import ru.hh.homework.at_least_some_backend.entity.HHCompany;
 import ru.hh.homework.at_least_some_backend.entity.HHResume;
+import ru.hh.homework.at_least_some_backend.entity.HHVacancy;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.datasource.DataSourceType;
@@ -29,7 +30,8 @@ public class Hibernate
         return new MappingConfig(
                 HHUser.class,
                 HHCompany.class,
-                HHResume.class
+                HHResume.class,
+                HHVacancy.class
         );
     }
 }
