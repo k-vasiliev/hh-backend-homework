@@ -11,7 +11,7 @@ import javax.ws.rs.Path;
 @Path("/")
 public class ExampleResource {
 
-  private static Logger logger = LoggerFactory.getLogger(ExampleResource.class);
+  private static final Logger logger = LoggerFactory.getLogger(ExampleResource.class);
 
   @GET
   public void dummy() {
