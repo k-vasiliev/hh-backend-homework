@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <nab.version>4.22.20</nab.version>
+        <nab.version>4.28.10</nab.version>
     </properties>
 
     <repositories>
