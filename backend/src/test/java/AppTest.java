@@ -6,6 +6,7 @@ import ru.hh.nab.testbase.NabTestBase;
 
 import javax.ws.rs.core.Response;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 @ContextConfiguration(classes = AppTestConfig.class)

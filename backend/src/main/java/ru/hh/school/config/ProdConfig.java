@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Import;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
 import ru.hh.nab.hibernate.NabHibernateProdConfig;
+import ru.hh.nab.hibernate.NabSessionFactoryBean;
 import ru.hh.nab.starter.NabProdConfig;
 
 import javax.sql.DataSource;
