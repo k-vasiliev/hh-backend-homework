@@ -11,8 +11,7 @@ import ru.hh.school.resource.ExampleResource;
 @Import({
   // import your beans here
   ExampleResource.class,
-  NabCommonConfig.class,
-  LogbackConfigurator.class
+  NabCommonConfig.class
 })
 public class CommonConfig {
 
