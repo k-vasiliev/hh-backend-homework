@@ -1,27 +1,23 @@
 package ru.hh.school.resource;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import ru.hh.nab.hibernate.NabHibernateCommonConfig;
-import ru.hh.nab.hibernate.NabSessionFactoryBean;
+import org.springframework.context.annotation.Import;
 import ru.hh.school.config.ProdConfig;
+import ru.hh.school.entity.Employer;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.persistence.EntityManager;
-import javax.sql.DataSource;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 @Singleton
 @Path("/")
+@Import(ProdConfig.class)
 public class ExampleResource {
 
   private final SessionFactory sessionFactory;
@@ -35,8 +31,9 @@ public class ExampleResource {
 
   @GET
   public void dummy() {
+    Employer test = new Employer();
+    test.setId(1);
+    test.setName("Employer name");
     logger.info("Do nothing");
   }
-
-
 }
