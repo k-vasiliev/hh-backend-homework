@@ -11,6 +11,9 @@ import ru.hh.school.dao.VacancyDao;
 import ru.hh.school.entity.Vacancy;
 import ru.hh.school.http.HhClient;
 import ru.hh.school.resource.ExampleResource;
+import ru.hh.school.service.EmployerService;
+import ru.hh.school.service.PaginationFilter;
+import ru.hh.school.service.QueryFilter;
 
 @Configuration
 @Import({
@@ -20,7 +23,10 @@ import ru.hh.school.resource.ExampleResource;
         EmployerDao.class,
         AreaDao.class,
         VacancyDao.class,
-        HhClient.class
+        HhClient.class,
+        EmployerService.class,
+        PaginationFilter.class,
+        QueryFilter.class
 })
 public class CommonConfig {
 

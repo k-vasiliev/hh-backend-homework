@@ -1,9 +1,5 @@
 package ru.hh.school.resource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hh.school.dao.AreaDao;
@@ -13,17 +9,15 @@ import ru.hh.school.entity.Area;
 import ru.hh.school.entity.Employer;
 import ru.hh.school.entity.Salary;
 import ru.hh.school.entity.Vacancy;
+import ru.hh.school.exception.InvalidPaginationException;
 import ru.hh.school.http.HhClient;
+import ru.hh.school.service.EmployerService;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDate;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Singleton
 @Path("/")
@@ -32,14 +26,13 @@ public class ExampleResource {
   private final EmployerDao employerDao;
   private final AreaDao areaDao;
   private final VacancyDao vacancyDao;
-  private final HhClient hhClient;
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final EmployerService employerService;
 
-  public ExampleResource(EmployerDao employerDao, AreaDao areaDao, VacancyDao vacancyDao, HhClient hhClient) {
+  public ExampleResource(EmployerDao employerDao, AreaDao areaDao, VacancyDao vacancyDao, EmployerService employerService) {
     this.employerDao = employerDao;
     this.areaDao = areaDao;
     this.vacancyDao = vacancyDao;
-    this.hhClient = hhClient;
+    this.employerService = employerService;
   }
 
   private static final Logger logger = LoggerFactory.getLogger(ExampleResource.class);
@@ -50,11 +43,12 @@ public class ExampleResource {
   public Response response(
           @QueryParam("query") String query,
           @QueryParam("page") String page,
-          @QueryParam("per_page") String perPage) {
-    System.out.println("page" + page);
-    System.out.println("perpage" + perPage);
-
-    return Response.ok().entity(result).build();
+          @QueryParam("per_page") String perPage){
+    try {
+      return employerService.fetchListOfEmployersFromApi(query, page, perPage);
+    } catch (InvalidPaginationException e) {
+      return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+    }
   }
 
   @GET
