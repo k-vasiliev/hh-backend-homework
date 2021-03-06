@@ -5,13 +5,22 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.starter.NabCommonConfig;
+import ru.hh.school.dao.AreaDao;
+import ru.hh.school.dao.EmployerDao;
+import ru.hh.school.dao.VacancyDao;
+import ru.hh.school.entity.Vacancy;
+import ru.hh.school.http.HhClient;
 import ru.hh.school.resource.ExampleResource;
 
 @Configuration
 @Import({
   // import your beans here
   ExampleResource.class,
-  NabCommonConfig.class
+  NabCommonConfig.class,
+        EmployerDao.class,
+        AreaDao.class,
+        VacancyDao.class,
+        HhClient.class
 })
 public class CommonConfig {
 

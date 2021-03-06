@@ -28,6 +28,7 @@ public class Employer {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "area")
     private Area area;
 
     @Column(columnDefinition = "TEXT")

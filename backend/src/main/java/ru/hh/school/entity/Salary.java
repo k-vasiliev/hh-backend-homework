@@ -1,28 +1,33 @@
 package ru.hh.school.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Salary {
 
-    private int to;
-    private int from;
-    private String currency;
-    private boolean gross;
+    @Column(name = "salary_to")
+    private Integer to = null;
+    @Column(name = "salary_from")
+    private Integer from = null;
+    @Column(name = "salary_curr")
+    private String currency = "";
+    @Column(name = "salary_gross")
+    private Boolean gross = null;
 
-    public int getTo() {
+    public Integer getTo() {
         return to;
     }
 
-    public void setTo(int to) {
+    public void setTo(Integer to) {
         this.to = to;
     }
 
-    public int getFrom() {
+    public Integer getFrom() {
         return from;
     }
 
-    public void setFrom(int from) {
+    public void setFrom(Integer from) {
         this.from = from;
     }
 
@@ -34,11 +39,11 @@ public class Salary {
         this.currency = currency;
     }
 
-    public boolean isGross() {
+    public Boolean isGross() {
         return gross;
     }
 
-    public void setGross(boolean gross) {
+    public void setGross(Boolean gross) {
         this.gross = gross;
     }
 

@@ -5,7 +5,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -26,6 +25,7 @@ public class Vacancy {
     private LocalDate dateCreate;
 
     @ManyToOne
+    @JoinColumn(name = "area")
     private Area area;
 
     @Embedded
@@ -35,6 +35,7 @@ public class Vacancy {
     private OffsetDateTime createdAt;
 
     @ManyToOne
+    @JoinColumn(name = "employer")
     private Employer employer;
 
     private int popularity;
