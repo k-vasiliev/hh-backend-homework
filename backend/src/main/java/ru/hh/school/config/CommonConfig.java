@@ -5,13 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.starter.NabCommonConfig;
+import ru.hh.school.resource.EmployerResource;
 import ru.hh.school.resource.ExampleResource;
 
 @Configuration
 @Import({
-  // import your beans here
-  ExampleResource.class,
-  NabCommonConfig.class
+        // import your beans here
+        EmployerResource.class,
+        ExampleResource.class,
+        NabCommonConfig.class
 })
 public class CommonConfig {
 

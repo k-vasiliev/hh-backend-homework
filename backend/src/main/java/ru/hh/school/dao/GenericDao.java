@@ -13,8 +13,7 @@ public class GenericDao {
     }
 
     public void update(Object object) {
-        getSession()
-                .update(object);
+        getSession().update(object);
     }
 
     public <T> T get(Class<T> clazz, Serializable id) {

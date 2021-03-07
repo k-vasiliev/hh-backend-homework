@@ -7,13 +7,13 @@ import ru.hh.school.entity.EmployerEntity;
 
 public final class EmployerMapper {
 
-    public static EmployerDto map(EmployerEntity employerEntity) {
-        AreaEntity area = employerEntity.getArea();
-        AreaDto areaDto = AreaMapper.map(area);
-
-        return new EmployerDto(employerEntity.getId(),
-                employerEntity.getName(),
-                employerEntity.getDescription(),
-                areaDto);
-    }
+//    public static EmployerDto map(EmployerEntity employerEntity) {
+//        AreaEntity area = employerEntity.getArea();
+//        AreaDto areaDto = AreaMapper.map(area);
+//
+//        return new EmployerDto(employerEntity.getId(),
+//                employerEntity.getName(),
+//                employerEntity.getDescription(),
+//                areaDto);
+//    }
 }

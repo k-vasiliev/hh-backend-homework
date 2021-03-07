@@ -1,17 +1,21 @@
 package ru.hh.school.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class EmployerDto {
 
+    @JsonProperty(required = true)
     private String id;
-    private String name;
-    private String description;
-    private AreaDto areaDto;
 
-    public EmployerDto(String id, String name, String description, AreaDto areaDto) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.areaDto = areaDto;
+    @JsonProperty(required = true)
+    private String name;
+
+    @Override
+    public String toString() {
+        return "EmployerDto{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     public String getId() {
@@ -22,27 +26,11 @@ public class EmployerDto {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public AreaDto getAreaDto() {
-        return areaDto;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setAreaDto(AreaDto areaDto) {
-        this.areaDto = areaDto;
     }
 }

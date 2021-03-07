@@ -13,7 +13,7 @@ public class EmployerDao extends GenericDao {
         return getSession()
                 .createQuery("select employer " +
                         "from Employer employer " +
-                        "join fetch employer.area " +
+                        "join employer.area " +
                         "where employer.id = :employerId", EmployerEntity.class)
                 .setParameter("employerId", employerId)
                 .getSingleResult();
