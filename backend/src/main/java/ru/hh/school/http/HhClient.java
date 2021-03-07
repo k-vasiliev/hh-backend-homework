@@ -1,6 +1,7 @@
 package ru.hh.school.http;
 
 import org.jvnet.hk2.annotations.Service;
+import ru.hh.school.exception.ApiRequestException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -14,7 +15,7 @@ public class HhClient {
 
     private final String HH_BASE_URL = "https://api.hh.ru/";
 
-    private HttpRequest createRequest(String url) {
+    private HttpRequest createGetRequest(String url) {
         try {
             return HttpRequest.newBuilder()
                     .uri(new URI(HH_BASE_URL + url))
@@ -36,8 +37,14 @@ public class HhClient {
         }
     }
 
-    public HttpResponse<String> makePaginatedRequest(String url, String query) {
-        return executeRequest(createRequest(url + query));
+    public HttpResponse<String> makeGetRequest(String url, String query) throws ApiRequestException {
+        HttpResponse<String> response = executeRequest(createGetRequest(url + query));
+        if (response.statusCode() == 200) {
+            return response;
+        }
+        throw new ApiRequestException(
+                "Error while making api request.\nStatus code: " + response.statusCode() + "\nMessage: " + response.body()
+        );
     }
 
 }

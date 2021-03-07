@@ -1,7 +1,7 @@
 package ru.hh.school.exception;
 
-public class InvalidPaginationException extends Exception {
-    public InvalidPaginationException(String error) {
-        super(error);
+public class InvalidPaginationException extends ApiRequestException {
+    public InvalidPaginationException(String message) {
+        super(message);
     }
 }

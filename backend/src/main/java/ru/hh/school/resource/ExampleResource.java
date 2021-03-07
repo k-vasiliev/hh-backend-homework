@@ -38,20 +38,6 @@ public class ExampleResource {
   private static final Logger logger = LoggerFactory.getLogger(ExampleResource.class);
 
   @GET
-  @Path("/employer")
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response response(
-          @QueryParam("query") String query,
-          @QueryParam("page") String page,
-          @QueryParam("per_page") String perPage){
-    try {
-      return employerService.fetchListOfEmployersFromApi(query, page, perPage);
-    } catch (InvalidPaginationException e) {
-      return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
-    }
-  }
-
-  @GET
   @Path("/area/create")
   @Produces(MediaType.APPLICATION_JSON)
   public Response saveArea() {
