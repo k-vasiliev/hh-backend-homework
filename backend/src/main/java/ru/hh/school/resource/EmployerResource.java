@@ -30,7 +30,7 @@ public class EmployerResource {
             @QueryParam("page") String page,
             @QueryParam("per_page") String perPage) {
         try {
-            List<EmployerDto> employers =  employerService.fetchEmployersFromApi(query, page, perPage);
+            List<EmployerDto> employers = employerService.fetchEmployersFromApi(query, page, perPage);
             return Response.ok().entity(employers).build();
         } catch (ApiRequestException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

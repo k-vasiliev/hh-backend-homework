@@ -19,9 +19,9 @@ import ru.hh.school.util.EmployerMapper;
 
 @Configuration
 @Import({
-  // import your beans here
-  ExampleResource.class,
-  NabCommonConfig.class,
+        // import your beans here
+        ExampleResource.class,
+        NabCommonConfig.class,
         EmployerDao.class,
         AreaDao.class,
         VacancyDao.class,
@@ -34,10 +34,10 @@ import ru.hh.school.util.EmployerMapper;
 })
 public class CommonConfig {
 
-  @Bean
-  public MappingConfig mappingConfig() {
-    MappingConfig mappingConfig = new MappingConfig();
-    mappingConfig.addPackagesToScan("ru.hh.school.entity");
-    return mappingConfig;
-  }
+    @Bean
+    public MappingConfig mappingConfig() {
+        MappingConfig mappingConfig = new MappingConfig();
+        mappingConfig.addPackagesToScan("ru.hh.school.entity");
+        return mappingConfig;
+    }
 }

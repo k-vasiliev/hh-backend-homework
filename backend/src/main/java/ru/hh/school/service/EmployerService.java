@@ -26,6 +26,7 @@ public class EmployerService {
     public List<EmployerDto> fetchEmployersFromApi(String query, String page, String perPage) throws ApiRequestException {
         String textParam = queryFilter.filter(query);
         String paginationParam = paginationFilter.filter(page, perPage);
+        System.out.println(textParam + paginationParam);
         String dataFromApi = hhClient.makeGetRequest("employers", textParam + paginationParam).body();
         return employerMapper.mapDataFromApi(dataFromApi);
     }

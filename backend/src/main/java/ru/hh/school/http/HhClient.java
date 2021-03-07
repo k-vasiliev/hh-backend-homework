@@ -42,9 +42,7 @@ public class HhClient {
         if (response.statusCode() == 200) {
             return response;
         }
-        throw new ApiRequestException(
-                "Error while making api request.\nStatus code: " + response.statusCode() + "\nMessage: " + response.body()
-        );
+        throw new ApiRequestException("Error while making api request.\nStatus code: " + response.statusCode() + "\nMessage: " + response.body());
     }
 
 }

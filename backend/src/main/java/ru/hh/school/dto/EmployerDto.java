@@ -5,6 +5,8 @@ public class EmployerDto {
     private int id;
     private String name;
 
+    public EmployerDto() {}
+
     public EmployerDto(int id, String name) {
         this.id = id;
         this.name = name;
@@ -24,6 +26,11 @@ public class EmployerDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployerDto=[id=" + id + ", name=" + name + ']';
     }
 
 }
