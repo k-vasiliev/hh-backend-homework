@@ -1,6 +1,7 @@
 package ru.hh.school.entity;
 
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Vacancy {
 
     @ManyToOne
     @JoinColumn(name = "area")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Area area;
 
     @Embedded
@@ -36,9 +38,11 @@ public class Vacancy {
 
     @ManyToOne
     @JoinColumn(name = "employer")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Employer employer;
 
-    private int popularity;
+    @Enumerated(EnumType.STRING)
+    private Popularity popularity = Popularity.REGULAR;
 
     @Column(name = "views_count")
     private int viewsCount;
@@ -99,11 +103,11 @@ public class Vacancy {
         this.employer = employer;
     }
 
-    public int getPopularity() {
+    public Popularity getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(int popularity) {
+    public void setPopularity(Popularity popularity) {
         this.popularity = popularity;
     }
 

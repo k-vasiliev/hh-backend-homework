@@ -1,7 +1,5 @@
 package ru.hh.school.resource;
 
-import org.hibernate.SessionFactory;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hh.school.dao.AreaDao;
@@ -11,10 +9,9 @@ import ru.hh.school.entity.Area;
 import ru.hh.school.entity.Employer;
 import ru.hh.school.entity.Salary;
 import ru.hh.school.entity.Vacancy;
-import ru.hh.school.service.EmployerService;
+import ru.hh.school.service.ApiService;
 
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import javax.ws.rs.GET;
@@ -33,17 +30,17 @@ public class ExampleResource {
     private final EmployerDao employerDao;
     private final AreaDao areaDao;
     private final VacancyDao vacancyDao;
-    private final EmployerService employerService;
+    private final ApiService apiService;
 
-    public ExampleResource(EmployerDao employerDao, AreaDao areaDao, VacancyDao vacancyDao, EmployerService employerService) {
+    public ExampleResource(EmployerDao employerDao, AreaDao areaDao, VacancyDao vacancyDao, ApiService apiService) {
         this.employerDao = employerDao;
         this.areaDao = areaDao;
         this.vacancyDao = vacancyDao;
-        this.employerService = employerService;
+        this.apiService = apiService;
     }
 
 
-    @GET
+    /*@GET
     @Path("/area/create")
     @Produces(MediaType.APPLICATION_JSON)
     public Response saveArea() {
@@ -94,5 +91,5 @@ public class ExampleResource {
         vacancyDao.save(test);
         Vacancy vacancy = vacancyDao.get(Vacancy.class, 1);
         return Response.ok().entity(vacancy).build();
-    }
+    }*/
 }

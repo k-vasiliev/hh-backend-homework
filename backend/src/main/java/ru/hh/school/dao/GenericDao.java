@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -17,8 +18,9 @@ public class GenericDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public <T> T get(Class<T> clz, Serializable id) {
-        return getSession().get(clz, id);
+    public <T> Optional<T> get(Class<T> clz, Serializable id) {
+            T instance =  getSession().get(clz, id);
+            return instance == null ? Optional.empty() : Optional.of(instance);
     }
 
     public void save(Object obj) {
@@ -26,6 +28,13 @@ public class GenericDao {
             return;
         }
         getSession().save(obj);
+    }
+
+    public void delete(Object obj) {
+        if (obj == null) {
+            return;
+        }
+        getSession().delete(obj);
     }
 
     protected Session getSession() {

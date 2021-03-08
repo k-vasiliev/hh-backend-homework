@@ -1,8 +1,10 @@
 package ru.hh.school.http;
 
 import org.jvnet.hk2.annotations.Service;
-import ru.hh.school.exception.ApiRequestException;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.ServerErrorException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,12 +39,18 @@ public class HhClient {
         }
     }
 
-    public HttpResponse<String> makeGetRequest(String url, String query) throws ApiRequestException {
+    public HttpResponse<String> makeGetRequest(String url, String query) {
         HttpResponse<String> response = executeRequest(createGetRequest(url + query));
         if (response.statusCode() == 200) {
             return response;
         }
-        throw new ApiRequestException("Error while making api request.\nStatus code: " + response.statusCode() + "\nMessage: " + response.body());
+        if (response.statusCode() == 404) {
+            throw new NotFoundException();
+        }
+        if (response.statusCode() == 400) {
+            throw new BadRequestException();
+        }
+        throw new ServerErrorException(500);
     }
 
 }

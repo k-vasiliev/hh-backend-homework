@@ -1,6 +1,7 @@
 package ru.hh.school.entity;
 
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -29,13 +30,14 @@ public class Employer {
 
     @ManyToOne
     @JoinColumn(name = "area")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Area area;
 
     @Column(columnDefinition = "TEXT")
     private String comment;
 
-    @Column(columnDefinition = "integer default 0")
-    private int popularity;
+    @Enumerated(EnumType.STRING)
+    private Popularity popularity = Popularity.REGULAR;
 
     @Column(name = "views_count", columnDefinition = "integer default 0")
     private int viewsCount;
@@ -88,11 +90,11 @@ public class Employer {
         this.comment = comment;
     }
 
-    public int getPopularity() {
+    public Popularity getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(int popularity) {
+    public void setPopularity(Popularity popularity) {
         this.popularity = popularity;
     }
 
@@ -112,6 +114,7 @@ public class Employer {
                     ", area=" + area + '\n' +
                     ", popularity=" + popularity + '\n' +
                     ", viewsCount=" + viewsCount +
+                    ", comment=" + comment +
                 ']';
     }
 

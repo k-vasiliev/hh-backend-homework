@@ -3,11 +3,9 @@ import org.springframework.test.context.ContextConfiguration;
 import ru.hh.nab.starter.NabApplication;
 import ru.hh.nab.testbase.NabTestBase;
 import ru.hh.school.dto.EmployerDto;
-import ru.hh.school.exception.InvalidPaginationException;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -29,7 +27,7 @@ public class EmployerResourceTest extends NabTestBase {
     }
 
     @Test
-    public void emptyParameters() {
+    public void emptyParametersShouldReturnListWithDefaultPaginationParameters() {
         Response response = executeGetRequestWithParams(BASE_URL, "");
         List<EmployerDto> employers = response.readEntity(new GenericType<>() {
         });
@@ -46,10 +44,54 @@ public class EmployerResourceTest extends NabTestBase {
     }
 
     @Test
-    public void invalidPageParameter() {
+    public void negativePageParameter() {
         Response response = executeGetRequestWithParams(BASE_URL, "query=headhunter&page=-1");
-        System.out.println(response.getStatus());
-        System.out.println(response.readEntity(String.class));
+        assertEquals(400, response.getStatus());
+        assertEquals("page parameter can't be negative", response.readEntity(String.class));
+    }
+
+    @Test
+    public void nonIntegerPageParameter() {
+        Response response = executeGetRequestWithParams(BASE_URL, "query=headhunter&page=a");
+        assertEquals(400, response.getStatus());
+        assertEquals("unable to parse page parameter", response.readEntity(String.class));
+    }
+
+    @Test
+    public void negativePerPageParameter() {
+        Response response = executeGetRequestWithParams(BASE_URL, "query=headhunter&per_page=-1");
+        assertEquals(400, response.getStatus());
+        assertEquals("per_page parameter can't be negative", response.readEntity(String.class));
+    }
+
+    @Test
+    public void greaterThen100PerPageParameter() {
+        Response response = executeGetRequestWithParams(BASE_URL, "query=headhunter&per_page=200");
+        assertEquals(400, response.getStatus());
+        assertEquals("per_page parameter can't be greater then 100", response.readEntity(String.class));
+    }
+
+    @Test
+    public void nonIntegerPerPageParameter() {
+        Response response = executeGetRequestWithParams(BASE_URL, "query=headhunter&per_page=a");
+        assertEquals(400, response.getStatus());
+        assertEquals("unable to parse per_page parameter", response.readEntity(String.class));
+    }
+
+    @Test
+    public void invalidPerPageAndPageParameters() {
+        Response response = executeGetRequestWithParams(BASE_URL, "query=headhunter&page=a&per_page=a");
+        assertEquals(400, response.getStatus());
+        assertEquals("unable to parse page parameter", response.readEntity(String.class));
+    }
+
+    @Test
+    public void validPerPageParameterShouldReturnListOfSpecifiedLength() {
+        Response response = executeGetRequestWithParams(BASE_URL, "per_page=10");
+        List<EmployerDto> employers = response.readEntity(new GenericType<>() {
+        });
+        assertEquals(200, response.getStatus());
+        assertEquals(10, employers.size());
     }
 
 }

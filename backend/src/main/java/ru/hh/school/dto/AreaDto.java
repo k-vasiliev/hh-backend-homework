@@ -1,13 +1,17 @@
 package ru.hh.school.dto;
 
-public class EmployerDto {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ru.hh.school.entity.Area;
 
-    protected int id;
-    protected String name;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class AreaDto {
 
-    public EmployerDto() {}
+    private int id;
+    private String name;
 
-    public EmployerDto(int id, String name) {
+    public AreaDto() {}
+
+    public AreaDto(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -30,7 +34,6 @@ public class EmployerDto {
 
     @Override
     public String toString() {
-        return "EmployerDto=[id=" + id + ", name=" + name + ']';
+        return "AreaDto[id=" + id + ", name=" + name + ']';
     }
-
 }
