@@ -6,13 +6,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jvnet.hk2.annotations.Service;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.school.dao.AreaDao;
+import ru.hh.school.dao.CommentDao;
+import ru.hh.school.dao.ViewsCounterDao;
 import ru.hh.school.dto.AreaDto;
 import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.dto.EmployerDtoById;
 import ru.hh.school.dto.FavoriteEmployerDto;
-import ru.hh.school.entity.Area;
-import ru.hh.school.entity.Employer;
-import ru.hh.school.entity.Popularity;
+import ru.hh.school.entity.*;
 
 import javax.ws.rs.ServerErrorException;
 import java.util.Iterator;
@@ -26,11 +26,15 @@ public class EmployerMapper {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final AreaMapper areaMapper;
     private final AreaDao areaDao;
+    private final CommentDao commentDao;
+    private final ViewsCounterDao viewsCounterDao;
     private final FileSettings fileSettings;
 
-    public EmployerMapper(AreaMapper areaMapper, AreaDao areaDao, FileSettings fileSettings) {
+    public EmployerMapper(AreaMapper areaMapper, AreaDao areaDao, CommentDao commentDao, ViewsCounterDao viewsCounterDao, FileSettings fileSettings) {
         this.areaMapper = areaMapper;
         this.areaDao = areaDao;
+        this.commentDao = commentDao;
+        this.viewsCounterDao = viewsCounterDao;
         this.fileSettings = fileSettings;
     }
 
@@ -52,7 +56,6 @@ public class EmployerMapper {
     public EmployerDtoById mapDataFromApiById(String employerData) {
         try {
             EmployerDtoById employer = objectMapper.readValue(employerData, EmployerDtoById.class);
-            System.out.println(employer);
             return employer;
         } catch (JsonProcessingException e) {
             throw new ServerErrorException(500);
@@ -61,15 +64,17 @@ public class EmployerMapper {
 
     public FavoriteEmployerDto mapDataFromDatabase(Employer employer) {
         AreaDto areaDto = areaMapper.mapToDto(employer.getArea());
-        Popularity popularity = employer.getViewsCount() >= fileSettings.getInteger("popularity.settings")
+        String comment = employer.getComment().getComment();
+        Integer counter = employer.getViewsCount().getCounter();
+        Popularity popularity = employer.getViewsCount().getCounter() >= fileSettings.getInteger("popularity.settings")
                 ? Popularity.POPULAR : Popularity.REGULAR;
         return new FavoriteEmployerDto(
                 employer.getId(),
                 employer.getName(),
                 employer.getDescription(),
-                employer.getComment(),
+                comment,
                 employer.getDateCreate(),
-                employer.getViewsCount(),
+                counter,
                 popularity,
                 areaDto
         );
@@ -85,8 +90,11 @@ public class EmployerMapper {
     public Employer mapEmployerDtoToEntity(EmployerDtoById employerDto, String comment) {
         Employer employer = new Employer();
         Area area = areaMapper.mapToEntity(employerDto.getArea());
+        Comment newComment = commentDao.persistNewComment(comment);
+        EmployerCounter counter = viewsCounterDao.persistNewCounter();
         employer.setArea(area);
-        employer.setComment(comment);
+        employer.setComment(newComment);
+        employer.setViewsCount(counter);
         return copyDtoFieldsToEntity(employer, employerDto);
     }
 
@@ -95,7 +103,6 @@ public class EmployerMapper {
         Area area = areaDao.get(Area.class, areaDto.getId()).orElse(areaMapper.mapToEntity(areaDto));
         area.setName(areaDto.getName());
         employer.setArea(area);
-        employer.setComment(employer.getComment());
         return copyDtoFieldsToEntity(employer, employerDto);
     }
 

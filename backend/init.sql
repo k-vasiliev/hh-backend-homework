@@ -6,9 +6,23 @@ TRUNCATE vacancy CASCADE;
 DROP TABLE area CASCADE;
 DROP TABLE employer CASCADE;
 DROP TABLE vacancy CASCADE;
+DROP TABLE viewscounter;
+DROP TABLE comment CASCADE;
+
+CREATE TABLE IF NOT EXISTS viewscounter (
+    id SERIAL PRIMARY KEY,
+    counter INTEGER DEFAULT 0,
+    version INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS comment (
+    id SERIAL PRIMARY KEY,
+    comment TEXT,
+    version INTEGER
+);
 
 CREATE TABLE IF NOT EXISTS area (
-    id  INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
 
@@ -18,8 +32,8 @@ CREATE TABLE IF NOT EXISTS  employer (
     date_create DATE NOT NULL DEFAULT CURRENT_DATE,
     description TEXT,
     area INTEGER NOT NULL REFERENCES area ON DELETE SET NULL,
-    comment TEXT,
-    views_count INTEGER default 0
+    comment INTEGER NOT NULL REFERENCES comment ON DELETE SET NULL,
+    views_count INTEGER NOT NULL REFERENCES viewscounter ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS vacancy (

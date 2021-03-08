@@ -7,23 +7,32 @@ import javax.persistence.*;
 
 @Entity
 @OptimisticLocking(type = OptimisticLockType.VERSION)
-public class Comment {
+@Table(name = "employer_counter")
+public class EmployerCounter {
 
-    public Comment() {}
-
-    public Comment(String comment) {
-        this.comment = comment;
-    }
+    public EmployerCounter() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "comment")
-    private String comment;
+    @Column(columnDefinition = "integer default 0")
+    private Integer counter;
+
+    @OneToOne(mappedBy = "employer_counter")
+
+    private Employer employer;
 
     @Version
     private Integer version;
+
+    public Integer getCounter() {
+        return counter;
+    }
+
+    public void setCounter(Integer counter) {
+        this.counter = counter;
+    }
 
     public int getId() {
         return id;
@@ -31,14 +40,6 @@ public class Comment {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public Integer getVersion() {
@@ -51,9 +52,9 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment[" +
+        return "ViewsCounter[" +
                 "id=" + id +
-                ", comment='" + comment + '\'' +
+                ", counter=" + counter +
                 ", version=" + version +
                 ']';
     }

@@ -33,11 +33,15 @@ public class Employer {
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Area area;
 
-    @Column(columnDefinition = "TEXT")
-    private String comment;
+    @OneToOne
+    @JoinColumn(name = "comment")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    private Comment comment;
 
-    @Column(name = "views_count", columnDefinition = "integer default 0")
-    private int viewsCount;
+    @OneToOne
+    @JoinColumn(name = "views_count")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    private EmployerCounter viewsCount;
 
     public int getId() {
         return id;
@@ -79,19 +83,19 @@ public class Employer {
         this.area = area;
     }
 
-    public String getComment() {
+    public Comment getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment(Comment comment) {
         this.comment = comment;
     }
 
-    public int getViewsCount() {
+    public EmployerCounter getViewsCount() {
         return viewsCount;
     }
 
-    public void setViewsCount(int viewsCount) {
+    public void setViewsCount(EmployerCounter viewsCount) {
         this.viewsCount = viewsCount;
     }
 

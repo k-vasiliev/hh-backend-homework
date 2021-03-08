@@ -17,4 +17,5 @@ public class AreaMapper {
         area.setName(areaDto.getName());
         return area;
     }
+
 }

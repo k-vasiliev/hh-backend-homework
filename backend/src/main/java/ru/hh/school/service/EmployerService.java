@@ -4,6 +4,7 @@ import org.jvnet.hk2.annotations.Service;
 import ru.hh.school.dao.EmployerDao;
 import ru.hh.school.dto.EmployerDtoById;
 import ru.hh.school.dto.FavoriteEmployerDto;
+import ru.hh.school.entity.Comment;
 import ru.hh.school.entity.Employer;
 import ru.hh.school.util.EmployerMapper;
 import ru.hh.school.util.IdParameterValidator;
@@ -22,26 +23,34 @@ public class EmployerService {
     private final EmployerDao employerDao;
     private final EmployerMapper employerMapper;
     private final ApiService apiService;
+    private final CounterService counterService;
+    private final CommentService commentService;
     private final StringParameterFilter stringParameterFilter;
     private final PaginationValidator paginationValidator;
     private final IdParameterValidator idParameterValidator;
 
-    public EmployerService(EmployerDao employerDao, EmployerMapper employerMapper, ApiService apiService, StringParameterFilter stringParameterFilter, PaginationValidator paginationValidator, IdParameterValidator idParameterValidator) {
+    public EmployerService(EmployerDao employerDao, EmployerMapper employerMapper, ApiService apiService, CounterService counterService, CommentService commentService, StringParameterFilter stringParameterFilter, PaginationValidator paginationValidator, IdParameterValidator idParameterValidator) {
         this.employerDao = employerDao;
         this.employerMapper = employerMapper;
         this.apiService = apiService;
+        this.counterService = counterService;
+        this.commentService = commentService;
         this.stringParameterFilter = stringParameterFilter;
         this.paginationValidator = paginationValidator;
         this.idParameterValidator = idParameterValidator;
     }
 
     private Employer getEmployer(Integer id) {
+        System.out.println(employerDao.get(Employer.class, id));
         return employerDao.get(Employer.class, id).orElseThrow(NotFoundException::new);
     }
 
     public List<FavoriteEmployerDto> getFavorites(Integer page, Integer perPage) {
         paginationValidator.validate(page, perPage);
         List<Employer> employers = employerDao.getFavoritesWithPagination(page, perPage);
+        employers.stream()
+                .map(employer -> employer.getViewsCount())
+                .forEach(counterService::incrementCounter);
         return employers.stream().map(employerMapper::mapDataFromDatabase).collect(Collectors.toList());
     }
 
@@ -63,7 +72,7 @@ public class EmployerService {
         idParameterValidator.validate(employerId);
         String validComment = stringParameterFilter.filter(comment);
         Employer employer = getEmployer(employerId);
-        employer.setComment(validComment);
+        commentService.updateComment(employer.getComment(), validComment);
         return employer;
     }
 

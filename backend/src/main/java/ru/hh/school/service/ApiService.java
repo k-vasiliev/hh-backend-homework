@@ -38,7 +38,9 @@ public class ApiService {
 
     public EmployerDtoById fetchEmployersFromApiById(Integer employerId) {
         Integer idParam = idParameterValidator.validate(employerId);
+        System.out.println("Employerid" + employerId);
         String dataFromApi = hhClient.makeGetRequest("employers/" + idParam, "").body();
+        System.out.println();
         return employerMapper.mapDataFromApiById(dataFromApi);
     }
 

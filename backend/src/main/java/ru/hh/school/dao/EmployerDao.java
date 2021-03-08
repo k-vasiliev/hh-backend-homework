@@ -21,18 +21,11 @@ public class EmployerDao extends GenericDao {
         return getSession().createQuery("from Employer", Employer.class).getResultList();
     }
 
-    @Transactional
     public List<Employer> getFavoritesWithPagination(Integer page, Integer perPage) {
         Query query =  getSession().createQuery("from Employer", Employer.class);
         query.setFirstResult(perPage * page);
         query.setMaxResults(perPage);
-        List<Employer> employers = query.getResultList();
-        employers.stream().forEach(
-                employer -> {
-                    employer.setViewsCount(employer.getViewsCount() + 1);
-                }
-        );
-        return employers;
+        return query.getResultList();
     }
 
 }

@@ -37,6 +37,10 @@ public class GenericDao {
         getSession().delete(obj);
     }
 
+    public void refresh(Object obj) {
+        getSession().refresh(obj);
+    }
+
     protected Session getSession() {
         return sessionFactory.getCurrentSession();
     }
