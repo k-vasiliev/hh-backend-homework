@@ -8,10 +8,7 @@ import ru.hh.nab.starter.NabCommonConfig;
 import ru.hh.school.dao.*;
 import ru.hh.school.exception.CustomExceptionMapper;
 import ru.hh.school.http.HhClient;
-import ru.hh.school.resource.EmployerResource;
-import ru.hh.school.resource.ExampleResource;
-import ru.hh.school.resource.FavoritesEmployerResource;
-import ru.hh.school.resource.VacancyResource;
+import ru.hh.school.resource.*;
 import ru.hh.school.service.ApiService;
 import ru.hh.school.service.CommentService;
 import ru.hh.school.service.CounterService;
@@ -42,7 +39,8 @@ import ru.hh.school.util.*;
         CounterService.class,
         CommentService.class,
         VacancyResource.class,
-        VacancyMapper.class
+        VacancyMapper.class,
+        FavoritesVacancyResource.class
 })
 public class CommonConfig {
 

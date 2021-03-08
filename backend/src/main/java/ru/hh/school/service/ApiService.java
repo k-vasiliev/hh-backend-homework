@@ -50,4 +50,9 @@ public class ApiService {
         return vacancyMapper.mapDataFromApi(dataFromApi);
     }
 
+    public VacancyDto fetchVacanciesFromApiById(Integer vacancyId) {
+        Integer idParam = idParameterValidator.validate(vacancyId);
+        String dataFromApi = hhClient.makeGetRequest("vacancies/" + idParam, "").body();
+        return vacancyMapper.mapDataFromApiById(dataFromApi);
+    }
 }

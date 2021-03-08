@@ -1,5 +1,6 @@
 package ru.hh.school.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 
@@ -22,6 +23,7 @@ public class EmployerCounter {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")
+    @JsonIgnore
     private Employer employer;
 
     @Version

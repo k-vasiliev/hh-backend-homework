@@ -20,6 +20,8 @@ public class FavoriteEmployerDto extends EmployerDtoById {
 
     private String comment;
 
+    public FavoriteEmployerDto() {}
+
     public FavoriteEmployerDto(
             int id,
             String name,

@@ -9,6 +9,7 @@ import ru.hh.school.dao.AreaDao;
 import ru.hh.school.dao.CommentDao;
 import ru.hh.school.dao.ViewsCounterDao;
 import ru.hh.school.dto.VacancyDto;
+import ru.hh.school.entity.Vacancy;
 
 import javax.ws.rs.ServerErrorException;
 import java.time.OffsetDateTime;
@@ -59,5 +60,17 @@ public class VacancyMapper {
             throw new ServerErrorException(500);
         }
     }
+
+    public VacancyDto mapDataFromApiById(String dataFromApi) {
+        try {
+            return objectMapper.readValue(dataFromApi, VacancyDto.class);
+        } catch (JsonProcessingException e) {
+            throw new ServerErrorException(500);
+        }
+    }
+
+    /*public Vacancy mapVacancyDtoToEntity(VacancyDto vacancyDto) {
+        Vacancy vacancy = new Vacancy();
+    }*/
 
 }

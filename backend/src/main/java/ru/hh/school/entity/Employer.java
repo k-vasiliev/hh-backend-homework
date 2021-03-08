@@ -1,5 +1,6 @@
 package ru.hh.school.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
@@ -44,6 +45,7 @@ public class Employer {
     private EmployerCounter employerCounter;
 
     @OneToMany(mappedBy = "employer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Vacancy> vacancies;
 
     public int getId() {
