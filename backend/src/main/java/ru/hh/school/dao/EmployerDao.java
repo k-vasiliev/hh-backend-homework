@@ -29,11 +29,7 @@ public class EmployerDao extends GenericDao {
         List<Employer> employers = query.getResultList();
         employers.stream().forEach(
                 employer -> {
-                    Integer viewsCount = employer.getViewsCount();
                     employer.setViewsCount(employer.getViewsCount() + 1);
-                    if (viewsCount == 49) {
-                        employer.setPopularity(Popularity.POPULAR);
-                    }
                 }
         );
         return employers;

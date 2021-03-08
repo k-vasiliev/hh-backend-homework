@@ -10,7 +10,7 @@ public class FavoriteEmployerDto extends EmployerDtoById {
     @JsonProperty("date_create")
     private LocalDate dateCreate;
 
-    private Popularity popularity;
+    private Popularity popularity = Popularity.REGULAR;
 
     @JsonProperty("views_count")
     private int viewsCount = 0;
@@ -23,8 +23,8 @@ public class FavoriteEmployerDto extends EmployerDtoById {
             String description,
             String comment,
             LocalDate dateCreate,
-            Popularity popularity,
             int viewsCount,
+            Popularity popularity,
             AreaDto area) {
         super(id, name, description, area);
         this.comment = comment;

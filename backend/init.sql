@@ -19,7 +19,6 @@ CREATE TABLE IF NOT EXISTS  employer (
     description TEXT,
     area INTEGER NOT NULL REFERENCES area ON DELETE SET NULL,
     comment TEXT,
-    popularity VARCHAR(10) default 'REGULAR',
     views_count INTEGER default 0
 );
 
@@ -34,6 +33,5 @@ CREATE TABLE IF NOT EXISTS vacancy (
     salary_gross BOOLEAN,
     created_at TIMESTAMPTZ,
     employer INTEGER NOT NULL REFERENCES employer ON DELETE CASCADE,
-    popularity VARCHAR(10) default 'REGULAR',
     views_count INTEGER default 0
 );

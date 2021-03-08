@@ -41,9 +41,6 @@ public class Vacancy {
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Employer employer;
 
-    @Enumerated(EnumType.STRING)
-    private Popularity popularity = Popularity.REGULAR;
-
     @Column(name = "views_count")
     private int viewsCount;
 
@@ -103,14 +100,6 @@ public class Vacancy {
         this.employer = employer;
     }
 
-    public Popularity getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(Popularity popularity) {
-        this.popularity = popularity;
-    }
-
     public int getViewsCount() {
         return viewsCount;
     }
@@ -128,7 +117,6 @@ public class Vacancy {
                 ", createdAt=" + createdAt + '\n' +
                 ", employer=[id=" + employer.getId() + ", name=" + employer.getName() + "]\n" +
                 ", area=" + area + '\n' +
-                ", popularity=" + popularity + '\n' +
                 ", viewsCount=" + viewsCount + '\n' +
                 ']';
     }

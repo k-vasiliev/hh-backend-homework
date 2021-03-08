@@ -36,9 +36,6 @@ public class Employer {
     @Column(columnDefinition = "TEXT")
     private String comment;
 
-    @Enumerated(EnumType.STRING)
-    private Popularity popularity = Popularity.REGULAR;
-
     @Column(name = "views_count", columnDefinition = "integer default 0")
     private int viewsCount;
 
@@ -90,14 +87,6 @@ public class Employer {
         this.comment = comment;
     }
 
-    public Popularity getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(Popularity popularity) {
-        this.popularity = popularity;
-    }
-
     public int getViewsCount() {
         return viewsCount;
     }
@@ -112,7 +101,6 @@ public class Employer {
                     ", name=" + name + '\n' +
                     ", dateCreate=" + dateCreate + '\n' +
                     ", area=" + area + '\n' +
-                    ", popularity=" + popularity + '\n' +
                     ", viewsCount=" + viewsCount +
                     ", comment=" + comment +
                 ']';

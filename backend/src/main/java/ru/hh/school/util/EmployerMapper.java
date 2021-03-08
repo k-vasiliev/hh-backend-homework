@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jvnet.hk2.annotations.Service;
+import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.school.dao.AreaDao;
 import ru.hh.school.dto.AreaDto;
 import ru.hh.school.dto.EmployerDto;
@@ -11,6 +12,7 @@ import ru.hh.school.dto.EmployerDtoById;
 import ru.hh.school.dto.FavoriteEmployerDto;
 import ru.hh.school.entity.Area;
 import ru.hh.school.entity.Employer;
+import ru.hh.school.entity.Popularity;
 
 import javax.ws.rs.ServerErrorException;
 import java.util.Iterator;
@@ -24,10 +26,12 @@ public class EmployerMapper {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final AreaMapper areaMapper;
     private final AreaDao areaDao;
+    private final FileSettings fileSettings;
 
-    public EmployerMapper(AreaMapper areaMapper, AreaDao areaDao) {
+    public EmployerMapper(AreaMapper areaMapper, AreaDao areaDao, FileSettings fileSettings) {
         this.areaMapper = areaMapper;
         this.areaDao = areaDao;
+        this.fileSettings = fileSettings;
     }
 
     public List<EmployerDto> mapDataFromApi(String employersData) {
@@ -57,14 +61,16 @@ public class EmployerMapper {
 
     public FavoriteEmployerDto mapDataFromDatabase(Employer employer) {
         AreaDto areaDto = areaMapper.mapToDto(employer.getArea());
+        Popularity popularity = employer.getViewsCount() >= fileSettings.getInteger("popularity.settings")
+                ? Popularity.POPULAR : Popularity.REGULAR;
         return new FavoriteEmployerDto(
                 employer.getId(),
                 employer.getName(),
                 employer.getDescription(),
                 employer.getComment(),
                 employer.getDateCreate(),
-                employer.getPopularity(),
                 employer.getViewsCount(),
+                popularity,
                 areaDto
         );
     }
