@@ -35,13 +35,13 @@ public class Employer {
 
     @OneToOne
     @JoinColumn(name = "comment")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Comment comment;
 
     @OneToOne
     @JoinColumn(name = "views_count")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private EmployerCounter viewsCount;
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private EmployerCounter employerCounter;
 
     public int getId() {
         return id;
@@ -92,11 +92,11 @@ public class Employer {
     }
 
     public EmployerCounter getViewsCount() {
-        return viewsCount;
+        return employerCounter;
     }
 
-    public void setViewsCount(EmployerCounter viewsCount) {
-        this.viewsCount = viewsCount;
+    public void setViewsCount(EmployerCounter employerCounter) {
+        this.employerCounter = employerCounter;
     }
 
     @Override
@@ -105,8 +105,8 @@ public class Employer {
                     ", name=" + name + '\n' +
                     ", dateCreate=" + dateCreate + '\n' +
                     ", area=" + area + '\n' +
-                    ", viewsCount=" + viewsCount +
-                    ", comment=" + comment +
+                    ", employerCounter=" + employerCounter.getCounter() +
+                    ", comment=" + comment.getComment() +
                 ']';
     }
 

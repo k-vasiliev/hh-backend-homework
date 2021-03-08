@@ -25,6 +25,9 @@ public class Comment {
     @Version
     private Integer version;
 
+    @OneToOne(mappedBy = "comment", fetch = FetchType.LAZY)
+    private Employer employer;
+
     public int getId() {
         return id;
     }

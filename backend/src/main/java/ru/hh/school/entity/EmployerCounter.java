@@ -19,8 +19,7 @@ public class EmployerCounter {
     @Column(columnDefinition = "integer default 0")
     private Integer counter;
 
-    @OneToOne(mappedBy = "employer_counter")
-
+    @OneToOne(mappedBy = "employerCounter", fetch = FetchType.LAZY)
     private Employer employer;
 
     @Version
@@ -48,6 +47,14 @@ public class EmployerCounter {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
     }
 
     @Override
