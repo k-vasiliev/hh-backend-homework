@@ -17,12 +17,18 @@ public class EmployerDao extends GenericDao {
         super(sessionFactory);
     }
 
-    public List<Employer> getFavorites() {
-        return getSession().createQuery("from Employer", Employer.class).getResultList();
+    private Query eagerQuery() {
+        return getSession().createQuery(
+                "from Employer employer " +
+                        "join fetch employer.area a " +
+                        "join fetch employer.comment c " +
+                        "join fetch employer.employerCounter ec ",
+                Employer.class
+        );
     }
 
     public List<Employer> getFavoritesWithPagination(Integer page, Integer perPage) {
-        Query query =  getSession().createQuery("from Employer", Employer.class);
+        Query query =  eagerQuery();
         query.setFirstResult(perPage * page);
         query.setMaxResults(perPage);
         return query.getResultList();

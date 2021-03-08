@@ -11,6 +11,7 @@ import ru.hh.school.http.HhClient;
 import ru.hh.school.resource.EmployerResource;
 import ru.hh.school.resource.ExampleResource;
 import ru.hh.school.resource.FavoritesEmployerResource;
+import ru.hh.school.resource.VacancyResource;
 import ru.hh.school.service.ApiService;
 import ru.hh.school.service.CommentService;
 import ru.hh.school.service.CounterService;
@@ -39,7 +40,9 @@ import ru.hh.school.util.*;
         CommentDao.class,
         ViewsCounterDao.class,
         CounterService.class,
-        CommentService.class
+        CommentService.class,
+        VacancyResource.class,
+        VacancyMapper.class
 })
 public class CommonConfig {
 

@@ -7,12 +7,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "employer")
 public class Employer {
 
-    public Employer() {}
+    public Employer() {
+    }
 
     @Id
     private int id;
@@ -28,20 +30,21 @@ public class Employer {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area")
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Area area;
 
-    @OneToOne
-    @JoinColumn(name = "comment")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToOne(mappedBy = "employer", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Comment comment;
 
-    @OneToOne
-    @JoinColumn(name = "views_count")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @OneToOne(mappedBy = "employer", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private EmployerCounter employerCounter;
+
+    @OneToMany(mappedBy = "employer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private Set<Vacancy> vacancies;
 
     public int getId() {
         return id;
@@ -99,14 +102,23 @@ public class Employer {
         this.employerCounter = employerCounter;
     }
 
+    public Set<Vacancy> getVacancies() {
+        return vacancies;
+    }
+
+    public void setVacancies(Set<Vacancy> vacancies) {
+        this.vacancies = vacancies;
+    }
+
+
     @Override
     public String toString() {
         return "Employer[id=" + id +
-                    ", name=" + name + '\n' +
-                    ", dateCreate=" + dateCreate + '\n' +
-                    ", area=" + area + '\n' +
-                    ", employerCounter=" + employerCounter.getCounter() +
-                    ", comment=" + comment.getComment() +
+                ", name=" + name + '\n' +
+                ", dateCreate=" + dateCreate + '\n' +
+                ", area=" + area + '\n' +
+                ", employerCounter=" + employerCounter.getCounter() +
+                ", comment=" + comment.getComment() +
                 ']';
     }
 
@@ -119,6 +131,8 @@ public class Employer {
     }
 
     @Override
-    public int hashCode() { return Objects.hash(name); }
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 
 }

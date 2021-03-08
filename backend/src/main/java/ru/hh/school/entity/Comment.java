@@ -25,7 +25,9 @@ public class Comment {
     @Version
     private Integer version;
 
-    @OneToOne(mappedBy = "comment", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JoinColumn(name = "id")
     private Employer employer;
 
     public int getId() {
@@ -59,5 +61,13 @@ public class Comment {
                 ", comment='" + comment + '\'' +
                 ", version=" + version +
                 ']';
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
     }
 }

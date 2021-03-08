@@ -45,10 +45,19 @@ public class EmployerMapper {
             Iterator<JsonNode> elements = items.elements();
             Iterable<JsonNode> iterable = () -> elements;
             List<EmployerDto> employers = StreamSupport.stream(iterable.spliterator(), false)
-                    .map(employer -> new EmployerDto(employer.get("id").asInt(), employer.get("name").asText()))
+                    .map(employer -> convertJsonNodeToValue(employer, EmployerDto.class))
                     .collect(Collectors.toList());
             return employers;
         } catch (JsonProcessingException e) {
+            throw new ServerErrorException(500);
+        }
+    }
+
+    private <T> T convertJsonNodeToValue(JsonNode node, Class<T> clz) {
+        try {
+            return objectMapper.treeToValue(node, clz);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
             throw new ServerErrorException(500);
         }
     }
@@ -90,8 +99,10 @@ public class EmployerMapper {
     public Employer mapEmployerDtoToEntity(EmployerDtoById employerDto, String comment) {
         Employer employer = new Employer();
         Area area = areaMapper.mapToEntity(employerDto.getArea());
-        Comment newComment = commentDao.persistNewComment(comment);
-        EmployerCounter counter = viewsCounterDao.persistNewCounter();
+        Comment newComment = new Comment(comment);
+        EmployerCounter counter = new EmployerCounter();
+        newComment.setEmployer(employer);
+        counter.setEmployer(employer);
         employer.setArea(area);
         employer.setComment(newComment);
         employer.setViewsCount(counter);

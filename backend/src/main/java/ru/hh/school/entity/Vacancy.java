@@ -25,7 +25,7 @@ public class Vacancy {
     @Column(name = "date_create")
     private LocalDate dateCreate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "area")
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Area area;
@@ -38,11 +38,11 @@ public class Vacancy {
 
     @ManyToOne
     @JoinColumn(name = "employer")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private Employer employer;
 
-    @Column(name = "views_count")
-    private int viewsCount;
+    @OneToOne(mappedBy = "vacancy", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private VacancyCounter vacancyCounter;
 
     public int getId() {
         return id;
@@ -100,12 +100,12 @@ public class Vacancy {
         this.employer = employer;
     }
 
-    public int getViewsCount() {
-        return viewsCount;
+    public VacancyCounter getViewsCount() {
+        return vacancyCounter;
     }
 
-    public void setViewsCount(int viewsCount) {
-        this.viewsCount = viewsCount;
+    public void setViewsCount(VacancyCounter vacancyCounter) {
+        this.vacancyCounter = vacancyCounter;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Vacancy {
                 ", createdAt=" + createdAt + '\n' +
                 ", employer=[id=" + employer.getId() + ", name=" + employer.getName() + "]\n" +
                 ", area=" + area + '\n' +
-                ", viewsCount=" + viewsCount + '\n' +
+                ", vacancyCounter=" + vacancyCounter + '\n' +
                 ']';
     }
 

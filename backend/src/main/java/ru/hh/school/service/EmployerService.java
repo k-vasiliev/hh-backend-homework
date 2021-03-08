@@ -4,7 +4,6 @@ import org.jvnet.hk2.annotations.Service;
 import ru.hh.school.dao.EmployerDao;
 import ru.hh.school.dto.EmployerDtoById;
 import ru.hh.school.dto.FavoriteEmployerDto;
-import ru.hh.school.entity.Comment;
 import ru.hh.school.entity.Employer;
 import ru.hh.school.util.EmployerMapper;
 import ru.hh.school.util.IdParameterValidator;
@@ -41,23 +40,23 @@ public class EmployerService {
     }
 
     private Employer getEmployer(Integer id) {
-        System.out.println(employerDao.get(Employer.class, id));
         return employerDao.get(Employer.class, id).orElseThrow(NotFoundException::new);
     }
 
     public List<FavoriteEmployerDto> getFavorites(Integer page, Integer perPage) {
         paginationValidator.validate(page, perPage);
         List<Employer> employers = employerDao.getFavoritesWithPagination(page, perPage);
+        //TODO update counter in separate thread?
         employers.stream()
-                .map(employer -> employer.getViewsCount())
-                .forEach(counterService::incrementCounter);
+                .map(employer -> employer.getId())
+                .forEach(counterService::incrementEmployerCounter);
         return employers.stream().map(employerMapper::mapDataFromDatabase).collect(Collectors.toList());
     }
 
     public Employer addEmployerToFavorites(Integer employerId, String comment) {
         try {
             getEmployer(employerId);
-            throw new BadRequestException();
+            throw new BadRequestException("Bad request");
         } catch (NotFoundException e) {
             String validComment = stringParameterFilter.filter(comment);
             EmployerDtoById employerDto = apiService.fetchEmployersFromApiById(employerId);
@@ -68,12 +67,10 @@ public class EmployerService {
     }
 
     @Transactional
-    public Employer updateComment(Integer employerId, String comment) {
+    public void updateComment(Integer employerId, String comment) {
         idParameterValidator.validate(employerId);
         String validComment = stringParameterFilter.filter(comment);
-        Employer employer = getEmployer(employerId);
-        commentService.updateComment(employer.getComment(), validComment);
-        return employer;
+        commentService.updateComment(employerId, validComment);
     }
 
     @Transactional

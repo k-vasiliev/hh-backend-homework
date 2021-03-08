@@ -1,5 +1,8 @@
 package ru.hh.school.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EmployerDto {
 
     protected int id;

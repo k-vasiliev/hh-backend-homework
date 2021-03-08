@@ -11,7 +11,8 @@ public class CustomExceptionMapper extends WebApplicationExceptionMapper {
     @Override
     protected Response serializeException(Response.StatusType statusCode, WebApplicationException exception) {
         int status = exception.getResponse().getStatus();
-        ExceptionResponse exceptionResponse = new ExceptionResponse(exception.getMessage(), status);
+        String message = exception.getMessage() == null ? "" : exception.getMessage();
+        ExceptionResponse exceptionResponse = new ExceptionResponse(message, status);
         return Response.status(status).entity(exceptionResponse).build();
     }
 }

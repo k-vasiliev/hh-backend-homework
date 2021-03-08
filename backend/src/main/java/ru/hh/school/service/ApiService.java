@@ -3,11 +3,9 @@ package ru.hh.school.service;
 import org.jvnet.hk2.annotations.Service;
 import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.dto.EmployerDtoById;
+import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.http.HhClient;
-import ru.hh.school.util.EmployerMapper;
-import ru.hh.school.util.IdParameterValidator;
-import ru.hh.school.util.PaginationValidator;
-import ru.hh.school.util.StringParameterFilter;
+import ru.hh.school.util.*;
 
 import java.util.List;
 
@@ -19,13 +17,15 @@ public class ApiService {
     private final StringParameterFilter queryFilter;
     private final EmployerMapper employerMapper;
     private final IdParameterValidator idParameterValidator;
+    private final VacancyMapper vacancyMapper;
 
-    public ApiService(HhClient hhClient, PaginationValidator paginationValidator, StringParameterFilter queryFilter, EmployerMapper employerMapper, IdParameterValidator idParameterValidator) {
+    public ApiService(HhClient hhClient, PaginationValidator paginationValidator, StringParameterFilter queryFilter, EmployerMapper employerMapper, IdParameterValidator idParameterValidator, VacancyMapper vacancyMapper) {
         this.hhClient = hhClient;
         this.paginationValidator = paginationValidator;
         this.queryFilter = queryFilter;
         this.employerMapper = employerMapper;
         this.idParameterValidator = idParameterValidator;
+        this.vacancyMapper = vacancyMapper;
     }
 
     public List<EmployerDto> fetchEmployersFromApi(String query, Integer page, Integer perPage) {
@@ -38,10 +38,16 @@ public class ApiService {
 
     public EmployerDtoById fetchEmployersFromApiById(Integer employerId) {
         Integer idParam = idParameterValidator.validate(employerId);
-        System.out.println("Employerid" + employerId);
         String dataFromApi = hhClient.makeGetRequest("employers/" + idParam, "").body();
-        System.out.println();
         return employerMapper.mapDataFromApiById(dataFromApi);
+    }
+
+    public List<VacancyDto> fetchVacanciesFromApi(String query, Integer page, Integer perPage) {
+        String textParam = "?text=" + queryFilter.filter(query);
+        paginationValidator.validate(page, perPage);
+        String paginationParam = "&page=" + page + "&per_page=" + perPage;
+        String dataFromApi = hhClient.makeGetRequest("vacancies", textParam + paginationParam).body();
+        return vacancyMapper.mapDataFromApi(dataFromApi);
     }
 
 }
