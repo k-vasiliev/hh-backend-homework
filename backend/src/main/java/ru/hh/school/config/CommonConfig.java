@@ -9,10 +9,7 @@ import ru.hh.school.dao.*;
 import ru.hh.school.exception.CustomExceptionMapper;
 import ru.hh.school.http.HhClient;
 import ru.hh.school.resource.*;
-import ru.hh.school.service.ApiService;
-import ru.hh.school.service.CommentService;
-import ru.hh.school.service.CounterService;
-import ru.hh.school.service.EmployerService;
+import ru.hh.school.service.*;
 import ru.hh.school.util.*;
 
 @Configuration
@@ -40,7 +37,9 @@ import ru.hh.school.util.*;
         CommentService.class,
         VacancyResource.class,
         VacancyMapper.class,
-        FavoritesVacancyResource.class
+        VacancyService.class,
+        FavoritesVacancyResource.class,
+        SalaryMapper.class
 })
 public class CommonConfig {
 

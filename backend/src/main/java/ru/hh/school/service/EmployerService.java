@@ -39,7 +39,7 @@ public class EmployerService {
         this.idParameterValidator = idParameterValidator;
     }
 
-    private Employer getEmployer(Integer id) {
+    public Employer getEmployer(Integer id) {
         return employerDao.get(Employer.class, id).orElseThrow(NotFoundException::new);
     }
 
@@ -58,12 +58,17 @@ public class EmployerService {
             getEmployer(employerId);
             throw new BadRequestException("Bad request");
         } catch (NotFoundException e) {
-            String validComment = stringParameterFilter.filter(comment);
-            EmployerDtoById employerDto = apiService.fetchEmployersFromApiById(employerId);
-            Employer employer = employerMapper.mapEmployerDtoToEntity(employerDto, validComment);
-            employerDao.save(employer);
-            return employer;
+            return addNewEmployerToFavorites(employerId, comment);
         }
+    }
+
+    public Employer addNewEmployerToFavorites(Integer employerId, String comment) {
+        String validComment = stringParameterFilter.filter(comment);
+        String dataFromApi = apiService.fetchEmployersFromApiById(employerId);
+        EmployerDtoById employerDto = employerMapper.mapDataFromApiById(dataFromApi);
+        Employer employer = employerMapper.mapEmployerDtoToEntity(employerDto, validComment);
+        employerDao.save(employer);
+        return employer;
     }
 
     @Transactional
@@ -84,7 +89,8 @@ public class EmployerService {
     public Employer refresh(Integer employerId) {
         idParameterValidator.validate(employerId);
         Employer employer = getEmployer(employerId);
-        EmployerDtoById employerDto = apiService.fetchEmployersFromApiById(employerId);
+        String dataFromApi = apiService.fetchEmployersFromApiById(employerId);
+        EmployerDtoById employerDto = employerMapper.mapDataFromApiById(dataFromApi);
         return employerMapper.refreshEmployer(employer, employerDto);
     }
 

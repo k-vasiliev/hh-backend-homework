@@ -1,5 +1,6 @@
 package ru.hh.school.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "area")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Area {
 
     public Area() {}

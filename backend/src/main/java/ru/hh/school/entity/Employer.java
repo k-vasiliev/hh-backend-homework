@@ -1,6 +1,7 @@
 package ru.hh.school.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "employer")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Employer {
 
     public Employer() {

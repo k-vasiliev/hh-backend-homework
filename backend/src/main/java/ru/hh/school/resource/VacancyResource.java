@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.service.ApiService;
+import ru.hh.school.util.SalaryMapper;
+import ru.hh.school.util.VacancyMapper;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;
@@ -18,9 +20,11 @@ public class VacancyResource {
     private static final Logger logger = LoggerFactory.getLogger(ExampleResource.class);
 
     private final ApiService apiService;
+    private final VacancyMapper vacancyMapper;
 
-    public VacancyResource(ApiService apiService) {
+    public VacancyResource(ApiService apiService, VacancyMapper vacancyMapper) {
         this.apiService = apiService;
+        this.vacancyMapper = vacancyMapper;
     }
 
     @GET
@@ -31,7 +35,14 @@ public class VacancyResource {
             @DefaultValue("20") @QueryParam("per_page") Integer perPage
     ) {
         try {
-            List<VacancyDto> vacancies = apiService.fetchVacanciesFromApi(query, page, perPage);
+            SalaryMapper mapper = new SalaryMapper();
+            String dataFromApi = apiService.fetchVacanciesFromApi(query, page, perPage);
+            List<VacancyDto> vacancies = vacancyMapper.mapDataFromApi(dataFromApi);
+            vacancies.stream()
+                    .map(vacancyDto -> vacancyDto.getSalary()).map(mapper::mapToEntity)
+                    .peek(System.out::println)
+                    .map(mapper::mapToDto)
+                    .forEach(System.out::println);
             return Response.ok().entity(vacancies).build();
         } catch (WebApplicationException exception) {
             throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());

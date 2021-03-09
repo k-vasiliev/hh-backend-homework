@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.service.ApiService;
+import ru.hh.school.util.EmployerMapper;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;
@@ -18,9 +19,11 @@ public class EmployerResource {
     private static final Logger logger = LoggerFactory.getLogger(ExampleResource.class);
 
     private final ApiService apiService;
+    private final EmployerMapper employerMapper;
 
-    public EmployerResource(ApiService apiService) {
+    public EmployerResource(ApiService apiService, EmployerMapper employerMapper) {
         this.apiService = apiService;
+        this.employerMapper = employerMapper;
     }
 
     @GET
@@ -31,7 +34,8 @@ public class EmployerResource {
             @DefaultValue("20") @QueryParam("per_page") Integer perPage
     ) {
         try {
-            List<EmployerDto> employers = apiService.fetchEmployersFromApi(query, page, perPage);
+            String dataFromApi = apiService.fetchEmployersFromApi(query, page, perPage);
+            List<EmployerDto> employers = employerMapper.mapDataFromApi(dataFromApi);
             return Response.ok().entity(employers).build();
         } catch (WebApplicationException exception) {
             throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());
@@ -43,7 +47,8 @@ public class EmployerResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployerFromApiById(@PathParam("employer_id") Integer employerId) {
         try {
-            EmployerDto employer = apiService.fetchEmployersFromApiById(employerId);
+            String dataFromApi = apiService.fetchEmployersFromApiById(employerId);
+            EmployerDto employer = employerMapper.mapDataFromApiById(dataFromApi);
             return Response.ok().entity(employer).build();
         } catch (WebApplicationException exception) {
             throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());

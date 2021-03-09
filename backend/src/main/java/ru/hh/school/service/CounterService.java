@@ -27,4 +27,14 @@ public class CounterService {
         }
     }
 
+    @Transactional
+    public void incrementVacancyCounter(Integer counterId) {
+        try {
+            counterDao.incrementVacancyViews(counterId);
+        } catch (ObjectOptimisticLockingFailureException e) {
+            logger.info("OptimisticLockingException for Counter Class");
+            counterDao.incrementVacancyViews(counterId);
+        }
+    }
+
 }

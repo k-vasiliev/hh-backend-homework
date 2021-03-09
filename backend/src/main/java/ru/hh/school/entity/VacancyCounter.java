@@ -1,5 +1,6 @@
 package ru.hh.school.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 
@@ -14,6 +15,7 @@ public class VacancyCounter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int id;
 
     @Column(columnDefinition = "integer default 0")
@@ -22,9 +24,11 @@ public class VacancyCounter {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")
+    @JsonIgnore
     private Vacancy vacancy;
 
     @Version
+    @JsonIgnore
     private Integer version;
 
     public int getId() {

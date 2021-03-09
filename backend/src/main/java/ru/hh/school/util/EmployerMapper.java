@@ -74,8 +74,8 @@ public class EmployerMapper {
     public FavoriteEmployerDto mapDataFromDatabase(Employer employer) {
         AreaDto areaDto = areaMapper.mapToDto(employer.getArea());
         String comment = employer.getComment().getComment();
-        Integer counter = employer.getViewsCount().getCounter();
-        Popularity popularity = employer.getViewsCount().getCounter() >= fileSettings.getInteger("popularity.settings")
+        Integer viewsCount = employer.getViewsCount().getCounter() + 1;
+        Popularity popularity = viewsCount >= fileSettings.getInteger("popularity.settings")
                 ? Popularity.POPULAR : Popularity.REGULAR;
         return new FavoriteEmployerDto(
                 employer.getId(),
@@ -83,7 +83,7 @@ public class EmployerMapper {
                 employer.getDescription(),
                 comment,
                 employer.getDateCreate(),
-                counter,
+                viewsCount,
                 popularity,
                 areaDto
         );

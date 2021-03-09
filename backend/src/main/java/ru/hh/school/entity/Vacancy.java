@@ -1,8 +1,16 @@
 package ru.hh.school.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import ru.hh.school.serialize.LocalDateSerializer;
+import ru.hh.school.serialize.OffsetDateTimeDeserializer;
+import ru.hh.school.serialize.OffsetDateTimeSerializer;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,6 +19,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "vacancy")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Vacancy {
 
     public Vacancy() {}
@@ -34,6 +43,9 @@ public class Vacancy {
     private Salary salary;
 
     @Column(name = "created_at")
+    @JsonProperty("created_at")
+    @JsonDeserialize(using = OffsetDateTimeDeserializer.class)
+    @JsonSerialize(using = OffsetDateTimeSerializer.class)
     private OffsetDateTime createdAt;
 
     @ManyToOne
@@ -117,7 +129,7 @@ public class Vacancy {
                 ", createdAt=" + createdAt + '\n' +
                 ", employer=[id=" + employer.getId() + ", name=" + employer.getName() + "]\n" +
                 ", area=" + area + '\n' +
-                ", vacancyCounter=" + vacancyCounter + '\n' +
+                ", vacancyCounter=" + vacancyCounter.getCounter() + '\n' +
                 ']';
     }
 

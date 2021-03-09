@@ -7,12 +7,16 @@ import org.jvnet.hk2.annotations.Service;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.school.dao.AreaDao;
 import ru.hh.school.dao.CommentDao;
+import ru.hh.school.dao.VacancyDao;
 import ru.hh.school.dao.ViewsCounterDao;
+import ru.hh.school.dto.EmployerDto;
+import ru.hh.school.dto.FavoriteVacancyDto;
 import ru.hh.school.dto.VacancyDto;
-import ru.hh.school.entity.Vacancy;
+import ru.hh.school.entity.*;
+import ru.hh.school.service.EmployerService;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-import java.time.OffsetDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,14 +26,16 @@ import java.util.stream.StreamSupport;
 public class VacancyMapper {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final AreaMapper areaMapper;
+    private final EmployerService employerService;
+    private final VacancyDao vacancyDao;
     private final AreaDao areaDao;
     private final CommentDao commentDao;
     private final ViewsCounterDao viewsCounterDao;
     private final FileSettings fileSettings;
 
-    public VacancyMapper(AreaMapper areaMapper, AreaDao areaDao, CommentDao commentDao, ViewsCounterDao viewsCounterDao, FileSettings fileSettings) {
-        this.areaMapper = areaMapper;
+    public VacancyMapper(EmployerService employerService, VacancyDao vacancyDao, AreaDao areaDao, CommentDao commentDao, ViewsCounterDao viewsCounterDao, FileSettings fileSettings) {
+        this.employerService = employerService;
+        this.vacancyDao = vacancyDao;
         this.areaDao = areaDao;
         this.commentDao = commentDao;
         this.viewsCounterDao = viewsCounterDao;
@@ -56,21 +62,54 @@ public class VacancyMapper {
         try {
             return objectMapper.treeToValue(node, clz);
         } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
             throw new ServerErrorException(500);
         }
     }
 
-    public VacancyDto mapDataFromApiById(String dataFromApi) {
+    private <T> T mapStringData(String data, Class<T> clz) {
         try {
-            return objectMapper.readValue(dataFromApi, VacancyDto.class);
+            return objectMapper.readValue(data, clz);
         } catch (JsonProcessingException e) {
             throw new ServerErrorException(500);
         }
     }
 
-    /*public Vacancy mapVacancyDtoToEntity(VacancyDto vacancyDto) {
-        Vacancy vacancy = new Vacancy();
-    }*/
+    public Vacancy mapApiDataToEntityAndSave(String dataFromApi) {
+        Vacancy vacancy = mapStringData(dataFromApi, Vacancy.class);
+
+        Employer vacancyEmployer = vacancy.getEmployer();
+        vacancyEmployer = getOrCreateVacancyEmployer(vacancyEmployer.getId());
+
+        Area vacancyArea = vacancy.getArea();
+        vacancyArea = areaDao.get(Area.class, vacancyArea.getId()).orElse(vacancyArea);
+
+        VacancyCounter counter = new VacancyCounter();
+        counter.setVacancy(vacancy);
+
+        vacancy.setEmployer(vacancyEmployer);
+        vacancy.setArea(vacancyArea);
+        vacancy.setViewsCount(counter);
+        vacancyDao.save(vacancy);
+        return vacancy;
+    }
+
+    private Employer getOrCreateVacancyEmployer(Integer employerId) {
+        try {
+            return employerService.getEmployer(employerId);
+        } catch(NotFoundException e) {
+            return employerService.addNewEmployerToFavorites(employerId, "");
+        }
+    }
+
+    public FavoriteVacancyDto mapEntityToDto(Vacancy vacancy) {
+        Integer viewsCount = vacancy.getViewsCount().getCounter() + 1;
+        Popularity popularity = viewsCount >= fileSettings.getInteger("popularity.settings")
+                ? Popularity.POPULAR : Popularity.REGULAR;
+        FavoriteVacancyDto vacancyDto = objectMapper.convertValue(vacancy, FavoriteVacancyDto.class);
+        vacancyDto.setDateCreate(vacancy.getDateCreate());
+        vacancyDto.setViewsCount(viewsCount);
+        vacancyDto.setPopularity(popularity);
+        return vacancyDto;
+    }
 
 }
