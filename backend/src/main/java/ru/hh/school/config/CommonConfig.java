@@ -3,14 +3,14 @@ package ru.hh.school.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
+import feign.Feign;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.starter.NabCommonConfig;
-import ru.hh.school.resource.ExampleResource;
+import ru.hh.school.feignclient.HhApi;
 
 @Configuration
 @Import({
-  // import your beans here
-  ExampleResource.class,
   NabCommonConfig.class
 })
 public class CommonConfig {
@@ -20,5 +20,10 @@ public class CommonConfig {
     MappingConfig mappingConfig = new MappingConfig();
     mappingConfig.addPackagesToScan("ru.hh.school.entity");
     return mappingConfig;
+  }
+
+  @Bean
+  public HhApi getHhApi() {
+    return Feign.builder().target(HhApi.class, HhApi.API_URL);
   }
 }
