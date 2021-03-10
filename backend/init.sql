@@ -1,20 +1,38 @@
-CREATE TABLE employer
+create table area
 (
-  id      serial primary key,
-  created timestamptz default now(),
-  updated timestamptz,
-  name    text not null,
+  id      integer not null,
+  name    text,
+  created timestamp default now(),
+updated timestamp default now()
 );
+create unique index area_id_uindex
+on area (id);
 
-CREATE TABLE vacancy
+create table employer
 (
-  id                 serial primary key,
-  created            timestamptz      default now(),
-  updated            timestamptz,
-  employer_id        integer not null references employer (id),
-  position_name      text    not null,
-  description        text    not null,
-  compensation_from  integer,
-  compensation_to    integer,
-  compensation_gross boolean not null default false
+  id          integer not null,
+  name        text,
+  description text,
+  area_id     integer
+              constraint employer_area_id_fk
+              references area (id)
+on update cascade on delete cascade,
+created     timestamp default now(),
+updated     timestamp default now()
 );
+create unique index employer_id_uindex
+on employer (id);
+
+create table favorite_employer
+(
+  employer_id integer             not null
+  constraint favorite_employer_employer_id_fk
+  references employer (id)
+on update cascade on delete cascade,
+created     timestamp default now(),
+updated     timestamp default now(),
+comment     text,
+views_count integer   default 0
+);
+create unique index favorite_employer_employer_id_uindex
+on favorite_employer (employer_id);

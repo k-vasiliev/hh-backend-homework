@@ -1,8 +1,10 @@
 package ru.hh.school.dto;
 
+import ru.hh.school.entity.EmployerApi;
+
 import java.util.List;
 
-public class EmployerItems {
+public class EmployerItemsApi {
     @Override
     public String toString() {
         return "EmployerItems{" +
@@ -10,9 +12,9 @@ public class EmployerItems {
                 '}';
     }
 
-    List<EmployerDto> items;
+    List<EmployerApi> items;
 
-    public List<EmployerDto> getItems() {
+    public List<EmployerApi> getItems() {
         return items;
     }
 }

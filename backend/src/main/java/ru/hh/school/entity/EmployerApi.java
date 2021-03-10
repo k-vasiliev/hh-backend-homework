@@ -1,11 +1,11 @@
-package ru.hh.school.dto;
+package ru.hh.school.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class EmployerDto {
+public class EmployerApi {
 
     @JsonProperty(required = true)
-    private String id;
+    private Integer id;
 
     @JsonProperty(required = true)
     private String name;
@@ -18,7 +18,7 @@ public class EmployerDto {
                 '}';
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -26,7 +26,7 @@ public class EmployerDto {
         return name;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -11,7 +11,11 @@ import ru.hh.nab.starter.NabProdConfig;
 import javax.sql.DataSource;
 
 @Configuration
-@Import({NabDataSourceProdConfig.class, NabProdConfig.class, CommonConfig.class})
+@Import({
+        NabDataSourceProdConfig.class,
+        NabProdConfig.class,
+        CommonConfig.class,
+})
 public class ProdConfig {
 
   @Bean

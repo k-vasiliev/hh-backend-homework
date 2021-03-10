@@ -7,11 +7,11 @@ import javax.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class EmployerDao {
+public class VacancyDao {
 
     private final SessionFactory sessionFactory;
 
-    public EmployerDao(SessionFactory sessionFactory) {
+    public VacancyDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -46,4 +46,5 @@ public class EmployerDao {
     public void delete(Employer employer) {
         session().getCurrentSession().delete(employer);
     }
+
 }

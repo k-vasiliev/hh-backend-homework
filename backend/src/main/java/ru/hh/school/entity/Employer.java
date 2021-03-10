@@ -1,23 +1,23 @@
 package ru.hh.school.entity;
 
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@DynamicInsert
 @Table(name = "employer")
-public class EmployerEntity {
+public class Employer {
 
-    public EmployerEntity() {}
+    public Employer() {}
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employer_id")
-    private String id;
+    @Column(name = "id" , nullable = false)
+    private Integer id;
 
-    @Column(name = "creation")
-    private LocalDateTime creation;
+    @Column(name = "created")
+    private LocalDateTime created;
 
     @Column(name = "updated")
     private LocalDateTime updated;
@@ -28,18 +28,22 @@ public class EmployerEntity {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(mappedBy = "employer")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private AreaEntity area;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "area_id")
+    private Area area;
 
-    public EmployerEntity(String id, String name, String description, AreaEntity area) {
+    public Employer(Integer id, String name, String description, Area area) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.area = area;
     }
 
-    public String getId() {
+    public Employer(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
         return id;
     }
 
@@ -51,11 +55,11 @@ public class EmployerEntity {
         return description;
     }
 
-    public AreaEntity getArea() {
+    public Area getArea() {
         return area;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -67,7 +71,7 @@ public class EmployerEntity {
         this.description = description;
     }
 
-    public void setArea(AreaEntity area) {
+    public void setArea(Area area) {
         this.area = area;
     }
 }
