@@ -22,7 +22,6 @@ import ru.hh.school.util.*;
         HhClient.class,
         ApiService.class,
         PaginationValidator.class,
-        StringParameterFilter.class,
         EmployerResource.class,
         EmployerMapper.class,
         IdParameterValidator.class,

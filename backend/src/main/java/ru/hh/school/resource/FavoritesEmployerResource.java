@@ -36,8 +36,7 @@ public class FavoritesEmployerResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addEmployerToFavorites(
             @FormParam("employer_id") Integer employerId,
-            @FormParam("comment") String comment
-    ) {
+            @DefaultValue("") @FormParam("comment") String comment) {
         try {
             employerService.addEmployerToFavorites(employerId, comment);
             return Response.ok().build();
@@ -49,7 +48,9 @@ public class FavoritesEmployerResource {
     @PUT
     @Path("/{employer_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateComment(@PathParam("employer_id") Integer employerId, @FormParam("comment") String comment) {
+    public Response updateComment(
+            @PathParam("employer_id") Integer employerId,
+            @DefaultValue("") @FormParam("comment") String comment) {
         employerService.updateComment(employerId, comment);
         return Response.ok().build();
     }

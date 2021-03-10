@@ -8,7 +8,6 @@ import ru.hh.school.entity.Employer;
 import ru.hh.school.util.EmployerMapper;
 import ru.hh.school.util.IdParameterValidator;
 import ru.hh.school.util.PaginationValidator;
-import ru.hh.school.util.StringParameterFilter;
 
 import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;
@@ -24,17 +23,15 @@ public class EmployerService {
     private final ApiService apiService;
     private final CounterService counterService;
     private final CommentService commentService;
-    private final StringParameterFilter stringParameterFilter;
     private final PaginationValidator paginationValidator;
     private final IdParameterValidator idParameterValidator;
 
-    public EmployerService(EmployerDao employerDao, EmployerMapper employerMapper, ApiService apiService, CounterService counterService, CommentService commentService, StringParameterFilter stringParameterFilter, PaginationValidator paginationValidator, IdParameterValidator idParameterValidator) {
+    public EmployerService(EmployerDao employerDao, EmployerMapper employerMapper, ApiService apiService, CounterService counterService, CommentService commentService, PaginationValidator paginationValidator, IdParameterValidator idParameterValidator) {
         this.employerDao = employerDao;
         this.employerMapper = employerMapper;
         this.apiService = apiService;
         this.counterService = counterService;
         this.commentService = commentService;
-        this.stringParameterFilter = stringParameterFilter;
         this.paginationValidator = paginationValidator;
         this.idParameterValidator = idParameterValidator;
     }
@@ -63,10 +60,9 @@ public class EmployerService {
     }
 
     public Employer addNewEmployerToFavorites(Integer employerId, String comment) {
-        String validComment = stringParameterFilter.filter(comment);
         String dataFromApi = apiService.fetchEmployersFromApiById(employerId);
         EmployerDtoById employerDto = employerMapper.mapDataFromApiById(dataFromApi);
-        Employer employer = employerMapper.mapEmployerDtoToEntity(employerDto, validComment);
+        Employer employer = employerMapper.mapEmployerDtoToEntity(employerDto, comment);
         employerDao.save(employer);
         return employer;
     }
@@ -74,8 +70,7 @@ public class EmployerService {
     @Transactional
     public void updateComment(Integer employerId, String comment) {
         idParameterValidator.validate(employerId);
-        String validComment = stringParameterFilter.filter(comment);
-        commentService.updateComment(employerId, validComment);
+        commentService.updateComment(employerId, comment);
     }
 
     @Transactional

@@ -29,7 +29,7 @@ public class EmployerResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployersFromApi (
-            @QueryParam("query") String query,
+            @DefaultValue("") @QueryParam("query") String query,
             @DefaultValue("0") @QueryParam("page") Integer page,
             @DefaultValue("20") @QueryParam("per_page") Integer perPage
     ) {

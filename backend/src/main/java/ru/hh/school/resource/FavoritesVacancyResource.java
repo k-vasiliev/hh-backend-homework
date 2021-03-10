@@ -38,7 +38,8 @@ public class FavoritesVacancyResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addVacancyToFavorites(
-            @FormParam("vacancy_id") Integer vacancyId
+            @FormParam("vacancy_id") Integer vacancyId,
+            @DefaultValue("") @FormParam("comment") String comment
     ) {
         try {
             vacancyService.addVacancyToFavorites(vacancyId);

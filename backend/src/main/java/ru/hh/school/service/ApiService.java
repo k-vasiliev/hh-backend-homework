@@ -10,21 +10,18 @@ public class ApiService {
 
     private final HhClient hhClient;
     private final PaginationValidator paginationValidator;
-    private final StringParameterFilter queryFilter;
     private final IdParameterValidator idParameterValidator;
 
-    public ApiService(HhClient hhClient, PaginationValidator paginationValidator, StringParameterFilter queryFilter, IdParameterValidator idParameterValidator) {
+    public ApiService(HhClient hhClient, PaginationValidator paginationValidator, IdParameterValidator idParameterValidator) {
         this.hhClient = hhClient;
         this.paginationValidator = paginationValidator;
-        this.queryFilter = queryFilter;
         this.idParameterValidator = idParameterValidator;
     }
 
     public String fetchEmployersFromApi(String query, Integer page, Integer perPage) {
-        String textParam = "?text=" + queryFilter.filter(query);
         paginationValidator.validate(page, perPage);
-        String paginationParam = "&page=" + page + "&per_page=" + perPage;
-        return hhClient.makeGetRequest("employers", textParam + paginationParam).body();
+        String requestQuery = "?text=" + query + "&page=" + page + "&per_page=" + perPage;
+        return hhClient.makeGetRequest("employers", requestQuery).body();
     }
 
     public String fetchEmployersFromApiById(Integer employerId) {
@@ -33,10 +30,9 @@ public class ApiService {
     }
 
     public String fetchVacanciesFromApi(String query, Integer page, Integer perPage) {
-        String textParam = "?text=" + queryFilter.filter(query);
         paginationValidator.validate(page, perPage);
-        String paginationParam = "&page=" + page + "&per_page=" + perPage;
-        return hhClient.makeGetRequest("vacancies", textParam + paginationParam).body();
+        String requestQuery = "?text=" + query + "&page=" + page + "&per_page=" + perPage;
+        return hhClient.makeGetRequest("vacancies", requestQuery).body();
     }
 
     public String fetchVacanciesFromApiById(Integer vacancyId) {

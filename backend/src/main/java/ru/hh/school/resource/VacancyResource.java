@@ -30,7 +30,7 @@ public class VacancyResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVacanciesFromApi (
-            @QueryParam("query") String query,
+            @DefaultValue("") @QueryParam("query") String query,
             @DefaultValue("0") @QueryParam("page") Integer page,
             @DefaultValue("20") @QueryParam("per_page") Integer perPage
     ) {
