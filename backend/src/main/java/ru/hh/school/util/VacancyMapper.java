@@ -53,7 +53,14 @@ public class VacancyMapper {
                     .collect(Collectors.toList());
             return vacancies;
         } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
+            throw new ServerErrorException(500);
+        }
+    }
+
+    public VacancyDto mapDataFromApiById(String vacancyData) {
+        try {
+            return objectMapper.readValue(vacancyData, VacancyDto.class);
+        } catch (JsonProcessingException e) {
             throw new ServerErrorException(500);
         }
     }

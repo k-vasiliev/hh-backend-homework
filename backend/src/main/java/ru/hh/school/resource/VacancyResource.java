@@ -2,6 +2,7 @@ package ru.hh.school.resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.service.ApiService;
 import ru.hh.school.util.VacancyMapper;
@@ -37,6 +38,19 @@ public class VacancyResource {
             String dataFromApi = apiService.fetchVacanciesFromApi(query, page, perPage);
             List<VacancyDto> vacancies = vacancyMapper.mapDataFromApi(dataFromApi);
             return Response.ok().entity(vacancies).build();
+        } catch (WebApplicationException exception) {
+            throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());
+        }
+    }
+
+    @GET
+    @Path("/{vacancy_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVacancyFromApiById(@PathParam("vacancy_id") Integer vacancyId) {
+        try {
+            String dataFromApi = apiService.fetchVacanciesFromApiById(vacancyId);
+            VacancyDto vacancy = vacancyMapper.mapDataFromApiById(dataFromApi);
+            return Response.ok().entity(vacancy).build();
         } catch (WebApplicationException exception) {
             throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());
         }
