@@ -50,12 +50,12 @@ public class AppTestConfig {
     return properties;
   }
 
-  @PostConstruct
+  /*@PostConstruct
   public static void before() throws IOException {
     EmbeddedPostgres em = EmbeddedPostgresDataSourceFactory.getEmbeddedPostgres();
     Arrays.stream(Files.readString(Path.of("init.sql")).split(";"))
             .forEach(query -> executeQuery(em, query));
-  }
+  }*/
 
   private static void executeQuery(EmbeddedPostgres em, String query) {
     try (Connection connection = em.getPostgresDatabase().getConnection();

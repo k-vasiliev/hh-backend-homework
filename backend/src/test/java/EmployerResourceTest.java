@@ -3,6 +3,7 @@ import org.springframework.test.context.ContextConfiguration;
 import ru.hh.nab.starter.NabApplication;
 import ru.hh.nab.testbase.NabTestBase;
 import ru.hh.school.dto.EmployerDto;
+import ru.hh.school.dto.FavoriteEmployerDto;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -33,6 +34,16 @@ public class EmployerResourceTest extends NabTestBase {
         });
         assertEquals(200, response.getStatus());
         assertEquals(20, employers.size());
+    }
+
+    @Test
+    public void emptyFavorites() {
+        Response response = executeGetRequestWithParams("/favorites/employer", "");
+        List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {
+        });
+        System.out.println("Employers: " + employers);
+        assertEquals(200, response.getStatus());
+        assertEquals(0, employers.size());
     }
 
     @Test
