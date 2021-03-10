@@ -48,6 +48,10 @@ public class Vacancy {
     @JsonSerialize(using = OffsetDateTimeSerializer.class)
     private OffsetDateTime createdAt;
 
+    @OneToOne(mappedBy = "vacancy", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private VacancyComment comment;
+
     @ManyToOne
     @JoinColumn(name = "employer")
     private Employer employer;
@@ -119,6 +123,10 @@ public class Vacancy {
     public void setViewsCount(VacancyCounter vacancyCounter) {
         this.vacancyCounter = vacancyCounter;
     }
+
+    public VacancyComment getComment() { return comment; }
+
+    public void setComment(VacancyComment comment) { this.comment = comment; }
 
     @Override
     public String toString() {

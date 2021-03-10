@@ -46,13 +46,13 @@ public class VacancyService {
         return vacancies.stream().map(vacancyMapper::mapEntityToDto).collect(Collectors.toList());
     }
 
-    public void addVacancyToFavorites(Integer vacancyId) {
+    public void addVacancyToFavorites(Integer vacancyId, String comment) {
         try {
             getVacancy(vacancyId);
             throw new BadRequestException("Bad request");
         } catch(NotFoundException e) {
             String dataFromApi = apiService.fetchVacanciesFromApiById(vacancyId);
-            vacancyMapper.mapApiDataToEntityAndSave(dataFromApi);
+            vacancyMapper.mapApiDataToEntityAndSave(dataFromApi, comment);
         }
     }
 

@@ -40,7 +40,7 @@ public class Employer {
 
     @OneToOne(mappedBy = "employer", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private Comment comment;
+    private EmployerComment comment;
 
     @OneToOne(mappedBy = "employer", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -90,11 +90,11 @@ public class Employer {
         this.area = area;
     }
 
-    public Comment getComment() {
+    public EmployerComment getComment() {
         return comment;
     }
 
-    public void setComment(Comment comment) {
+    public void setComment(EmployerComment comment) {
         this.comment = comment;
     }
 

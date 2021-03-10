@@ -8,7 +8,8 @@ DROP TABLE employer CASCADE;
 DROP TABLE vacancy CASCADE;
 DROP TABLE employer_counter CASCADE;
 DROP TABLE vacancy_counter CASCADE;
-DROP TABLE comment CASCADE;
+DROP TABLE employer_comment CASCADE;
+DROP TABLE vacancy_comment CASCADE;
 
 CREATE TABLE IF NOT EXISTS employer_counter (
     id INTEGER PRIMARY KEY,
@@ -22,7 +23,13 @@ CREATE TABLE IF NOT EXISTS vacancy_counter (
     version INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS comment (
+CREATE TABLE IF NOT EXISTS employer_comment (
+    id INTEGER PRIMARY KEY,
+    comment TEXT,
+    version INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS vacancy_comment (
     id INTEGER PRIMARY KEY,
     comment TEXT,
     version INTEGER

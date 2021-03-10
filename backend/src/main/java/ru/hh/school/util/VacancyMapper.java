@@ -81,7 +81,7 @@ public class VacancyMapper {
         }
     }
 
-    public Vacancy mapApiDataToEntityAndSave(String dataFromApi) {
+    public Vacancy mapApiDataToEntityAndSave(String dataFromApi, String comment) {
         Vacancy vacancy = mapStringData(dataFromApi, Vacancy.class);
 
         Employer vacancyEmployer = vacancy.getEmployer();
