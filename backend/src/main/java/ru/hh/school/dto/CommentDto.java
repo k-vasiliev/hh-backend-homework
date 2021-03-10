@@ -5,15 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CommentDto {
 
-    private String name;
+    private String comment;
 
     public CommentDto() {}
 
-    public String getName() {
-        return name;
+    public String getComment() {
+        return comment;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

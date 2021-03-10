@@ -1,7 +1,4 @@
 SET timezone = 'Europe/Moscow';
-TRUNCATE area CASCADE;
-TRUNCATE employer CASCADE;
-TRUNCATE vacancy CASCADE;
 
 DROP TABLE area CASCADE;
 DROP TABLE employer CASCADE;

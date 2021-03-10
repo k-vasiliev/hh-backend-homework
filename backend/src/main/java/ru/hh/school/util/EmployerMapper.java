@@ -90,7 +90,6 @@ public class EmployerMapper {
     }
 
     private Employer copyDtoFieldsToEntity(Employer employer, EmployerDtoById employerDto) {
-        employer.setId(employerDto.getId());
         employer.setName(employerDto.getName());
         employer.setDescription(employerDto.getDescription());
         return employer;
@@ -99,7 +98,7 @@ public class EmployerMapper {
     public Employer mapEmployerDtoToEntity(EmployerDtoById employerDto, String comment) {
         Employer employer = new Employer();
         Area area = areaMapper.mapToEntity(employerDto.getArea());
-        Comment newComment = new Comment(comment);
+        EmployerComment newComment = new EmployerComment(comment);
         EmployerCounter counter = new EmployerCounter();
         newComment.setEmployer(employer);
         counter.setEmployer(employer);
@@ -112,7 +111,6 @@ public class EmployerMapper {
     public Employer refreshEmployer(Employer employer, EmployerDtoById employerDto) {
         AreaDto areaDto = employerDto.getArea();
         Area area = areaDao.get(Area.class, areaDto.getId()).orElse(areaMapper.mapToEntity(areaDto));
-        area.setName(areaDto.getName());
         employer.setArea(area);
         return copyDtoFieldsToEntity(employer, employerDto);
     }

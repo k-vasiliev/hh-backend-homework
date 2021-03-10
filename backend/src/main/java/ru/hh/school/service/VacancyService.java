@@ -1,9 +1,12 @@
 package ru.hh.school.service;
 
 import org.jvnet.hk2.annotations.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.VacancyDao;
 import ru.hh.school.dto.FavoriteVacancyDto;
+import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.entity.Vacancy;
+import ru.hh.school.util.IdParameterValidator;
 import ru.hh.school.util.PaginationValidator;
 import ru.hh.school.util.VacancyMapper;
 
@@ -20,20 +23,24 @@ public class VacancyService {
     private final VacancyMapper vacancyMapper;
     private final PaginationValidator paginationValidator;
     private final CounterService counterService;
+    private final IdParameterValidator idParameterValidator;
 
 
-    public VacancyService(ApiService apiService, VacancyDao vacancyDao, VacancyMapper vacancyMapper, PaginationValidator paginationValidator, CounterService counterService) {
+    public VacancyService(ApiService apiService, VacancyDao vacancyDao, VacancyMapper vacancyMapper, PaginationValidator paginationValidator, CounterService counterService, IdParameterValidator idParameterValidator) {
         this.apiService = apiService;
         this.vacancyDao = vacancyDao;
         this.vacancyMapper = vacancyMapper;
         this.paginationValidator = paginationValidator;
         this.counterService = counterService;
+        this.idParameterValidator = idParameterValidator;
     }
 
     private Vacancy getVacancy(Integer id) {
+        idParameterValidator.validate(id);
         return vacancyDao.get(Vacancy.class, id).orElseThrow(NotFoundException::new);
     }
 
+    @Transactional
     public List<FavoriteVacancyDto> getFavorites(Integer page, Integer perPage) {
         paginationValidator.validate(page, perPage);
         List<Vacancy> vacancies = vacancyDao.getFavoritesWithPagination(page, perPage);
@@ -46,6 +53,7 @@ public class VacancyService {
         return vacancies.stream().map(vacancyMapper::mapEntityToDto).collect(Collectors.toList());
     }
 
+    @Transactional
     public void addVacancyToFavorites(Integer vacancyId, String comment) {
         try {
             getVacancy(vacancyId);
@@ -56,10 +64,18 @@ public class VacancyService {
         }
     }
 
-    public void deleteVacancy(Integer employerId) {
+    @Transactional
+    public void deleteVacancy(Integer vacancyId) {
+        Vacancy vacancy = getVacancy(vacancyId);
+        vacancyDao.delete(vacancy);
     }
 
-    public void refresh(Integer employerId) {
+    @Transactional
+    public Vacancy refresh(Integer vacancyId) {
+        Vacancy vacancy = getVacancy(vacancyId);
+        String dataFromApi = apiService.fetchEmployersFromApiById(vacancyId);
+        VacancyDto vacancyDto = vacancyMapper.mapDataFromApiById(dataFromApi);
+        return vacancyMapper.refreshVacancy(vacancy, vacancyDto);
     }
 
 

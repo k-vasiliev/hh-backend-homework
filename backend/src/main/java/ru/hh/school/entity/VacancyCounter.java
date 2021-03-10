@@ -19,7 +19,7 @@ public class VacancyCounter {
     private int id;
 
     @Column(columnDefinition = "integer default 0")
-    private Integer counter = 0;
+    private Integer counter;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId

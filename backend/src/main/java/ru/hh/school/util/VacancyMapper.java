@@ -5,12 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jvnet.hk2.annotations.Service;
 import ru.hh.nab.common.properties.FileSettings;
-import ru.hh.school.dao.AreaDao;
-import ru.hh.school.dao.CommentDao;
-import ru.hh.school.dao.VacancyDao;
-import ru.hh.school.dao.ViewsCounterDao;
-import ru.hh.school.dto.EmployerDto;
+import ru.hh.school.dao.*;
+import ru.hh.school.dto.AreaDto;
 import ru.hh.school.dto.FavoriteVacancyDto;
+import ru.hh.school.dto.SalaryDto;
 import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.entity.*;
 import ru.hh.school.service.EmployerService;
@@ -29,17 +27,21 @@ public class VacancyMapper {
     private final EmployerService employerService;
     private final VacancyDao vacancyDao;
     private final AreaDao areaDao;
+    private final AreaMapper areaMapper;
     private final CommentDao commentDao;
     private final ViewsCounterDao viewsCounterDao;
     private final FileSettings fileSettings;
+    private final GenericDao genericDao;
 
-    public VacancyMapper(EmployerService employerService, VacancyDao vacancyDao, AreaDao areaDao, CommentDao commentDao, ViewsCounterDao viewsCounterDao, FileSettings fileSettings) {
+    public VacancyMapper(EmployerService employerService, VacancyDao vacancyDao, AreaDao areaDao, AreaMapper areaMapper, CommentDao commentDao, ViewsCounterDao viewsCounterDao, FileSettings fileSettings, GenericDao genericDao) {
         this.employerService = employerService;
         this.vacancyDao = vacancyDao;
         this.areaDao = areaDao;
+        this.areaMapper = areaMapper;
         this.commentDao = commentDao;
         this.viewsCounterDao = viewsCounterDao;
         this.fileSettings = fileSettings;
+        this.genericDao = genericDao;
     }
 
     public List<VacancyDto> mapDataFromApi(String vacancyData) {
@@ -93,9 +95,13 @@ public class VacancyMapper {
         VacancyCounter counter = new VacancyCounter();
         counter.setVacancy(vacancy);
 
+        VacancyComment vacancyComment = new VacancyComment(comment);
+        vacancyComment.setVacancy(vacancy);
+
         vacancy.setEmployer(vacancyEmployer);
         vacancy.setArea(vacancyArea);
         vacancy.setViewsCount(counter);
+        vacancy.setComment(vacancyComment);
         vacancyDao.save(vacancy);
         return vacancy;
     }
@@ -112,11 +118,37 @@ public class VacancyMapper {
         Integer viewsCount = vacancy.getViewsCount().getCounter() + 1;
         Popularity popularity = viewsCount >= fileSettings.getInteger("popularity.settings")
                 ? Popularity.POPULAR : Popularity.REGULAR;
+        System.out.println(vacancy);
         FavoriteVacancyDto vacancyDto = objectMapper.convertValue(vacancy, FavoriteVacancyDto.class);
         vacancyDto.setDateCreate(vacancy.getDateCreate());
         vacancyDto.setViewsCount(viewsCount);
         vacancyDto.setPopularity(popularity);
         return vacancyDto;
+    }
+
+    public Vacancy refreshVacancy(Vacancy vacancy, VacancyDto vacancyDto) {
+        Integer employerId = vacancyDto.getEmployer().getId();
+        Employer employer = refreshOrCreateEmployer(employerId);
+
+        AreaDto areaDto = vacancyDto.getArea();
+        Area area = areaDao.get(Area.class, areaDto.getId()).orElse(areaMapper.mapToEntity(areaDto));
+
+        Salary salary = objectMapper.convertValue(vacancyDto.getSalary(), Salary.class);
+
+        vacancy.setArea(area);
+        vacancy.setEmployer(employer);
+        vacancy.setSalary(salary);
+        vacancy.setCreatedAt(vacancyDto.getCreatedAt());
+        vacancy.setName(vacancyDto.getName());
+        return vacancy;
+    }
+
+    private Employer refreshOrCreateEmployer(Integer employerId) {
+        try {
+            return employerService.refresh(employerId);
+        } catch (NotFoundException e) {
+            return employerService.addNewEmployerToFavorites(employerId, "");
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package ru.hh.school.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ru.hh.school.entity.Popularity;
 import ru.hh.school.serialize.LocalDateSerializer;
@@ -17,6 +18,9 @@ public class FavoriteVacancyDto extends VacancyDto {
 
     @JsonProperty("views_count")
     private int viewsCount = 0;
+
+    @JsonProperty("comment")
+    private String comment;
 
     public FavoriteVacancyDto() {}
 
@@ -44,6 +48,15 @@ public class FavoriteVacancyDto extends VacancyDto {
         this.viewsCount = viewsCount;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+
     @Override
     public String toString() {
         return "FavoriteVacancyDto[" +
@@ -55,6 +68,8 @@ public class FavoriteVacancyDto extends VacancyDto {
                 ", area=" + area +
                 ", salary=" + salary +
                 ", createdAt=" + createdAt +
+                ", comment=" + comment +
                 ']';
     }
+
 }

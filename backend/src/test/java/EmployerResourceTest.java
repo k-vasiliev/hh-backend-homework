@@ -1,12 +1,20 @@
+
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.web.client.RestTemplate;
 import ru.hh.nab.starter.NabApplication;
 import ru.hh.nab.testbase.NabTestBase;
 import ru.hh.school.dto.EmployerDto;
-import ru.hh.school.dto.FavoriteEmployerDto;
+import ru.hh.school.entity.Employer;
+import ru.hh.school.http.HhClient;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -15,6 +23,9 @@ import static org.junit.Assert.*;
 public class EmployerResourceTest extends NabTestBase {
 
     private final String BASE_URL = "/employer";
+
+    @Mock
+    private RestTemplate restTemplate;
 
     @Override
     protected NabApplication getApplication() {
@@ -28,22 +39,22 @@ public class EmployerResourceTest extends NabTestBase {
     }
 
     @Test
+    public void testMock() {
+        Mockito.when(restTemplate.getForEntity(
+                "https://hh.api.ru", String.class
+        )).thenReturn(new ResponseEntity("{\"city\":\"chicago\",\"name\":\"jon doe\",\"age\":\"22\"}", HttpStatus.OK));
+        HhClient hhClient = new HhClient();
+        HttpResponse<String> r = hhClient.makeGetRequest("https://hh.api.ru", "");
+        System.out.println("Response: " + r);
+    }
+
+    @Test
     public void emptyParametersShouldReturnListWithDefaultPaginationParameters() {
         Response response = executeGetRequestWithParams(BASE_URL, "");
         List<EmployerDto> employers = response.readEntity(new GenericType<>() {
         });
         assertEquals(200, response.getStatus());
         assertEquals(20, employers.size());
-    }
-
-    @Test
-    public void emptyFavorites() {
-        Response response = executeGetRequestWithParams("/favorites/employer", "");
-        List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {
-        });
-        System.out.println("Employers: " + employers);
-        assertEquals(200, response.getStatus());
-        assertEquals(0, employers.size());
     }
 
     @Test

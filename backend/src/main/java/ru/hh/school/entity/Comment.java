@@ -1,5 +1,7 @@
 package ru.hh.school.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @MappedSuperclass
@@ -13,12 +15,14 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int id;
 
     @Column(name = "comment")
     private String comment;
 
     @Version
+    @JsonIgnore
     private Integer version;
 
     public int getId() {

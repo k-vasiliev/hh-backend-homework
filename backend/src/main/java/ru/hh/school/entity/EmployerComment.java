@@ -13,6 +13,10 @@ public class EmployerComment extends Comment {
 
     public EmployerComment() {}
 
+    public EmployerComment(String comment) {
+        super(comment);
+    }
+
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")

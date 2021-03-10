@@ -13,6 +13,10 @@ public class VacancyComment extends Comment {
 
     public VacancyComment() {}
 
+    public VacancyComment(String comment) {
+        super(comment);
+    }
+
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")

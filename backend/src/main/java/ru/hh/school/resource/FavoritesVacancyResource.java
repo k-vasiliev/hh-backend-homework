@@ -42,7 +42,7 @@ public class FavoritesVacancyResource {
             @DefaultValue("") @FormParam("comment") String comment
     ) {
         try {
-            vacancyService.addVacancyToFavorites(vacancyId);
+            vacancyService.addVacancyToFavorites(vacancyId, comment);
             return Response.ok().build();
         } catch (WebApplicationException exception) {
             throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());

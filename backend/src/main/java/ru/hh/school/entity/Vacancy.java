@@ -2,6 +2,7 @@ package ru.hh.school.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sun.istack.NotNull;
@@ -50,6 +51,7 @@ public class Vacancy {
 
     @OneToOne(mappedBy = "vacancy", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+    @JsonUnwrapped
     private VacancyComment comment;
 
     @ManyToOne
@@ -58,6 +60,7 @@ public class Vacancy {
 
     @OneToOne(mappedBy = "vacancy", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+    @JsonUnwrapped
     private VacancyCounter vacancyCounter;
 
     public int getId() {
@@ -138,6 +141,7 @@ public class Vacancy {
                 ", employer=[id=" + employer.getId() + ", name=" + employer.getName() + "]\n" +
                 ", area=" + area + '\n' +
                 ", vacancyCounter=" + vacancyCounter.getCounter() + '\n' +
+                ", comment=" + comment +
                 ']';
     }
 
