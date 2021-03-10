@@ -15,7 +15,6 @@ import ru.hh.school.util.*;
 @Configuration
 @Import({
         // import your beans here
-        ExampleResource.class,
         NabCommonConfig.class,
         EmployerDao.class,
         AreaDao.class,

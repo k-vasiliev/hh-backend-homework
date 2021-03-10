@@ -16,7 +16,7 @@ import java.util.List;
 @Path("/vacancy")
 public class VacancyResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExampleResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(VacancyResource.class);
 
     private final ApiService apiService;
     private final VacancyMapper vacancyMapper;

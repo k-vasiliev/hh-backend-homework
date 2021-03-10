@@ -15,7 +15,7 @@ import java.util.List;
 @Path("/favorites/employer")
 public class FavoritesEmployerResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExampleResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(FavoritesEmployerResource.class);
 
     private final EmployerService employerService;
 

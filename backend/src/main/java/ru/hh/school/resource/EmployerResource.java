@@ -16,7 +16,7 @@ import java.util.List;
 @Path("/employer")
 public class EmployerResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExampleResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmployerResource.class);
 
     private final ApiService apiService;
     private final EmployerMapper employerMapper;
