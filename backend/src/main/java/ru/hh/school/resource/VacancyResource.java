@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.service.ApiService;
-import ru.hh.school.util.SalaryMapper;
 import ru.hh.school.util.VacancyMapper;
 
 import javax.inject.Singleton;
@@ -35,14 +34,8 @@ public class VacancyResource {
             @DefaultValue("20") @QueryParam("per_page") Integer perPage
     ) {
         try {
-            SalaryMapper mapper = new SalaryMapper();
             String dataFromApi = apiService.fetchVacanciesFromApi(query, page, perPage);
             List<VacancyDto> vacancies = vacancyMapper.mapDataFromApi(dataFromApi);
-            vacancies.stream()
-                    .map(vacancyDto -> vacancyDto.getSalary()).map(mapper::mapToEntity)
-                    .peek(System.out::println)
-                    .map(mapper::mapToDto)
-                    .forEach(System.out::println);
             return Response.ok().entity(vacancies).build();
         } catch (WebApplicationException exception) {
             throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());
