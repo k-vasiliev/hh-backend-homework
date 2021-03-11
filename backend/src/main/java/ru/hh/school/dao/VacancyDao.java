@@ -1,7 +1,7 @@
 package ru.hh.school.dao;
 
 import org.hibernate.SessionFactory;
-import ru.hh.school.entity.Employer;
+import ru.hh.school.entity.Vacancy;
 
 import javax.inject.Singleton;
 import java.util.Optional;
@@ -19,32 +19,22 @@ public class VacancyDao {
         return sessionFactory;
     }
 
-    public Optional<Employer> get(int employerId) {
-        try {
-            Employer employer = session()
-                    .getCurrentSession()
-                    .createQuery("SELECT e FROM employer e WHERE e.id = :id", Employer.class)
-                    .setParameter("id", employerId)
-                    .getSingleResult();
-
-            return Optional.of(employer);
-        } catch (RuntimeException e) {
-            return Optional.empty();
-        }
+    public Optional<Vacancy> get(Integer vacancyId) {
+        return Optional.ofNullable(session().getCurrentSession().get(Vacancy.class, vacancyId));
     }
 
-    public Employer create(Employer employer) {
-        session().getCurrentSession().persist(employer);
-        return employer;
+    public Vacancy create(Vacancy vacancy) {
+        session().getCurrentSession().persist(vacancy);
+        return vacancy;
     }
 
-    public Employer saveOrUpdate(Employer employer) {
-        session().getCurrentSession().saveOrUpdate(employer);
-        return employer;
+    public Vacancy saveOrUpdate(Vacancy vacancy) {
+        session().getCurrentSession().saveOrUpdate(vacancy);
+        return vacancy;
     }
 
-    public void delete(Employer employer) {
-        session().getCurrentSession().delete(employer);
+    public void delete(Vacancy vacancy) {
+        session().getCurrentSession().delete(vacancy);
     }
 
 }

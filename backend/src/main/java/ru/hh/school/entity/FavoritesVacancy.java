@@ -21,8 +21,24 @@ public class FavoritesVacancy extends Popularity {
     @Column(name = "created")
     private LocalDateTime created;
 
+    @Column(name = "comment")
+    private String comment;
+
     @Column(name = "views_count")
     private Integer viewsCount;
+
+    public FavoritesVacancy(Integer vacancyId) {
+        this.vacancyId = vacancyId;
+    }
+
+    public FavoritesVacancy(Integer vacancyId, String comment, LocalDateTime created) {
+        this.vacancyId = vacancyId;
+        this.comment = comment;
+        this.created = created;
+    }
+
+    public FavoritesVacancy() {
+    }
 
     public Integer getVacancyId() {
         return vacancyId;
@@ -59,5 +75,13 @@ public class FavoritesVacancy extends Popularity {
     @Override
     public String getPopularityValue(Integer viewsCount) {
         return super.getPopularityValue(viewsCount);
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

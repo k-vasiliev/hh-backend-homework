@@ -3,7 +3,7 @@ package ru.hh.school.service;
 import org.hibernate.HibernateException;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.FavoritesEmployerDao;
-import ru.hh.school.dto.EmployerByIdDto;
+import ru.hh.school.dto.EmployerApiHh;
 import ru.hh.school.entity.Employer;
 import ru.hh.school.entity.FavoritesEmployer;
 import ru.hh.school.exception.ConstraintException;
@@ -26,11 +26,14 @@ public class FavoritesEmployerService {
 
     private final EmployerMapper employerMapper;
 
+    private final ApiHhService apiHhService;
 
-    public FavoritesEmployerService(EmployerService employerService, FavoritesEmployerDao favoritesEmployerDao, EmployerMapper employerMapper) {
+
+    public FavoritesEmployerService(EmployerService employerService, FavoritesEmployerDao favoritesEmployerDao, EmployerMapper employerMapper, ApiHhService apiHhService) {
         this.employerService = employerService;
         this.favoritesEmployerDao = favoritesEmployerDao;
         this.employerMapper = employerMapper;
+        this.apiHhService = apiHhService;
     }
 
     @Transactional
@@ -56,7 +59,7 @@ public class FavoritesEmployerService {
         }
         // иду в апи хх, чтобы сохранить данные об работодателе
         // TODO можно ли сделать в отдельном не блокирующем потоке?
-        EmployerByIdDto employerApiHh = employerService.get(String.valueOf(id));
+        EmployerApiHh employerApiHh = apiHhService.getEmployerBy(id);
         Employer employer = employerMapper.map(employerApiHh);
         employerService.saveOrUpdate(employer);
 
@@ -79,7 +82,7 @@ public class FavoritesEmployerService {
         limit = limit == null ? defaultLimit : limit;
         page = page == null ? defaultPage : page;
 
-        List<FavoritesEmployer> favoritesEmployers = null;
+        List<FavoritesEmployer> favoritesEmployers;
         try {
             favoritesEmployers = favoritesEmployerDao.getAll(limit, page);
         } catch (HibernateException e) {

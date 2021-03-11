@@ -2,17 +2,14 @@ package ru.hh.school.dto;
 
 import java.util.List;
 
-public class VacancyItemsApi {
+public class EmployerItemsApiHh {
     @Override
     public String toString() {
-        return "VacancyItems{" +
+        return "{" +
                 "items=" + items +
                 '}';
     }
 
-    List<VacancyDto> items;
+    List<EmployerApiHh> items;
 
-    public List<VacancyDto> getItems() {
-        return items;
-    }
 }

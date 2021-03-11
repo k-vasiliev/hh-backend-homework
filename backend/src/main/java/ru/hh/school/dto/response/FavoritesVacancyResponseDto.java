@@ -3,9 +3,10 @@ package ru.hh.school.dto.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.hh.school.dto.AreaDto;
+import ru.hh.school.dto.EmployerApiHh;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class FavoritesEmployerResponseDto {
+public class FavoritesVacancyResponseDto {
 
     private Integer id;
 
@@ -14,9 +15,9 @@ public class FavoritesEmployerResponseDto {
     @JsonProperty(value = "date_create")
     private String dateCreate;
 
-    private String description;
-
     private AreaDto area;
+
+    private EmployerApiHh employer;
 
     private String comment;
 
@@ -25,50 +26,27 @@ public class FavoritesEmployerResponseDto {
     @JsonProperty(value = "views_count")
     private Integer viewsCount;
 
-    public FavoritesEmployerResponseDto(Integer id, String name, String dateCreate, String description, AreaDto area, String comment, String popularity, Integer viewsCount) {
+
+    public FavoritesVacancyResponseDto(Integer id) {
+        this.id = id;
+    }
+
+    public FavoritesVacancyResponseDto(Integer id, String name, String dateCreate, AreaDto area, EmployerApiHh employer, String comment, String popularity, Integer viewsCount) {
         this.id = id;
         this.name = name;
         this.dateCreate = dateCreate;
-        this.description = description;
         this.area = area;
+        this.employer = employer;
         this.comment = comment;
         this.popularity = popularity;
         this.viewsCount = viewsCount;
     }
 
-    public FavoritesEmployerResponseDto() {
+    public FavoritesVacancyResponseDto() {
     }
 
     public Integer getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDateCreate() {
-        return dateCreate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public AreaDto getArea() {
-        return area;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public String getPopularity() {
-        return popularity;
-    }
-
-    public Integer getViewsCount() {
-        return viewsCount;
     }
 
     public void setId(Integer id) {
@@ -83,12 +61,13 @@ public class FavoritesEmployerResponseDto {
         this.dateCreate = dateCreate;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public void setArea(AreaDto area) {
         this.area = area;
+    }
+
+
+    public void setEmployer(EmployerApiHh employer) {
+        this.employer = employer;
     }
 
     public void setComment(String comment) {
@@ -106,10 +85,38 @@ public class FavoritesEmployerResponseDto {
     public void clearWithoutId() {
         setName(null);
         setDateCreate(null);
-        setDescription(null);
+        setEmployer(null);
         setArea(null);
         setComment(null);
         setPopularity(null);
         setViewsCount(null);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDateCreate() {
+        return dateCreate;
+    }
+
+    public AreaDto getArea() {
+        return area;
+    }
+
+    public EmployerApiHh getEmployer() {
+        return employer;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public String getPopularity() {
+        return popularity;
+    }
+
+    public Integer getViewsCount() {
+        return viewsCount;
     }
 }

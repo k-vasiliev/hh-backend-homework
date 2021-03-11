@@ -1,65 +1,58 @@
 package ru.hh.school.service;
 
-import com.google.gson.Gson;
-import org.apache.http.HttpHeaders;
-import org.apache.http.client.utils.URIBuilder;
-import org.eclipse.jetty.server.Response;
-import ru.hh.school.dto.VacancyItemsApi;
+import org.springframework.transaction.annotation.Transactional;
+import ru.hh.school.dao.VacancyDao;
+import ru.hh.school.dto.VacancyDto;
+import ru.hh.school.entity.Vacancy;
 import ru.hh.school.exception.HhRequestException;
+import ru.hh.school.mapper.VacancyMapper;
 
 import javax.inject.Singleton;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
+import javax.ws.rs.NotFoundException;
 
 @Singleton
 public class VacancyService {
 
-    public VacancyItemsApi getVacancy(Integer page, Integer perPage, String query) throws HhRequestException {
-        if (query == null) {
-            throw new HhRequestException("query is empty");
-        }
+    private final VacancyDao vacancyDao;
 
-        final int defaultPage = 0;
-        final int defaultPerPage = 20;
-        page = page == null ? defaultPage : page;
-        perPage = perPage == null ? defaultPerPage : perPage;
+    private final ApiHhService apiHhService;
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = null;
-        try {
-            request = HttpRequest.newBuilder()
-                    .uri(new URIBuilder()
-                            .setScheme("https")
-                            .setHost("api.hh.ru")
-                            .setPath("/vacancies")
-                            .addParameter("text", query)
-                            .addParameter("page", String.valueOf(page))
-                            .addParameter("perPage", String.valueOf(perPage))
-                            .build())
-                    .timeout(Duration.ofSeconds(2))
-                    .header(HttpHeaders.AUTHORIZATION,
-                            "Bearer JOIN9M0LTBRLMF0S1JBLA2VUSFHAPSJF63PGT89P96D6HGNNHALD7QL2PSTKUD8P")
-                    .GET()
-                    .build();
-        } catch (URISyntaxException e) {
-            throw new HhRequestException(e.getMessage());
-        }
+    private final VacancyMapper vacancyMapper;
 
-        HttpResponse<String> response = null;
-        try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            throw new HhRequestException(e.getMessage());
-        }
-
-        if (response.statusCode() != Response.SC_OK) {
-            throw new HhRequestException("status code is "+ response.statusCode());
-        }
-
-        return new Gson().fromJson(response.body(), VacancyItemsApi.class);
+    public VacancyService(VacancyDao vacancyDao, ApiHhService apiHhService, VacancyMapper vacancyMapper) {
+        this.vacancyDao = vacancyDao;
+        this.apiHhService = apiHhService;
+        this.vacancyMapper = vacancyMapper;
     }
+
+    @Transactional
+    public Vacancy get(Integer vacancyId) {
+        return vacancyDao.get(vacancyId).orElseThrow(NotFoundException::new);
+    }
+
+    @Transactional
+    public Vacancy create(Vacancy vacancy) {
+        return vacancyDao.create(vacancy);
+    }
+
+    @Transactional
+    public Vacancy saveOrUpdate(Vacancy vacancy) {
+        return vacancyDao.saveOrUpdate(vacancy);
+    }
+
+    @Transactional
+    public void delete(Vacancy vacancy) {
+        vacancyDao.delete(vacancy);
+    }
+
+    @Transactional
+    public void update(Integer id) throws HhRequestException {
+        if (id  == null) {
+            throw new HhRequestException("employer id is empty");
+        }
+
+        VacancyDto vacancy = apiHhService.getVacancyBy(id);
+        this.saveOrUpdate(vacancyMapper.map(vacancy));
+    }
+
 }

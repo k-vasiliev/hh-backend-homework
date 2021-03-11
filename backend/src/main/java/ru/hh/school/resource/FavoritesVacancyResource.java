@@ -1,16 +1,16 @@
 package ru.hh.school.resource;
 
-import ru.hh.school.dto.request.FavoritesEmployerRequestDto;
 import ru.hh.school.dto.request.FavoritesEmployerUpdateCommentDto;
+import ru.hh.school.dto.request.FavoritesVacancyRequestDto;
 import ru.hh.school.dto.response.ErrorResponseDto;
-import ru.hh.school.dto.response.FavoritesEmployerResponseDto;
-import ru.hh.school.entity.FavoritesEmployer;
+import ru.hh.school.dto.response.FavoritesVacancyResponseDto;
+import ru.hh.school.entity.FavoritesVacancy;
 import ru.hh.school.exception.ConstraintException;
 import ru.hh.school.exception.HhRequestException;
 import ru.hh.school.exception.InternalException;
-import ru.hh.school.mapper.FavoritesEmployerMapper;
-import ru.hh.school.service.EmployerService;
-import ru.hh.school.service.FavoritesEmployerService;
+import ru.hh.school.mapper.FavoritesVacancyMapper;
+import ru.hh.school.service.FavoritesVacancyService;
+import ru.hh.school.service.VacancyService;
 
 import javax.inject.Singleton;
 import javax.validation.Valid;
@@ -20,28 +20,30 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Path("/favorites/employer")
+@Path("/favorites/vacancy")
 @Produces(MediaType.APPLICATION_JSON)
 @Singleton
-public class FavoritesEmployerResource {
+public class FavoritesVacancyResource {
 
-    private final FavoritesEmployerService favoritesEmployerService;
-    private final EmployerService employerService;
+    private final FavoritesVacancyService favoritesVacancyService;
 
-    private final FavoritesEmployerMapper responseMapper;
+    private final VacancyService vacancyService;
 
-    public FavoritesEmployerResource(FavoritesEmployerService favoritesEmployerService, EmployerService employerService, FavoritesEmployerMapper responseMapper) {
-        this.favoritesEmployerService = favoritesEmployerService;
-        this.employerService = employerService;
-        this.responseMapper = responseMapper;
+    private final FavoritesVacancyMapper favoritesVacancyMapper;
+
+    public FavoritesVacancyResource(FavoritesVacancyService favoritesVacancyService, VacancyService vacancyService, FavoritesVacancyMapper favoritesVacancyMapper) {
+        this.favoritesVacancyService = favoritesVacancyService;
+        this.vacancyService = vacancyService;
+        this.favoritesVacancyMapper = favoritesVacancyMapper;
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response save(@Valid FavoritesEmployerRequestDto request) {
-        FavoritesEmployer favoritesEmployer = null;
+    public Response save(@Valid FavoritesVacancyRequestDto request) {
+        FavoritesVacancy favoritesVacancy;
+
         try {
-            favoritesEmployer = favoritesEmployerService.create(request.getEmployerId(), request.getComment());
+            favoritesVacancy = favoritesVacancyService.create(request.getVacancyId(), request.getComment());
         } catch (HhRequestException e) {
             ErrorResponseDto error = new ErrorResponseDto(e.getMessage());
             return Response
@@ -55,11 +57,12 @@ public class FavoritesEmployerResource {
                     .entity(error)
                     .build();
         }
-        FavoritesEmployerResponseDto employer = responseMapper.map(favoritesEmployer);
-        employer.clearWithoutId();
+
+        FavoritesVacancyResponseDto vacancy = favoritesVacancyMapper.map(favoritesVacancy);
+        vacancy.clearWithoutId();
         return Response
                 .status(Response.Status.CREATED)
-                .entity(employer)
+                .entity(vacancy)
                 .build();
     }
 
@@ -67,9 +70,9 @@ public class FavoritesEmployerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getAll(@QueryParam("limit") Integer limit,
                            @QueryParam("page") Integer page) {
-        List<FavoritesEmployer> favoritesEmployers;
+        List<FavoritesVacancy> favoritesVacancyList;
         try {
-            favoritesEmployers = favoritesEmployerService.getAll(limit, page);
+            favoritesVacancyList = favoritesVacancyService.getAll(limit, page);
         } catch (InternalException e) {
             ErrorResponseDto error = new ErrorResponseDto(e.getMessage());
             return Response
@@ -78,13 +81,13 @@ public class FavoritesEmployerResource {
                     .build();
         }
 
-        List<FavoritesEmployerResponseDto> employersDtoList = favoritesEmployers.stream()
-                .map(responseMapper::map)
+        List<FavoritesVacancyResponseDto> vacancyResponseDtoList = favoritesVacancyList.stream()
+                .map(favoritesVacancyMapper::map)
                 .collect(Collectors.toList());
 
         return Response
                 .ok()
-                .entity(employersDtoList)
+                .entity(vacancyResponseDtoList)
                 .build();
     }
 
@@ -92,7 +95,7 @@ public class FavoritesEmployerResource {
     @Path(value = "/{id}")
     public Response update(@PathParam(value = "id") Integer id,
                            @Valid FavoritesEmployerUpdateCommentDto commentDto) {
-        favoritesEmployerService.update(id, commentDto.getComment());
+        favoritesVacancyService.update(id, commentDto.getComment());
         return Response
                 .ok()
                 .build();
@@ -103,7 +106,7 @@ public class FavoritesEmployerResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam(value = "id") Integer id) {
         try {
-            favoritesEmployerService.delete(id);
+            favoritesVacancyService.delete(id);
         } catch (InternalException e) {
             ErrorResponseDto error = new ErrorResponseDto(e.getMessage());
             return Response
@@ -120,9 +123,9 @@ public class FavoritesEmployerResource {
     @POST
     @Path(value = "/{id}/refresh")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateEmployer(@PathParam(value = "id") Integer id) {
+    public Response updateVacancy(@PathParam(value = "id") Integer id) {
         try {
-            employerService.update(id);
+            vacancyService.update(id);
         } catch (HhRequestException e) {
             ErrorResponseDto error = new ErrorResponseDto(e.getMessage());
             return Response

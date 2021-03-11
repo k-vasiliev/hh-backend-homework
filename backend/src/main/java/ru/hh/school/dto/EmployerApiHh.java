@@ -2,7 +2,7 @@ package ru.hh.school.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class EmployerByIdDto {
+public class EmployerApiHh {
 
     @JsonProperty(required = true)
     private Integer id;
@@ -15,6 +15,16 @@ public class EmployerByIdDto {
 
     @JsonProperty(required = true)
     private AreaDto area;
+
+    public EmployerApiHh(Integer id, String name, String description, AreaDto area) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.area = area;
+    }
+
+    public EmployerApiHh() {
+    }
 
     public Integer getId() {
         return id;

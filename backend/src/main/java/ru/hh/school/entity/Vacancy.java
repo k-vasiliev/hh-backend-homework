@@ -20,11 +20,62 @@ public class Vacancy {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "area_id")
     private Area area;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "employer_id")
     private Employer employer;
+
+    public Vacancy(Integer id, LocalDateTime created, String name, Area area, Employer employer) {
+        this.id = id;
+        this.created = created;
+        this.name = name;
+        this.area = area;
+        this.employer = employer;
+    }
+
+    public Vacancy() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
+    }
 }
