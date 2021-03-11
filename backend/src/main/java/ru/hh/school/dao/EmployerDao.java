@@ -27,6 +27,18 @@ public class EmployerDao extends GenericDao {
         );
     }
 
+    public Employer getEager(Integer id) {
+        return getSession().createQuery(
+                "from Employer employer " +
+                        "join fetch employer.area a " +
+                        "join fetch employer.comment c " +
+                        "join fetch employer.employerCounter ec " +
+                        "where employer.id = :id",
+                Employer.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
     public List<Employer> getFavoritesWithPagination(Integer page, Integer perPage) {
         Query query =  eagerQuery();
         query.setFirstResult(perPage * page);

@@ -36,8 +36,7 @@ import ru.hh.school.util.*;
         VacancyResource.class,
         VacancyMapper.class,
         VacancyService.class,
-        FavoritesVacancyResource.class,
-        GenericDao.class
+        FavoritesVacancyResource.class
 })
 public class CommonConfig {
 

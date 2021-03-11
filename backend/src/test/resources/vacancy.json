@@ -1,0 +1,128 @@
+{
+  "id": "42859569",
+  "premium": false,
+  "billing_type": {
+    "id": "standard_plus",
+    "name": "Стандарт плюс"
+  },
+  "relations": [
+
+  ],
+  "name": "Junior Java / Kotlin разработчик",
+  "insider_interview": null,
+  "response_letter_required": false,
+  "area": {
+    "id": "1",
+    "name": "Москва",
+    "url": "https://api.hh.ru/areas/1"
+  },
+  "salary": {
+    "from": 30000,
+    "to": null,
+    "currency": "RUR",
+    "gross": false
+  },
+  "type": {
+    "id": "open",
+    "name": "Открытая"
+  },
+  "address": null,
+  "allow_messages": true,
+  "site": {
+    "id": "hh",
+    "name": "hh.ru"
+  },
+  "experience": {
+    "id": "noExperience",
+    "name": "Нет опыта"
+  },
+  "schedule": {
+    "id": "fullDay",
+    "name": "Полный день"
+  },
+  "employment": {
+    "id": "full",
+    "name": "Полная занятость"
+  },
+  "department": null,
+  "contacts": null,
+  "description": "<p><strong>Обязанности:</strong></p> <ul> <li>разработка на Java под руководством ведущего разработчика;</li> </ul> <strong>Требования:</strong> <ul> <li> <p>знание классических алгоритмов и структур данных;</p> </li> <li> <p>знание Сore Java;</p> </li> <li> <p>умение тестировать собственный код и работать с чужим;</p> </li> <li> <p>умение работать в команде;</p> </li> <li> <p>понимание того, что такое настоящая ответственность за свою работу;</p> </li> <li> <p>позитивный настрой :)</p> </li> </ul> <p><strong>Плюсом будет:</strong></p> <ul> <li>базовые знания Spring Framework;</li> <li>SQL;</li> <li>умение понимать технический текст на английском (для чтения документации по java/kotlin/spring);</li> <li>знакомство с AWS;</li> </ul> <strong>Условия:</strong> <ul> <li>Работа в офисе в районе м.Курская с 12:00 до 21:00 (расписание обсуждается);</li> <li>Стартовая ЗП 30.000 в месяц первые 6 месяцев;</li> <li>Обучение и профессиональный рост :)</li> </ul>",
+  "branded_description": null,
+  "vacancy_constructor_template": null,
+  "key_skills": [
+    {
+      "name": "Java"
+    },
+    {
+      "name": "Spring Framework"
+    },
+    {
+      "name": "SQL"
+    },
+    {
+      "name": "Java SE"
+    }
+  ],
+  "accept_handicapped": false,
+  "accept_kids": false,
+  "archived": false,
+  "response_url": null,
+  "specializations": [
+    {
+      "id": "15.93",
+      "name": "Информационные технологии, Интернет, Мультимедиа",
+      "profarea_id": "15",
+      "profarea_name": "Начало карьеры, студенты"
+    },
+    {
+      "id": "1.221",
+      "name": "Программирование, Разработка",
+      "profarea_id": "1",
+      "profarea_name": "Информационные технологии, интернет, телеком"
+    },
+    {
+      "id": "1.82",
+      "name": "Инженер",
+      "profarea_id": "1",
+      "profarea_name": "Информационные технологии, интернет, телеком"
+    }
+  ],
+  "code": null,
+  "hidden": false,
+  "quick_responses_allowed": false,
+  "driver_license_types": [
+
+  ],
+  "accept_incomplete_resumes": false,
+  "employer": {
+    "id": "5201571",
+    "name": "Геворгян Геворг Рафикович",
+    "url": "https://api.hh.ru/employers/5201571",
+    "alternate_url": "https://hh.ru/employer/5201571",
+    "logo_urls": {
+      "90": "https://hhcdn.ru/employer-logo/3716411.png",
+      "240": "https://hhcdn.ru/employer-logo/3716412.png",
+      "original": "https://hhcdn.ru/employer-logo-original/818881.png"
+    },
+    "vacancies_url": "https://api.hh.ru/vacancies?employer_id=5201571",
+    "trusted": false
+  },
+  "published_at": "2021-03-11T20:03:00+0300",
+  "created_at": "2021-03-11T20:03:00+0300",
+  "negotiations_url": null,
+  "suitable_resumes_url": null,
+  "apply_alternate_url": "https://hh.ru/applicant/vacancy_response?vacancyId=42859569",
+  "has_test": false,
+  "test": null,
+  "alternate_url": "https://hh.ru/vacancy/42859569",
+  "working_days": [
+
+  ],
+  "working_time_intervals": [
+
+  ],
+  "working_time_modes": [
+
+  ],
+  "accept_temporary": false
+}

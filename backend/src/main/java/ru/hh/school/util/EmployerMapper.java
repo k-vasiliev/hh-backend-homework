@@ -90,6 +90,7 @@ public class EmployerMapper {
     }
 
     private Employer copyDtoFieldsToEntity(Employer employer, EmployerDtoById employerDto) {
+        employer.setId(employerDto.getId());
         employer.setName(employerDto.getName());
         employer.setDescription(employerDto.getDescription());
         return employer;

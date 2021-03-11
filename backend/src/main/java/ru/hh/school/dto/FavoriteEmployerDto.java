@@ -1,8 +1,10 @@
 package ru.hh.school.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ru.hh.school.entity.Popularity;
+import ru.hh.school.serialize.LocalDateDeserializer;
 import ru.hh.school.serialize.LocalDateSerializer;
 
 import java.time.LocalDate;
@@ -11,6 +13,7 @@ public class FavoriteEmployerDto extends EmployerDtoById {
 
     @JsonProperty("date_create")
     @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateCreate;
 
     private Popularity popularity = Popularity.REGULAR;

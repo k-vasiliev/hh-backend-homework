@@ -38,7 +38,17 @@ public class GenericDao {
     }
 
     public void refresh(Object obj) {
+        if (obj == null) {
+            return;
+        }
         getSession().refresh(obj);
+    }
+
+    public void update(Object obj) {
+        if (obj == null) {
+            return;
+        }
+        getSession().update(obj);
     }
 
     protected Session getSession() {

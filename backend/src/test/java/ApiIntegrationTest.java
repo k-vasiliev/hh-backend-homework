@@ -1,19 +1,13 @@
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.springframework.test.context.ContextConfiguration;
-import ru.hh.nab.starter.NabApplication;
-import ru.hh.nab.testbase.NabTestBase;
-import ru.hh.school.dto.AreaDto;
-import ru.hh.school.dto.EmployerDto;
-import ru.hh.school.dto.EmployerDtoById;
-import ru.hh.school.resource.EmployerResource;
+import ru.hh.school.dto.*;
 import ru.hh.school.service.ApiService;
 
 
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,50 +18,32 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {AppTestConfig.class, ApiMockConfig.class})
-public class EmployerResourceTest extends NabTestBase {
-
+public class ApiIntegrationTest extends AppBaseTest {
 
     @Inject
     private ApiService apiService;
-    @Inject
-    private EmployerResource employerResource;
-
-    @Override
-    protected NabApplication getApplication() {
-        return NabApplication.builder().configureJersey().bindToRoot().build();
-    }
-
-    private Response executeGetRequestWithParams(String url, String query) {
-        return createRequest(url + "?" + query)
-                .buildGet()
-                .invoke();
-    }
-
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
-
 
     @Test
     public void getEmployerByIdEndpointReturnsValidDto() throws IOException {
         String jsonString = Files.readString(Path.of("src/test/resources/employer.json"));
-        when(apiService.fetchEmployersFromApiById(1)).thenReturn(jsonString);
-        Response response = employerResource.getEmployerFromApiById(1);
-        EmployerDtoById employer = (EmployerDtoById) response.getEntity();
+        when(apiService.fetchEmployersFromApiById(employerId)).thenReturn(jsonString);
+        Response response = executeGetRequestWithParams(EMPLOYER_BASE_URL + "/" + employerId, "");
+        EmployerDtoById employer = response.readEntity(EmployerDtoById.class);
         AreaDto areaDto = employer.getArea();
         assertEquals(200, response.getStatus());
-        assertEquals(1, employer.getId());
-        assertEquals("NCI", employer.getName());
+        assertEquals(employerId, employer.getId());
+        assertEquals("𝐁𝐥𝐚𝐜𝐤 𝐖𝐨𝐨𝐝", employer.getName());
         assertEquals("Random description", employer.getDescription());
-        assertEquals(1, areaDto.getId());
-        assertEquals("Москва", areaDto.getName());
+        assertEquals(1381, areaDto.getId());
+        assertEquals("Сургут", areaDto.getName());
     }
 
     @Test
     public void getEmployersEndpointReturnsValidDtoList() throws IOException {
         String jsonString = Files.readString(Path.of("src/test/resources/employers.json"));
         when(apiService.fetchEmployersFromApi("", 0, 20)).thenReturn(jsonString);
-        Response response = employerResource.getEmployersFromApi("", 0, 20);
-        List<EmployerDto> employers = (List<EmployerDto>) response.getEntity();
+        Response response = executeGetRequestWithParams(EMPLOYER_BASE_URL, "");
+        List<EmployerDto> employers = response.readEntity(new GenericType<>() {});
         assertEquals(200, response.getStatus());
         assertEquals(20, employers.size());
         employers.stream().forEach( employerDto -> {
@@ -75,8 +51,49 @@ public class EmployerResourceTest extends NabTestBase {
                     assertNotNull(employerDto.getName());
                 }
         );
-        assertEquals(4849846, employers.get(0).getId());
+        assertEquals(employerId, employers.get(0).getId());
         assertEquals("𝐁𝐥𝐚𝐜𝐤 𝐖𝐨𝐨𝐝", employers.get(0).getName());
+    }
+
+    @Test
+    public void getVacancyByIdEndpointReturnsValidDto() throws IOException {
+        String jsonString = Files.readString(Path.of("src/test/resources/vacancy.json"));
+        when(apiService.fetchVacanciesFromApiById(vacancyId)).thenReturn(jsonString);
+        Response response = executeGetRequestWithParams(VACANCY_BASE_URL + "/" + vacancyId, "");
+        VacancyDto vacancy = response.readEntity(VacancyDto.class);
+        AreaDto areaDto = vacancy.getArea();
+        SalaryDto salaryDto = vacancy.getSalary();
+        assertEquals(200, response.getStatus());
+        assertEquals(vacancyId, vacancy.getId());
+        assertEquals("Junior Java / Kotlin разработчик", vacancy.getName());
+        assertEquals(1, areaDto.getId());
+        assertEquals("Москва", areaDto.getName());
+        assertEquals(30000, (int) salaryDto.getFrom());
+        assertEquals("RUR", salaryDto.getCurrency());
+        assertNull(salaryDto.getTo());
+        assertFalse(salaryDto.getGross());
+    }
+
+    @Test
+    public void getVacanciesEndpointReturnsValidDtoList() throws IOException {
+        String jsonString = Files.readString(Path.of("src/test/resources/vacancies.json"));
+        when(apiService.fetchVacanciesFromApi("", 0, 20)).thenReturn(jsonString);
+        Response response = executeGetRequestWithParams(VACANCY_BASE_URL, "");
+        List<VacancyDto> vacancies = response.readEntity(new GenericType<>() {});
+        assertEquals(200, response.getStatus());
+        assertEquals(20, vacancies.size());
+        VacancyDto vacancy = vacancies.get(0);
+        AreaDto areaDto = vacancy.getArea();
+        SalaryDto salaryDto = vacancy.getSalary();
+        assertEquals(200, response.getStatus());
+        assertEquals(vacancyId, vacancy.getId());
+        assertEquals("Junior Java / Kotlin разработчик", vacancy.getName());
+        assertEquals(1, areaDto.getId());
+        assertEquals("Москва", areaDto.getName());
+        assertEquals(30000, (int) salaryDto.getFrom());
+        assertEquals("RUR", salaryDto.getCurrency());
+        assertNull(salaryDto.getTo());
+        assertFalse(salaryDto.getGross());
     }
 
     @Test
@@ -87,6 +104,20 @@ public class EmployerResourceTest extends NabTestBase {
         executeGetRequestWithParams("/employer", "query=headhunter&page=-1");
     }
 
+    @Test
+    public void negativePerPageParameterThrowsBadRequestException() {
+        exceptionRule.expect(BadRequestException.class);
+        exceptionRule.expectMessage("per_page parameter can't be negative");
+        when(apiService.fetchEmployersFromApi("headhunter", 0, -1)).thenCallRealMethod();
+        executeGetRequestWithParams(EMPLOYER_BASE_URL, "query=headhunter&per_page=-1");
+    }
 
+    @Test
+    public void greaterThen100PerPageParameterThrowsBadRequestException() {
+        exceptionRule.expect(BadRequestException.class);
+        exceptionRule.expectMessage("per_page parameter can't be greater then 100");
+        when(apiService.fetchEmployersFromApi("headhunter", 0, 200)).thenCallRealMethod();
+        executeGetRequestWithParams(EMPLOYER_BASE_URL, "query=headhunter&per_page=200");
+    }
 
 }

@@ -31,9 +31,8 @@ public class VacancyMapper {
     private final CommentDao commentDao;
     private final ViewsCounterDao viewsCounterDao;
     private final FileSettings fileSettings;
-    private final GenericDao genericDao;
 
-    public VacancyMapper(EmployerService employerService, VacancyDao vacancyDao, AreaDao areaDao, AreaMapper areaMapper, CommentDao commentDao, ViewsCounterDao viewsCounterDao, FileSettings fileSettings, GenericDao genericDao) {
+    public VacancyMapper(EmployerService employerService, VacancyDao vacancyDao, AreaDao areaDao, AreaMapper areaMapper, CommentDao commentDao, ViewsCounterDao viewsCounterDao, FileSettings fileSettings) {
         this.employerService = employerService;
         this.vacancyDao = vacancyDao;
         this.areaDao = areaDao;
@@ -41,7 +40,6 @@ public class VacancyMapper {
         this.commentDao = commentDao;
         this.viewsCounterDao = viewsCounterDao;
         this.fileSettings = fileSettings;
-        this.genericDao = genericDao;
     }
 
     public List<VacancyDto> mapDataFromApi(String vacancyData) {
