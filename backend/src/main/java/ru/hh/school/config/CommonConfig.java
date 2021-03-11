@@ -7,12 +7,16 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.starter.NabCommonConfig;
 import ru.hh.school.resource.MainResource;
+import ru.hh.school.resource.MeResource;
+import ru.hh.school.service.MeService;
 
 @Configuration
 @Import({
         MainResource.class,
         NabCommonConfig.class,
-        MainResource.class
+        MainResource.class,
+        MeResource.class,
+        MeService.class
 })
 public class CommonConfig {
 
