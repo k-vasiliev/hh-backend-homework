@@ -11,20 +11,22 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(classes = AppTestConfig.class)
 public class AppTest extends NabTestBase {
 
-  @Override
-  protected NabApplication getApplication() {
-    return NabApplication.builder().configureJersey().bindToRoot().build();
-  }
+    @Override
+    protected NabApplication getApplication() {
+        return NabApplication.builder().configureJersey().bindToRoot().build();
+    }
 
-  @Before
-  public void before() {}
+    @Before
+    public void before() {
+    }
 
-  @Test
-  public void createUserAndCompanyTest() {
-    Response response = createRequest("/")
-            .buildGet()
-            .invoke();
+    @Test
+    public void createUserAndCompanyTest() {
+        Response response = createRequest("/")
+                .buildGet()
+                .invoke();
 
-    assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
-  }
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+    }
+
 }

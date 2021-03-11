@@ -15,28 +15,29 @@ import java.util.Properties;
 
 @Configuration
 @Import({
-  NabTestConfig.class,
-  NabHibernateCommonConfig.class,
-  NabHibernateTestBaseConfig.class,
-  CommonConfig.class
+        NabTestConfig.class,
+        NabHibernateCommonConfig.class,
+        NabHibernateTestBaseConfig.class,
+        CommonConfig.class
 })
 public class AppTestConfig {
 
-  private static final String DB_SETTINGS_FILE_NAME = "db-settings-test.properties";
+    private static final String DB_SETTINGS_FILE_NAME = "db-settings-test.properties";
 
-  @Bean
-  public DataSource dataSource(DataSourceFactory dataSourceFactory, Properties dbProperties) {
-    return dataSourceFactory.create("master", false, new FileSettings(dbProperties));
-  }
+    @Bean
+    public DataSource dataSource(DataSourceFactory dataSourceFactory, Properties dbProperties) {
+        return dataSourceFactory.create("master", false, new FileSettings(dbProperties));
+    }
 
-  @Bean
-  public PropertiesFactoryBean dbProperties() {
-    PropertiesFactoryBean properties = new PropertiesFactoryBean();
-    properties.setSingleton(false);
-    properties.setIgnoreResourceNotFound(true);
-    properties.setLocations(
-        new ClassPathResource(DB_SETTINGS_FILE_NAME),
-        new ClassPathResource(DB_SETTINGS_FILE_NAME + ".dev"));
-    return properties;
-  }
+    @Bean
+    public PropertiesFactoryBean dbProperties() {
+        PropertiesFactoryBean properties = new PropertiesFactoryBean();
+        properties.setSingleton(false);
+        properties.setIgnoreResourceNotFound(true);
+        properties.setLocations(
+                new ClassPathResource(DB_SETTINGS_FILE_NAME),
+                new ClassPathResource(DB_SETTINGS_FILE_NAME + ".dev"));
+        return properties;
+    }
+
 }
