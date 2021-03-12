@@ -1,7 +1,7 @@
 {
   "id": "4849846",
   "trusted": false,
-  "name": "𝐁𝐥𝐚𝐜𝐤 𝐖𝐨𝐨𝐝",
+  "name": "Black Wood",
   "type": "project_director",
   "description": "Random description",
   "site_url": "",
@@ -13,7 +13,7 @@
   ],
   "area": {
     "id": "1381",
-    "name": "Сургут",
+    "name": "Black",
     "url": "https://api.hh.ru/areas/1381"
   },
   "industries": [
