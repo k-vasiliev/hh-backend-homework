@@ -23,50 +23,21 @@ public class CounterService {
 
     @Transactional
     public void incrementEmployerCounter(Integer counterId) {
-        int retryCounter = 0;
-        while (true) {
-            if (executeIncrement(() -> counterDao.incrementEmployerViews(counterId))) { break; }
-            retryCounter += 1;
-        }
-        logger.info("Retry counter: " + retryCounter);
+        executeIncrementWithRetryCounter(() -> counterDao.incrementEmployerViews(counterId));
     }
 
     @Transactional
     public void incrementVacancyCounter(Integer counterId) {
+        executeIncrementWithRetryCounter(() -> counterDao.incrementVacancyViews(counterId));
+    }
+
+    private void executeIncrementWithRetryCounter(Runnable incrementMethod) {
         int retryCounter = 0;
         while (true) {
-            if (vacancyCounterIncrementIsCompleted(counterId)) { break; }
+            if (executeIncrement(incrementMethod)) { break; }
             retryCounter += 1;
         }
         logger.info("Retry counter: " + retryCounter);
-    }
-
-    private boolean employerCounterIncrementIsCompleted(Integer counterId) {
-        try {
-            counterDao.incrementEmployerViews(counterId);
-            logger.info("Increment success");
-            return true;
-        } catch (ObjectOptimisticLockingFailureException | StaleStateException  e) {
-            logger.info("OptimisticLockingException for Counter Class");
-            return false;
-        } catch (NotFoundException e) {
-            logger.info("Counter has been deleted");
-            return true;
-        }
-    }
-
-    private boolean vacancyCounterIncrementIsCompleted(Integer counterId) {
-        try {
-            counterDao.incrementVacancyViews(counterId);
-            logger.info("Increment success");
-            return true;
-        } catch (ObjectOptimisticLockingFailureException | StaleStateException  e) {
-            logger.info("OptimisticLockingException for Counter Class");
-            return false;
-        } catch (NotFoundException e) {
-            logger.info("Counter has been deleted");
-            return true;
-        }
     }
 
     private boolean executeIncrement(Runnable incrementMethod) {

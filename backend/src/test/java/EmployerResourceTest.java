@@ -24,9 +24,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
@@ -189,17 +187,29 @@ public class EmployerResourceTest extends AppBaseTest {
     @Test
     public void counterIsThreadSafe() throws IOException, InterruptedException {
         saveSingleEmployerToDatabase();
-        ExecutorService threadPool = Executors.newFixedThreadPool(3);
-        for (int i = 0; i < 1000; i++) {
-            threadPool.submit(() -> executeGet(FAVORITE_EMPLOYER_BASE_URL));
+        Executor executors = new ThreadPoolExecutor(
+                3, 3, 30, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<Runnable>());
+        for (int i = 0; i < 500; i++) {
+            executors.execute(() -> executeGet(FAVORITE_EMPLOYER_BASE_URL));
         }
-        threadPool.awaitTermination(12000, TimeUnit.MILLISECONDS);
+        Thread.sleep(5000);
         Employer employer = employerDao.getEager(employerId);
-        System.out.println(employer.getViewsCount().getCounter());
-        Thread.sleep(1000);
-        employer = employerDao.getEager(employerId);
-        System.out.println(employer.getViewsCount().getCounter());
-        assertEquals(1000, (int) employer.getViewsCount().getCounter());
+        assertEquals(500, (int) employer.getViewsCount().getCounter());
+    }
+
+    @Test
+    public void counterIsThreadSafeForMultipleEntries() throws IOException, InterruptedException {
+        saveMultipleEmployersToDatabase(10);
+        Executor executors = new ThreadPoolExecutor(
+                3, 3, 30, TimeUnit.SECONDS,
+                new LinkedBlockingQueue<Runnable>());
+        for (int i = 0; i < 500; i++) {
+            executors.execute(() -> executeGet(FAVORITE_EMPLOYER_BASE_URL));
+        }
+        Thread.sleep(12000);
+        Employer employer = employerDao.getEager(1);
+        assertEquals(500, (int) employer.getViewsCount().getCounter());
     }
 
     @Test
