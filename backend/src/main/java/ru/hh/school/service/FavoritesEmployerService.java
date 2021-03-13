@@ -8,7 +8,7 @@ import ru.hh.school.dao.EmployerDao;
 import ru.hh.school.dto.EmployerDetailed;
 import ru.hh.school.entity.AreaEntity;
 import ru.hh.school.entity.EmployerEntity;
-import ru.hh.school.resource.FavoritesEmployerRequest;
+import ru.hh.school.request.FavoritesEmployerRequest;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;

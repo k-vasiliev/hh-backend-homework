@@ -2,6 +2,7 @@ package ru.hh.school.resource;
 
 import org.springframework.validation.annotation.Validated;
 import ru.hh.school.entity.EmployerEntity;
+import ru.hh.school.request.FavoritesEmployerRequest;
 import ru.hh.school.service.FavoritesEmployerService;
 
 import javax.inject.Singleton;

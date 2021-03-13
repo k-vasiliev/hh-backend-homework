@@ -1,4 +1,4 @@
-package ru.hh.school.resource;
+package ru.hh.school.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
