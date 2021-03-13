@@ -5,7 +5,6 @@ import org.jvnet.hk2.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.ViewsCounterDao;
 
@@ -37,16 +36,14 @@ public class CounterService {
             if (executeIncrement(incrementMethod)) { break; }
             retryCounter += 1;
         }
-        logger.info("Retry counter: " + retryCounter);
+        logger.info("OptimisticLocking retry counter: " + retryCounter);
     }
 
     private boolean executeIncrement(Runnable incrementMethod) {
         try {
             incrementMethod.run();
-            logger.info("Increment success");
             return true;
         } catch (ObjectOptimisticLockingFailureException | StaleStateException  e) {
-            logger.info("OptimisticLockingException for Counter Class");
             return false;
         } catch (NotFoundException e) {
             logger.info("Counter has been deleted");

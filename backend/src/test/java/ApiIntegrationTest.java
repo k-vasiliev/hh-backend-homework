@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = {AppTestConfig.class, ApiMockConfig.class})
+@ContextConfiguration(classes = AppTestConfig.class)
 public class ApiIntegrationTest extends AppBaseTest {
 
     @Inject

@@ -1,3 +1,4 @@
+import org.mockito.Mockito;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,12 @@ import ru.hh.nab.hibernate.NabHibernateCommonConfig;
 import ru.hh.nab.testbase.NabTestConfig;
 import ru.hh.nab.testbase.hibernate.NabHibernateTestBaseConfig;
 import ru.hh.school.config.CommonConfig;
+import ru.hh.school.http.HhClient;
+import ru.hh.school.service.ApiService;
+import ru.hh.school.util.IdParameterValidator;
+import ru.hh.school.util.PaginationValidator;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -23,6 +29,18 @@ import java.util.Properties;
 public class AppTestConfig {
 
   private static final String DB_SETTINGS_FILE_NAME = "db-settings-test.properties";
+
+  @Inject
+  private PaginationValidator paginationValidator;
+  @Inject
+  private HhClient hhClient;
+  @Inject
+  private IdParameterValidator idParameterValidator;
+
+  @Bean
+  public ApiService apiService() {
+    return Mockito.spy(new ApiService(hhClient, paginationValidator, idParameterValidator));
+  }
 
   @Bean
   public DataSource dataSource(DataSourceFactory dataSourceFactory, Properties dbProperties) {
