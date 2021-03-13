@@ -3,7 +3,7 @@ create table area
   id      integer not null,
   name    text,
   created timestamp default now(),
-updated timestamp default now()
+  updated timestamp default now()
 );
 create unique index area_id_uindex
 on area (id);

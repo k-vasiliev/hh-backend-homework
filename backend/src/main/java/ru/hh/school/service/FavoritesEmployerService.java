@@ -89,6 +89,7 @@ public class FavoritesEmployerService {
             throw new InternalException(e.getMessage());
         }
 
+        // TODO возможен рейс? на подумать
         favoritesEmployers.stream()
                 .peek(employer -> employer.setViewsCount(employer.getViewsCount() + 1))
                 .forEach(favoritesEmployerDao::update);

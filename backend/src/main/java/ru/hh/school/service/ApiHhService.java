@@ -22,7 +22,7 @@ import java.time.Duration;
 @Singleton
 public class ApiHhService {
 
-    // TODO вынести в конфиг (на лекции по API токен разрешали светить в паблик репах)
+    // TODO можно вынести в конфиг (на лекции по API токен разрешали светить в паблик репах)
     private static final String TOKEN = "Bearer JOIN9M0LTBRLMF0S1JBLA2VUSFHAPSJF63PGT89P96D6HGNNHALD7QL2PSTKUD8P";
 
     private final String employersUrl = "https://api.hh.ru/employers/";
