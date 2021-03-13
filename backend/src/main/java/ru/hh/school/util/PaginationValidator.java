@@ -8,7 +8,7 @@ import javax.ws.rs.BadRequestException;
 public class PaginationValidator {
 
     public Boolean validate(Integer page, Integer perPage) throws BadRequestException {
-        return (validPage(page) && validPerPage(perPage));
+        return (validPage(page) && validPerPage(perPage) && validDepth(page, perPage));
     }
 
     private Boolean validPage(Integer page) throws BadRequestException {
@@ -27,4 +27,11 @@ public class PaginationValidator {
             }
             return true;
         }
+
+    private Boolean validDepth(Integer page, Integer perPage) throws BadRequestException {
+        if ((page + 1)*perPage > 2000) {
+            throw new BadRequestException("you can't look up more than 2000 items in the list");
+        }
+        return true;
+    }
 }

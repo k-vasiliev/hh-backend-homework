@@ -76,7 +76,7 @@ public class EmployerService {
     @Transactional
     public void deleteCompany(Integer employerId) {
         idParameterValidator.validate(employerId);
-        Employer employer = getEmployer(employerId);
+        Employer employer = employerDao.getWithPessimisticLocking(employerId).orElseThrow(NotFoundException::new);
         employerDao.delete(employer);
     }
 

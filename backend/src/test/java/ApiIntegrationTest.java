@@ -25,22 +25,22 @@ public class ApiIntegrationTest extends AppBaseTest {
 
     @Test
     public void getEmployerByIdEndpointReturnsValidDto() throws IOException {
-        String jsonString = Files.readString(Path.of("src/test/resources/employer.json"));
+        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/employer.json"));
         when(apiService.fetchEmployersFromApiById(employerId)).thenReturn(jsonString);
         Response response = executeGetRequestWithParams(EMPLOYER_BASE_URL + "/" + employerId, "");
         EmployerDtoById employer = response.readEntity(EmployerDtoById.class);
         AreaDto areaDto = employer.getArea();
         assertEquals(200, response.getStatus());
         assertEquals(employerId, employer.getId());
-        assertEquals("𝐁𝐥𝐚𝐜𝐤 𝐖𝐨𝐨𝐝", employer.getName());
+        assertEquals("Black Wood", employer.getName());
         assertEquals("Random description", employer.getDescription());
         assertEquals(1381, areaDto.getId());
-        assertEquals("Сургут", areaDto.getName());
+        assertEquals("Black", areaDto.getName());
     }
 
     @Test
     public void getEmployersEndpointReturnsValidDtoList() throws IOException {
-        String jsonString = Files.readString(Path.of("src/test/resources/employers.json"));
+        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/employers.json"));
         when(apiService.fetchEmployersFromApi("", 0, 20)).thenReturn(jsonString);
         Response response = executeGetRequestWithParams(EMPLOYER_BASE_URL, "");
         List<EmployerDto> employers = response.readEntity(new GenericType<>() {});
@@ -52,12 +52,12 @@ public class ApiIntegrationTest extends AppBaseTest {
                 }
         );
         assertEquals(employerId, employers.get(0).getId());
-        assertEquals("𝐁𝐥𝐚𝐜𝐤 𝐖𝐨𝐨𝐝", employers.get(0).getName());
+        assertEquals("Black Wood", employers.get(0).getName());
     }
 
     @Test
     public void getVacancyByIdEndpointReturnsValidDto() throws IOException {
-        String jsonString = Files.readString(Path.of("src/test/resources/vacancy.json"));
+        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/vacancy.json"));
         when(apiService.fetchVacanciesFromApiById(vacancyId)).thenReturn(jsonString);
         Response response = executeGetRequestWithParams(VACANCY_BASE_URL + "/" + vacancyId, "");
         VacancyDto vacancy = response.readEntity(VacancyDto.class);
@@ -76,7 +76,7 @@ public class ApiIntegrationTest extends AppBaseTest {
 
     @Test
     public void getVacanciesEndpointReturnsValidDtoList() throws IOException {
-        String jsonString = Files.readString(Path.of("src/test/resources/vacancies.json"));
+        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/vacancies.json"));
         when(apiService.fetchVacanciesFromApi("", 0, 20)).thenReturn(jsonString);
         Response response = executeGetRequestWithParams(VACANCY_BASE_URL, "");
         List<VacancyDto> vacancies = response.readEntity(new GenericType<>() {});

@@ -1,8 +1,10 @@
 import org.hibernate.SessionFactory;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
+import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.starter.NabApplication;
 import ru.hh.nab.testbase.NabTestBase;
+import ru.hh.school.service.ApiService;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
@@ -24,11 +26,20 @@ public class AppBaseTest extends NabTestBase {
     protected final String FAVORITE_EMPLOYER_BASE_URL= "/favorites/employer";
     protected final String FAVORITE_VACANCY_BASE_URL= "/favorites/vacancy";
 
+    protected final String JSON_BASE_PATH = "src/test/resources/json";
+    protected final String DEFAULT_COMMENT = "DEFAULT COMMENT";
+
     protected final int vacancyId = 42859569;
-    protected final int employerId = 4849846;
+    protected final int employerId = 1;
 
     @Inject
     protected SessionFactory sessionFactory;
+
+    @Inject
+    protected FileSettings fileSettings;
+
+    @Inject
+    protected ApiService apiService;
 
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();

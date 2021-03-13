@@ -1,0 +1,28 @@
+{
+  "id": "1",
+  "trusted": false,
+  "name": "Very Black Wood",
+  "type": "project_director",
+  "description": "Very random description",
+  "site_url": "",
+  "alternate_url": "https://hh.ru/employer/4849846",
+  "vacancies_url": "https://api.hh.ru/vacancies?employer_id=4849846",
+  "logo_urls": null,
+  "relations": [
+
+  ],
+  "area": {
+    "id": "13812",
+    "name": "Very Black",
+    "url": "https://api.hh.ru/areas/1381"
+  },
+  "industries": [
+
+  ],
+  "branded_description": null,
+  "branding": null,
+  "insider_interviews": [
+
+  ],
+  "open_vacancies": 0
+}

@@ -6,8 +6,11 @@ import org.springframework.stereotype.Repository;
 import ru.hh.school.entity.Employer;
 import ru.hh.school.entity.Popularity;
 
+import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -27,14 +30,18 @@ public class EmployerDao extends GenericDao {
         );
     }
 
-    public Employer getEager(Integer id) {
+    private Query<Employer> createEagerQueryById() {
         return getSession().createQuery(
                 "from Employer employer " +
                         "join fetch employer.area a " +
                         "join fetch employer.comment c " +
                         "join fetch employer.employerCounter ec " +
                         "where employer.id = :id",
-                Employer.class)
+                Employer.class);
+    }
+
+    public Employer getEager(Integer id) {
+        return createEagerQueryById()
                 .setParameter("id", id)
                 .getSingleResult();
     }
@@ -44,6 +51,19 @@ public class EmployerDao extends GenericDao {
         query.setFirstResult(perPage * page);
         query.setMaxResults(perPage);
         return query.getResultList();
+    }
+
+    public Optional<Employer> getWithPessimisticLocking(Integer id) {
+        try {
+            return Optional.of(
+                    createEagerQueryById()
+                    .setParameter("id", id)
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                    .getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+
     }
 
 }
