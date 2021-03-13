@@ -71,8 +71,10 @@ public class FavoritesEmployerService {
     @Transactional
     public void update(FavoritesEmployerRequest employer) {
         EmployerEntity employerEntity = employerDao.get(EmployerEntity.class, employer.getEmployerId());
-        employerEntity.setComment(employer.getComment());
-        employerDao.update(employerEntity);
+        if (employerEntity != null) {
+            employerEntity.setComment(employer.getComment());
+            employerDao.update(employerEntity);
+        }
     }
 
     @Transactional
@@ -85,6 +87,9 @@ public class FavoritesEmployerService {
     @Transactional
     public void refresh(Integer id) {
         EmployerEntity employerEntity = employerDao.get(EmployerEntity.class, id);
+        if (employerEntity == null) {
+            return;
+        }
         EmployerDetailed employerDetailed = employerService.get(id);
 
         AreaEntity areaEntity = employerEntity.getArea();
