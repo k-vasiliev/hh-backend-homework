@@ -63,7 +63,6 @@ public class EmployerDao extends GenericDao {
         } catch (NoResultException e) {
             return Optional.empty();
         }
-
     }
 
 }

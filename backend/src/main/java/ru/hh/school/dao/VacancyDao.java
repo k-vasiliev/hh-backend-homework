@@ -4,7 +4,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import ru.hh.school.entity.Vacancy;
 
-import java.io.Serializable;
+import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,22 +27,22 @@ public class VacancyDao extends GenericDao {
         );
     }
 
-    private Query<Vacancy> getEagerQueryById() {
+    private Query<Vacancy> createEagerQueryById() {
         return getSession().createQuery(
-                "from Vacancy vacancy " +
+                "from Vacancy vacancy  " +
                         "join fetch vacancy.area a " +
                         "join fetch vacancy.employer e " +
                         "join fetch vacancy.vacancyCounter vc " +
                         "join fetch e.area ea " +
                         "join fetch e.comment ec " +
                         "join fetch e.employerCounter " +
-                        "where id = :id",
+                        "where vacancy.id = :id",
                 Vacancy.class
         );
     }
 
     public Vacancy getEager(Integer id) {
-        return getEagerQueryById()
+        return createEagerQueryById()
                 .setParameter("id", id)
                 .getSingleResult();
     }
@@ -51,6 +52,18 @@ public class VacancyDao extends GenericDao {
         query.setFirstResult(perPage * page);
         query.setMaxResults(perPage);
         return query.getResultList();
+    }
+
+    public Optional<Vacancy> getWithPessimisticLocking(Integer id) {
+        try {
+            return Optional.of(
+                    createEagerQueryById()
+                            .setParameter("id", id)
+                            .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                            .getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
 }

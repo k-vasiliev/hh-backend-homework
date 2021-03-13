@@ -1,13 +1,12 @@
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import ru.hh.school.dao.EmployerDao;
 import ru.hh.school.dto.EmployerDtoById;
 import ru.hh.school.dto.FavoriteEmployerDto;
-import ru.hh.school.entity.*;
-import ru.hh.school.util.EmployerMapper;
+import ru.hh.school.entity.Employer;
+import ru.hh.school.entity.EmployerComment;
+import ru.hh.school.entity.EmployerCounter;
+import ru.hh.school.entity.Popularity;
 
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
@@ -18,14 +17,13 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
 
 @ContextConfiguration(classes = AppTestConfig.class)
 public class EmployerResourceTest extends AppBaseTest {
@@ -33,14 +31,13 @@ public class EmployerResourceTest extends AppBaseTest {
     @Inject
     private EmployerDao employerDao;
 
-
     @Test
     public void postSingleFavoriteEmployerShouldSaveEntityToDatabase() throws IOException {
-        HttpResponse response = saveSingleEmployerToDatabase("/employer.json");
+        HttpResponse response = saveSingleEmployerToDatabase(SINGLE_EMPLOYER_JSON);
         assertEquals(200, response.statusCode());
 
         Employer employer = employerDao.getEager(employerId);
-        EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/employer.json");
+        EmployerDtoById jsonEmployer = getEmployerDtoFromJson(SINGLE_EMPLOYER_JSON);
         assertEmployerDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
         assertEquals(0, (int) employer.getViewsCount().getCounter());
         assertEquals(DEFAULT_COMMENT, employer.getComment().getComment());
@@ -48,32 +45,30 @@ public class EmployerResourceTest extends AppBaseTest {
 
     @Test
     public void postSameFavoriteEmployerTwiceShouldReturnBadRequestStatus() throws IOException {
-        HttpResponse first = saveSingleEmployerToDatabase("/employer.json");
+        HttpResponse first = saveSingleEmployerToDatabase(SINGLE_EMPLOYER_JSON);
         assertEquals(200, first.statusCode());
-        HttpResponse second = saveSingleEmployerToDatabase("/employer.json");
+        HttpResponse second = saveSingleEmployerToDatabase(SINGLE_EMPLOYER_JSON);
         assertEquals(400, second.statusCode());
     }
 
     @Test
     public void getFavoriteEmployerEndpointWithEmptyTableReturnsEmptyList() {
         Response response = executeGet(FAVORITE_EMPLOYER_BASE_URL);
-        List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {
-        });
+        List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {});
         assertEquals(200, response.getStatus());
         assertEquals(0, employers.size());
     }
 
     @Test
     public void getFavoriteEmployerEndpointWithNonEmptyTableReturnsListOfValidDto() throws IOException {
-        HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
+        HttpResponse postResponse = saveSingleEmployerToDatabase(SINGLE_EMPLOYER_JSON);
         assertEquals(200, postResponse.statusCode());
         Response response = executeGet(FAVORITE_EMPLOYER_BASE_URL);
         assertEquals(200, response.getStatus());
 
-        List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {
-        });
+        List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {});
         FavoriteEmployerDto employer = employers.get(0);
-        EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/employer.json");
+        EmployerDtoById jsonEmployer = getEmployerDtoFromJson(SINGLE_EMPLOYER_JSON);
         assertEquals(1, employers.size());
 
         assertEmployerDtoFromJsonAndDtoFromResponseAreSame(jsonEmployer, employer);
@@ -87,40 +82,35 @@ public class EmployerResourceTest extends AppBaseTest {
         saveMultipleEmployersToDatabase(30);
         //Default parameters
         Response defaultParamsResponse = executeGet(FAVORITE_EMPLOYER_BASE_URL);
-        List<FavoriteEmployerDto> employers = defaultParamsResponse.readEntity(new GenericType<>() {
-        });
+        List<FavoriteEmployerDto> employers = defaultParamsResponse.readEntity(new GenericType<>() {});
         assertEquals(200, defaultParamsResponse.getStatus());
         assertEquals(20, employers.size());
         assertEquals(1, employers.get(0).getId());
         assertEquals(20, employers.get(19).getId());
         //Per page = 25
         Response perPage25Response = executeGet(FAVORITE_EMPLOYER_BASE_URL + "?per_page=25");
-        employers = perPage25Response.readEntity(new GenericType<>() {
-        });
+        employers = perPage25Response.readEntity(new GenericType<>() {});
         assertEquals(200, perPage25Response.getStatus());
         assertEquals(25, employers.size());
         assertEquals(1, employers.get(0).getId());
         assertEquals(25, employers.get(24).getId());
         //Per page = 5
         Response perPage5Response = executeGet(FAVORITE_EMPLOYER_BASE_URL + "?per_page=5");
-        employers = perPage5Response.readEntity(new GenericType<>() {
-        });
+        employers = perPage5Response.readEntity(new GenericType<>() {});
         assertEquals(200, perPage5Response.getStatus());
         assertEquals(5, employers.size());
         assertEquals(1, employers.get(0).getId());
         assertEquals(5, employers.get(4).getId());
         //Page = 2
         Response page2Response = executeGet(FAVORITE_EMPLOYER_BASE_URL + "?page=1");
-        employers = page2Response.readEntity(new GenericType<>() {
-        });
+        employers = page2Response.readEntity(new GenericType<>() {});
         assertEquals(200, page2Response.getStatus());
         assertEquals(10, employers.size());
         assertEquals(21, employers.get(0).getId());
         assertEquals(30, employers.get(9).getId());
         //Page = 4 And Per Page = 5
         Response page4PerPage5Response = executeGet(FAVORITE_EMPLOYER_BASE_URL + "?page=4&per_page=5");
-        employers = page4PerPage5Response.readEntity(new GenericType<>() {
-        });
+        employers = page4PerPage5Response.readEntity(new GenericType<>() {});
         assertEquals(200, page4PerPage5Response.getStatus());
         assertEquals(5, employers.size());
         assertEquals(21, employers.get(0).getId());
@@ -128,18 +118,16 @@ public class EmployerResourceTest extends AppBaseTest {
         //Page = 96 And Per Page = 21
         Response depthTestResponse = executeGet(FAVORITE_EMPLOYER_BASE_URL + "?page=96&per_page=21");
         assertEquals(400, depthTestResponse.getStatus());
-        System.out.println(depthTestResponse.readEntity(String.class));
     }
 
     @Test
     public void getFavoriteEmployerEndpointShouldIncrementCounterByOne() throws IOException {
-        HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
+        HttpResponse postResponse = saveSingleEmployerToDatabase(SINGLE_EMPLOYER_JSON);
         assertEquals(200, postResponse.statusCode());
 
         IntStream.range(0, 20).forEach(i -> executeGet(FAVORITE_EMPLOYER_BASE_URL));
         Response response = executeGet(FAVORITE_EMPLOYER_BASE_URL);
-        List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {
-        });
+        List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {});
         FavoriteEmployerDto employer = employers.get(0);
 
         assertEquals(200, response.getStatus());
@@ -149,13 +137,12 @@ public class EmployerResourceTest extends AppBaseTest {
 
     @Test
     public void afterFileSettingsThresholdEmployerBecomesPopular() throws IOException {
-        HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
+        HttpResponse postResponse = saveSingleEmployerToDatabase(SINGLE_EMPLOYER_JSON);
         assertEquals(200, postResponse.statusCode());
 
         IntStream.range(0, 48).forEach(i -> executeGet(FAVORITE_EMPLOYER_BASE_URL));
         Response response = executeGet(FAVORITE_EMPLOYER_BASE_URL);
-        List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {
-        });
+        List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {});
         FavoriteEmployerDto employer = employers.get(0);
 
         assertEquals(200, response.getStatus());
@@ -163,8 +150,7 @@ public class EmployerResourceTest extends AppBaseTest {
         assertEquals(Popularity.REGULAR, employer.getPopularity());
 
         response = executeGet(FAVORITE_EMPLOYER_BASE_URL);
-        employers = response.readEntity(new GenericType<>() {
-        });
+        employers = response.readEntity(new GenericType<>() {});
         employer = employers.get(0);
 
         assertEquals(200, response.getStatus());
@@ -174,7 +160,7 @@ public class EmployerResourceTest extends AppBaseTest {
 
     @Test
     public void counterIsThreadSafeForSingleEntry() throws IOException, InterruptedException {
-        saveSingleEmployerToDatabase("/employer.json");
+        saveSingleEmployerToDatabase(SINGLE_EMPLOYER_JSON);
         ExecutorService executor = Executors.newFixedThreadPool(3);
         IntStream.range(0, 200).forEach(i -> executor.execute(() -> executeGet(FAVORITE_EMPLOYER_BASE_URL)));
         awaitExecutorTermination(executor);
@@ -227,7 +213,7 @@ public class EmployerResourceTest extends AppBaseTest {
 
     @Test
     public void putFavoriteEmployerEndpointShouldUpdateEmployerCommentInDatabase() throws IOException {
-        HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
+        HttpResponse postResponse = saveSingleEmployerToDatabase(SINGLE_EMPLOYER_JSON);
         assertEquals(200, postResponse.statusCode());
 
         Employer employer = employerDao.getEager(employerId);
@@ -250,7 +236,7 @@ public class EmployerResourceTest extends AppBaseTest {
     @Test
     public void deleteFavoriteEmployerEndpointShouldDeleteEmployerFromDatabase() throws IOException {
         exceptionRule.expect(NoResultException.class);
-        HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
+        HttpResponse postResponse = saveSingleEmployerToDatabase(SINGLE_EMPLOYER_JSON);
         assertEquals(200, postResponse.statusCode());
 
         Employer employer = employerDao.getEager(employerId);
@@ -263,7 +249,7 @@ public class EmployerResourceTest extends AppBaseTest {
 
     @Test
     public void deleteFavoriteEmployerEndpointShouldDeleteEmployerCounterAndComment() throws IOException {
-        HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
+        HttpResponse postResponse = saveSingleEmployerToDatabase(SINGLE_EMPLOYER_JSON);
         assertEquals(200, postResponse.statusCode());
 
         assertFalse(employerDao.get(EmployerComment.class, employerId).isEmpty());
@@ -291,13 +277,13 @@ public class EmployerResourceTest extends AppBaseTest {
         Employer employer = employerDao.getEager(employerId);
         assertEmployerDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
 
-        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/employer.json"));
-        when(apiService.fetchEmployersFromApiById(employerId)).thenReturn(jsonString);
+        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + SINGLE_EMPLOYER_JSON));
+        doReturn(jsonString).when(apiService).fetchEmployersFromApiById(employerId);
         HttpResponse response = executePostRequest(FAVORITE_EMPLOYER_BASE_URL + "/" + employerId + "/refresh");
         assertEquals(200, response.statusCode());
 
         employer = employerDao.getEager(employerId);
-        jsonEmployer = getEmployerDtoFromJson("/employer.json");
+        jsonEmployer = getEmployerDtoFromJson(SINGLE_EMPLOYER_JSON);
         assertEmployerDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
     }
 
@@ -305,9 +291,9 @@ public class EmployerResourceTest extends AppBaseTest {
     public void refreshEmployerWhileGettingFavorites() throws IOException {
         saveMultipleEmployersToDatabase(10);
         ExecutorService executor = Executors.newFixedThreadPool(3);
-        String jsonString = Files.readString(Paths.get(JSON_BASE_PATH + "/employer.json"));
-        EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/employer.json");
-        when(apiService.fetchEmployersFromApiById(1)).thenReturn(jsonString);
+        String jsonString = Files.readString(Paths.get(JSON_BASE_PATH + SINGLE_EMPLOYER_JSON));
+        EmployerDtoById jsonEmployer = getEmployerDtoFromJson(SINGLE_EMPLOYER_JSON);
+        doReturn(jsonString).when(apiService).fetchEmployersFromApiById(employerId);
         for (int i = 0; i < 200; i++) {
             if (i == 100) {
                 executor.execute(() -> executePostRequest(FAVORITE_EMPLOYER_BASE_URL + "/" + 1 + "/refresh"));
@@ -328,7 +314,7 @@ public class EmployerResourceTest extends AppBaseTest {
 
     private HttpResponse saveSingleEmployerToDatabase(String pathToJson) throws IOException {
         String jsonString = Files.readString(Path.of(JSON_BASE_PATH + pathToJson));
-        when(apiService.fetchEmployersFromApiById(employerId)).thenReturn(jsonString);
+        doReturn(jsonString).when(apiService).fetchEmployersFromApiById(employerId);
         parametersMap.put("employer_id", String.valueOf(employerId));
         parametersMap.put("comment", DEFAULT_COMMENT);
         HttpResponse response = executePostRequestWithParams(FAVORITE_EMPLOYER_BASE_URL, parametersMap);
@@ -338,7 +324,7 @@ public class EmployerResourceTest extends AppBaseTest {
 
     private void saveMultipleEmployersToDatabase(Integer numOfEmployers) {
         IntStream.range(1, numOfEmployers + 1)
-                .mapToObj(i -> createAndSaveEmployerWithId(i))
+                .mapToObj(i -> createEmployerWithId(i))
                 .forEach(employerDao::save);
     }
 

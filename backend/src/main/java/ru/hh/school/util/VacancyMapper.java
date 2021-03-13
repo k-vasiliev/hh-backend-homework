@@ -83,7 +83,6 @@ public class VacancyMapper {
 
     public Vacancy mapApiDataToEntityAndSave(String dataFromApi, String comment) {
         Vacancy vacancy = mapStringData(dataFromApi, Vacancy.class);
-
         Employer vacancyEmployer = vacancy.getEmployer();
         vacancyEmployer = getOrCreateVacancyEmployer(vacancyEmployer.getId());
 
@@ -116,7 +115,6 @@ public class VacancyMapper {
         Integer viewsCount = vacancy.getViewsCount().getCounter() + 1;
         Popularity popularity = viewsCount >= fileSettings.getInteger("popularity.settings")
                 ? Popularity.POPULAR : Popularity.REGULAR;
-        System.out.println(vacancy);
         FavoriteVacancyDto vacancyDto = objectMapper.convertValue(vacancy, FavoriteVacancyDto.class);
         vacancyDto.setDateCreate(vacancy.getDateCreate());
         vacancyDto.setViewsCount(viewsCount);

@@ -1,7 +1,8 @@
-
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
-import ru.hh.school.dto.*;
+import ru.hh.school.dto.EmployerDto;
+import ru.hh.school.dto.EmployerDtoById;
+import ru.hh.school.dto.VacancyDto;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.GenericType;
@@ -11,7 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = AppTestConfig.class)
@@ -19,14 +22,14 @@ public class ApiIntegrationTest extends AppBaseTest {
 
     @Test
     public void getEmployerByIdEndpointReturnsValidDto() throws IOException {
-        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/employer.json"));
-        when(apiService.fetchEmployersFromApiById(employerId)).thenReturn(jsonString);
+        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + SINGLE_EMPLOYER_JSON));
+        doReturn(jsonString).when(apiService).fetchEmployersFromApiById(employerId);
 
         Response response = executeGetRequestWithParams(EMPLOYER_BASE_URL + "/" + employerId, "");
         assertEquals(200, response.getStatus());
 
         EmployerDtoById employer = response.readEntity(EmployerDtoById.class);
-        EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/employer.json");
+        EmployerDtoById jsonEmployer = getEmployerDtoFromJson(SINGLE_EMPLOYER_JSON);
 
         assertEquals(jsonEmployer.getId(), employer.getId());
         assertEquals(jsonEmployer.getName(), employer.getName());
@@ -37,64 +40,57 @@ public class ApiIntegrationTest extends AppBaseTest {
 
     @Test
     public void getEmployersEndpointReturnsValidDtoList() throws IOException {
-        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/employers.json"));
-        when(apiService.fetchEmployersFromApi("", 0, 20)).thenReturn(jsonString);
+        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + MULTIPLE_EMPLOYERS_JSON));
+        doReturn(jsonString).when(apiService).fetchEmployersFromApi("", 0, 20);
 
         Response response = executeGetRequestWithParams(EMPLOYER_BASE_URL, "");
         assertEquals(200, response.getStatus());
 
         List<EmployerDto> employers = response.readEntity(new GenericType<>() {});
         assertEquals(20, employers.size());
-        employers.stream().forEach( employerDto -> {
+        employers.stream().forEach(
+                employerDto -> {
                     assertNotNull(employerDto.getId());
                     assertNotNull(employerDto.getName());
                 }
         );
 
-        EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/employer.json");
+        EmployerDtoById jsonEmployer = getEmployerDtoFromJson(SINGLE_EMPLOYER_JSON);
         assertEquals(jsonEmployer.getId(), employers.get(0).getId());
         assertEquals(jsonEmployer.getName(), employers.get(0).getName());
     }
 
     @Test
     public void getVacancyByIdEndpointReturnsValidDto() throws IOException {
-        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/vacancy.json"));
-        when(apiService.fetchVacanciesFromApiById(vacancyId)).thenReturn(jsonString);
+        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + SINGLE_VACANCY_JSON));
+        doReturn(jsonString).when(apiService).fetchVacanciesFromApiById(vacancyId);
         Response response = executeGetRequestWithParams(VACANCY_BASE_URL + "/" + vacancyId, "");
+
+        VacancyDto jsonVacancy = getVacancyDtoFromJson(SINGLE_VACANCY_JSON);
         VacancyDto vacancy = response.readEntity(VacancyDto.class);
-        AreaDto areaDto = vacancy.getArea();
-        SalaryDto salaryDto = vacancy.getSalary();
+
         assertEquals(200, response.getStatus());
-        assertEquals(vacancyId, vacancy.getId());
-        assertEquals("Junior Java / Kotlin разработчик", vacancy.getName());
-        assertEquals(1, areaDto.getId());
-        assertEquals("Москва", areaDto.getName());
-        assertEquals(30000, (int) salaryDto.getFrom());
-        assertEquals("RUR", salaryDto.getCurrency());
-        assertNull(salaryDto.getTo());
-        assertFalse(salaryDto.getGross());
+        assertEquals(jsonVacancy, vacancy);
     }
 
     @Test
     public void getVacanciesEndpointReturnsValidDtoList() throws IOException {
-        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/vacancies.json"));
-        when(apiService.fetchVacanciesFromApi("", 0, 20)).thenReturn(jsonString);
+        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + MULTIPLE_VACANCIES_JSON));
+        doReturn(jsonString).when(apiService).fetchVacanciesFromApi("", 0, 20);
+
         Response response = executeGetRequestWithParams(VACANCY_BASE_URL, "");
         List<VacancyDto> vacancies = response.readEntity(new GenericType<>() {});
         assertEquals(200, response.getStatus());
         assertEquals(20, vacancies.size());
+
+        VacancyDto jsonVacancy = getVacancyDtoFromJson(SINGLE_VACANCY_JSON);
         VacancyDto vacancy = vacancies.get(0);
-        AreaDto areaDto = vacancy.getArea();
-        SalaryDto salaryDto = vacancy.getSalary();
-        assertEquals(200, response.getStatus());
-        assertEquals(vacancyId, vacancy.getId());
-        assertEquals("Junior Java / Kotlin разработчик", vacancy.getName());
-        assertEquals(1, areaDto.getId());
-        assertEquals("Москва", areaDto.getName());
-        assertEquals(30000, (int) salaryDto.getFrom());
-        assertEquals("RUR", salaryDto.getCurrency());
-        assertNull(salaryDto.getTo());
-        assertFalse(salaryDto.getGross());
+
+        assertEquals(jsonVacancy.getArea(), vacancy.getArea());
+        assertEquals(jsonVacancy.getSalary(), vacancy.getSalary());
+
+        assertEquals(jsonVacancy.getId(), vacancy.getId());
+        assertEquals(jsonVacancy.getName(), vacancy.getName());
     }
 
     @Test

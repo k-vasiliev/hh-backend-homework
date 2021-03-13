@@ -8,6 +8,7 @@ import ru.hh.school.serialize.OffsetDateTimeDeserializer;
 import ru.hh.school.serialize.OffsetDateTimeSerializer;
 
 import java.time.OffsetDateTime;
+import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VacancyDto {
@@ -88,4 +89,17 @@ public class VacancyDto {
                 ", employer=" + employer +
                 ']';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VacancyDto) || o == null) return false;
+        VacancyDto that = (VacancyDto) o;
+        return id == that.id &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(area, that.area) &&
+                Objects.equals(salary, that.salary) &&
+                Objects.equals(createdAt, that.createdAt);
+    }
+
 }

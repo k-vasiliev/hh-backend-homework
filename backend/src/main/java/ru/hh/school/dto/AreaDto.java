@@ -3,6 +3,8 @@ package ru.hh.school.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ru.hh.school.entity.Area;
 
+import java.util.Objects;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AreaDto {
 
@@ -36,4 +38,14 @@ public class AreaDto {
     public String toString() {
         return "AreaDto[id=" + id + ", name=" + name + ']';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AreaDto) || o == null) return false;
+        AreaDto areaDto = (AreaDto) o;
+        return id == areaDto.id &&
+                Objects.equals(name, areaDto.name);
+    }
+
 }

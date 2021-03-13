@@ -8,19 +8,19 @@
   "relations": [
 
   ],
-  "name": "Junior Java",
+  "name": "Changed name",
   "insider_interview": null,
   "response_letter_required": false,
   "area": {
-    "id": "5",
-    "name": "Moscow",
+    "id": "6",
+    "name": "New Moscow",
     "url": "https://api.hh.ru/areas/1"
   },
   "salary": {
-    "from": 30000,
-    "to": null,
-    "currency": "RUR",
-    "gross": false
+    "from": 40000,
+    "to": 300,
+    "currency": "EU",
+    "gross": true
   },
   "type": {
     "id": "open",
@@ -96,7 +96,7 @@
   "accept_incomplete_resumes": false,
   "employer": {
     "id": "1",
-    "name": "Black Wood",
+    "name": "Very Black Wood",
     "url": "https://api.hh.ru/employers/5201571",
     "alternate_url": "https://hh.ru/employer/5201571",
     "logo_urls": {

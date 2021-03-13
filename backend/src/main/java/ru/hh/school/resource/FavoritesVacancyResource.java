@@ -31,7 +31,6 @@ public class FavoritesVacancyResource {
             @DefaultValue("0") @QueryParam("page") Integer page,
             @DefaultValue("20") @QueryParam("per_page") Integer perPage) {
         List<FavoriteVacancyDto> favoriteVacancies = vacancyService.getFavorites(page, perPage);
-        System.out.println("LIST: " +  favoriteVacancies);
         return Response.ok().entity(favoriteVacancies).build();
     }
 

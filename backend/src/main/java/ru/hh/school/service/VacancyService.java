@@ -66,14 +66,14 @@ public class VacancyService {
 
     @Transactional
     public void deleteVacancy(Integer vacancyId) {
-        Vacancy vacancy = getVacancy(vacancyId);
+        Vacancy vacancy = vacancyDao.getWithPessimisticLocking(vacancyId).orElseThrow(NotFoundException::new);
         vacancyDao.delete(vacancy);
     }
 
     @Transactional
     public Vacancy refresh(Integer vacancyId) {
         Vacancy vacancy = getVacancy(vacancyId);
-        String dataFromApi = apiService.fetchEmployersFromApiById(vacancyId);
+        String dataFromApi = apiService.fetchVacanciesFromApiById(vacancyId);
         VacancyDto vacancyDto = vacancyMapper.mapDataFromApiById(dataFromApi);
         return vacancyMapper.refreshVacancy(vacancy, vacancyDto);
     }

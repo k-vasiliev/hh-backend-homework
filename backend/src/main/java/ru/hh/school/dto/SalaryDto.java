@@ -1,5 +1,7 @@
 package ru.hh.school.dto;
 
+import java.util.Objects;
+
 public class SalaryDto {
 
     private Integer to = null;
@@ -60,4 +62,16 @@ public class SalaryDto {
                 ", gross=" + gross +
                 ']';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SalaryDto) || o == null) return false;
+        SalaryDto salaryDto = (SalaryDto) o;
+        return Objects.equals(to, salaryDto.to) &&
+                Objects.equals(from, salaryDto.from) &&
+                Objects.equals(currency, salaryDto.currency) &&
+                Objects.equals(gross, salaryDto.gross);
+    }
+
 }

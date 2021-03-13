@@ -2,6 +2,8 @@ package ru.hh.school.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Objects;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmployerDtoById extends EmployerDto {
 
@@ -42,4 +44,17 @@ public class EmployerDtoById extends EmployerDto {
                 ']';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmployerDtoById)) return false;
+        EmployerDtoById that = (EmployerDtoById) o;
+        return Objects.equals(description, that.description) &&
+                Objects.equals(area, that.area);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, area);
+    }
 }

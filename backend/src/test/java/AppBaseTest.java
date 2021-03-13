@@ -8,12 +8,14 @@ import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.starter.NabApplication;
 import ru.hh.nab.testbase.NabTestBase;
 import ru.hh.school.dto.EmployerDtoById;
+import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.entity.Area;
 import ru.hh.school.entity.Employer;
 import ru.hh.school.entity.EmployerComment;
 import ru.hh.school.entity.EmployerCounter;
 import ru.hh.school.service.ApiService;
 import ru.hh.school.util.EmployerMapper;
+import ru.hh.school.util.VacancyMapper;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
@@ -23,7 +25,6 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -34,36 +35,36 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
-public class AppBaseTest extends NabTestBase {
+public abstract class AppBaseTest extends NabTestBase {
 
     protected final String EMPLOYER_BASE_URL = "/employer";
     protected final String VACANCY_BASE_URL = "/vacancy";
-    protected final String FAVORITE_EMPLOYER_BASE_URL= "/favorites/employer";
-    protected final String FAVORITE_VACANCY_BASE_URL= "/favorites/vacancy";
+    protected final String FAVORITE_EMPLOYER_BASE_URL = "/favorites/employer";
+    protected final String FAVORITE_VACANCY_BASE_URL = "/favorites/vacancy";
 
     protected final String JSON_BASE_PATH = "src/test/resources/json";
     protected final String DEFAULT_COMMENT = "DEFAULT COMMENT";
-
     protected final int vacancyId = 1;
     protected final int employerId = 1;
-
     protected final Map<String, String> parametersMap = new HashMap<>();
 
-    @Inject
-    protected SessionFactory sessionFactory;
-
-    @Inject
-    protected FileSettings fileSettings;
-
-    @Inject
-    protected ApiService apiService;
-
-    @Inject
-    protected EmployerMapper employerMapper;
+    protected String SINGLE_EMPLOYER_JSON = "/employer.json";
+    protected String MULTIPLE_EMPLOYERS_JSON = "/employers.json";
+    protected String SINGLE_VACANCY_JSON = "/vacancy.json";
+    protected String MULTIPLE_VACANCIES_JSON = "/vacancies.json";
 
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
-
+    @Inject
+    protected SessionFactory sessionFactory;
+    @Inject
+    protected FileSettings fileSettings;
+    @Inject
+    protected EmployerMapper employerMapper;
+    @Inject
+    protected VacancyMapper vacancyMapper;
+    @Inject
+    protected ApiService apiService;
 
     @Before
     public void init() throws IOException {
@@ -84,12 +85,12 @@ public class AppBaseTest extends NabTestBase {
         return NabApplication.builder().configureJersey().bindToRoot().build();
     }
 
-    protected HttpResponse<String> executePostRequestWithParams(String url, Map<String,String> params) {
+    protected HttpResponse<String> executePostRequestWithParams(String url, Map<String, String> params) {
         HttpRequest request = createPostRequestWithParameters(url, params);
         return executeRequest(request);
     }
 
-    protected HttpResponse<String> executePutRequestWithParams(String url, Map<String,String> params) {
+    protected HttpResponse<String> executePutRequestWithParams(String url, Map<String, String> params) {
         HttpRequest request = createPutRequestWithParameters(url, params);
         return executeRequest(request);
     }
@@ -115,7 +116,9 @@ public class AppBaseTest extends NabTestBase {
             return HttpRequest.newBuilder()
                     .uri(new URI(baseUrl() + url))
                     .POST(HttpRequest.BodyPublishers.noBody()).build();
-        } catch (URISyntaxException e) { return null; }
+        } catch (URISyntaxException e) {
+            return null;
+        }
     }
 
     private HttpRequest createDeleteRequest(String url) {
@@ -123,10 +126,12 @@ public class AppBaseTest extends NabTestBase {
             return HttpRequest.newBuilder()
                     .uri(new URI(baseUrl() + url))
                     .DELETE().build();
-        } catch (URISyntaxException e) { return null; }
+        } catch (URISyntaxException e) {
+            return null;
+        }
     }
 
-    private HttpRequest createPostRequestWithParameters(String url, Map<String,String> params) {
+    private HttpRequest createPostRequestWithParameters(String url, Map<String, String> params) {
         try {
             String requestParams = params.keySet().stream()
                     .map(key -> key + "=" + params.get(key))
@@ -136,10 +141,12 @@ public class AppBaseTest extends NabTestBase {
                     .headers("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(requestParams))
                     .build();
-        } catch (URISyntaxException e) { return null; }
+        } catch (URISyntaxException e) {
+            return null;
+        }
     }
 
-    private HttpRequest createPutRequestWithParameters(String url, Map<String,String> params) {
+    private HttpRequest createPutRequestWithParameters(String url, Map<String, String> params) {
         try {
             String requestParams = params.keySet().stream()
                     .map(key -> key + "=" + params.get(key))
@@ -149,7 +156,9 @@ public class AppBaseTest extends NabTestBase {
                     .headers("Content-Type", "application/x-www-form-urlencoded")
                     .PUT(HttpRequest.BodyPublishers.ofString(requestParams))
                     .build();
-        } catch (URISyntaxException e) { return null; }
+        } catch (URISyntaxException e) {
+            return null;
+        }
     }
 
     private HttpResponse<String> executeRequest(HttpRequest request) {
@@ -177,7 +186,7 @@ public class AppBaseTest extends NabTestBase {
         }
     }
 
-    protected Employer createAndSaveEmployerWithId(Integer id) {
+    protected Employer createEmployerWithId(Integer id) {
         Area area = new Area();
         area.setId(1);
         area.setName("Area name");
@@ -198,6 +207,11 @@ public class AppBaseTest extends NabTestBase {
     protected EmployerDtoById getEmployerDtoFromJson(String pathToJson) throws IOException {
         String jsonString = Files.readString(Path.of(JSON_BASE_PATH + pathToJson));
         return employerMapper.mapDataFromApiById(jsonString);
+    }
+
+    protected VacancyDto getVacancyDtoFromJson(String pathToJson) throws IOException {
+        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + pathToJson));
+        return vacancyMapper.mapDataFromApiById(jsonString);
     }
 
 
