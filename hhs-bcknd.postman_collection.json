@@ -1,0 +1,413 @@
+{
+	"info": {
+		"_postman_id": "e4bc272c-5de2-411d-9091-3206f351a110",
+		"name": "hhs-bcknd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get main",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "me",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/me",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get empls",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/employer?page=1&per_page=30&query=a",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"employer"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "per_page",
+							"value": "30"
+						},
+						{
+							"key": "query",
+							"value": "a"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get empl",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/employer/5015523",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"employer",
+						"5015523"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add fav empl",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employer_id\" : 5015523,\r\n    \"comment\": \"Personal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/favorites/employer",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"employer"
+					],
+					"query": [
+						{
+							"key": "employer_id",
+							"value": "1272187",
+							"disabled": true
+						},
+						{
+							"key": "comment",
+							"value": "What?",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get fav empls",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/favorites/employer?page=1&per_page=10",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"employer"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "per_page",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refr fav empl",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/favorites/employer/5169334/refresh",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"employer",
+						"5169334",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upd fav empl",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employer_id\" : 3823996,\r\n    \"comment\": \"C\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/favorites/employer/3823996",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"employer",
+						"3823996"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "del fav empl",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/favorites/employer/5169334",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"employer",
+						"5169334"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get vacs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/vacancy?page=2&per_page=30&query=hero",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacancy"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "per_page",
+							"value": "30"
+						},
+						{
+							"key": "query",
+							"value": "hero"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get vac",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/vacancy/42598764",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vacancy",
+						"42598764"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add fav vac",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vacancy_id\" : 42598764,\r\n    \"comment\": \"Buh\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/favorites/vacancy",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"vacancy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get fav vacs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/favorites/vacancy?page=1&per_page=10",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"vacancy"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "per_page",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refr fav vac",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/favorites/vacancy/42598764/refresh",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"vacancy",
+						"42598764",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upd fav vac",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vacancy_id\" : 42737412,\r\n    \"comment\": \"D\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/favorites/vacancy/42737412",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"vacancy",
+						"42737412"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "dev fav vac",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/favorites/vacancy/42598764",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"favorites",
+						"vacancy",
+						"42598764"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
