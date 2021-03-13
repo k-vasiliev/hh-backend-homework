@@ -8,13 +8,9 @@ import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.starter.NabCommonConfig;
 import ru.hh.school.dao.AreaDao;
 import ru.hh.school.dao.EmployerDao;
-import ru.hh.school.resource.EmployerResource;
-import ru.hh.school.resource.FavoritesEmployerResource;
-import ru.hh.school.resource.MainResource;
-import ru.hh.school.resource.MeResource;
-import ru.hh.school.service.EmployerService;
-import ru.hh.school.service.FavoritesEmployerService;
-import ru.hh.school.service.MeService;
+import ru.hh.school.dao.VacancyDao;
+import ru.hh.school.resource.*;
+import ru.hh.school.service.*;
 
 @Configuration
 @Import({
@@ -28,7 +24,12 @@ import ru.hh.school.service.MeService;
         FavoritesEmployerResource.class,
         FavoritesEmployerService.class,
         AreaDao.class,
-        EmployerDao.class
+        EmployerDao.class,
+        VacancyResource.class,
+        VacancyService.class,
+        VacancyDao.class,
+        FavoritesVacancyResource.class,
+        FavoritesVacancyService.class
 })
 public class CommonConfig {
 
