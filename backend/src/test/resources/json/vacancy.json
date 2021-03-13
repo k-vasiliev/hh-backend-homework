@@ -1,5 +1,5 @@
 {
-  "id": "42859569",
+  "id": "1",
   "premium": false,
   "billing_type": {
     "id": "standard_plus",
@@ -8,12 +8,12 @@
   "relations": [
 
   ],
-  "name": "Junior Java / Kotlin разработчик",
+  "name": "Junior Java",
   "insider_interview": null,
   "response_letter_required": false,
   "area": {
-    "id": "1",
-    "name": "Москва",
+    "id": "5",
+    "name": "Moscow",
     "url": "https://api.hh.ru/areas/1"
   },
   "salary": {
@@ -95,7 +95,7 @@
   ],
   "accept_incomplete_resumes": false,
   "employer": {
-    "id": "5201571",
+    "id": "1",
     "name": "Геворгян Геворг Рафикович",
     "url": "https://api.hh.ru/employers/5201571",
     "alternate_url": "https://hh.ru/employer/5201571",

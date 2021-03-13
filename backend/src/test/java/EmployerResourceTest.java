@@ -30,27 +30,9 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = AppTestConfig.class)
 public class EmployerResourceTest extends AppBaseTest {
 
-    private final Map<String, String> parametersMap = new HashMap<>();
-
     @Inject
     private EmployerDao employerDao;
 
-    @Inject
-    private EmployerMapper employerMapper;
-
-    @Before
-    public void init() throws IOException {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.getTransaction();
-        transaction.begin();
-        String truncateQuery =
-                Files.readString(Path.of("src/test/resources/truncate.sql"));
-        List.of(truncateQuery.split(";")).stream()
-                .forEach(query -> session.createNativeQuery(query).executeUpdate());
-        parametersMap.clear();
-        transaction.commit();
-        session.close();
-    }
 
     @Test
     public void postSingleFavoriteEmployerShouldSaveEntityToDatabase() throws IOException {
@@ -59,7 +41,7 @@ public class EmployerResourceTest extends AppBaseTest {
 
         Employer employer = employerDao.getEager(employerId);
         EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/employer.json");
-        assertDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
+        assertEmployerDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
         assertEquals(0, (int) employer.getViewsCount().getCounter());
         assertEquals(DEFAULT_COMMENT, employer.getComment().getComment());
     }
@@ -94,7 +76,7 @@ public class EmployerResourceTest extends AppBaseTest {
         EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/employer.json");
         assertEquals(1, employers.size());
 
-        assertDtoFromJsonAndDtoFromResponseAreSame(jsonEmployer, employer);
+        assertEmployerDtoFromJsonAndDtoFromResponseAreSame(jsonEmployer, employer);
         assertEquals(1, employer.getViewsCount());
         assertEquals(DEFAULT_COMMENT, employer.getComment());
         assertEquals(Popularity.REGULAR, employer.getPopularity());
@@ -307,7 +289,7 @@ public class EmployerResourceTest extends AppBaseTest {
 
         EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/changed_employer.json");
         Employer employer = employerDao.getEager(employerId);
-        assertDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
+        assertEmployerDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
 
         String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/employer.json"));
         when(apiService.fetchEmployersFromApiById(employerId)).thenReturn(jsonString);
@@ -316,7 +298,7 @@ public class EmployerResourceTest extends AppBaseTest {
 
         employer = employerDao.getEager(employerId);
         jsonEmployer = getEmployerDtoFromJson("/employer.json");
-        assertDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
+        assertEmployerDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
     }
 
     @Test
@@ -334,7 +316,7 @@ public class EmployerResourceTest extends AppBaseTest {
         }
         awaitExecutorTermination(executor);
         Employer employerEntity = employerDao.getEager(1);
-        assertDtoFromJsonAndEntityAreSame(jsonEmployer, employerEntity);
+        assertEmployerDtoFromJsonAndEntityAreSame(jsonEmployer, employerEntity);
         assertEquals(200, (int) employerEntity.getViewsCount().getCounter());
         IntStream.range(1, 11)
                 .mapToObj(i -> employerDao.getEager(i))
@@ -355,31 +337,12 @@ public class EmployerResourceTest extends AppBaseTest {
     }
 
     private void saveMultipleEmployersToDatabase(Integer numOfEmployers) {
-        Area area = new Area();
-        area.setId(1);
-        area.setName("Area name");
-        for (int i = 1; i <= numOfEmployers; i++) {
-            Employer employer = new Employer();
-            EmployerComment comment = new EmployerComment(DEFAULT_COMMENT);
-            EmployerCounter counter = new EmployerCounter();
-            comment.setEmployer(employer);
-            counter.setEmployer(employer);
-            employer.setId(i);
-            employer.setName("Random name " + i);
-            employer.setDescription("Random description");
-            employer.setArea(area);
-            employer.setComment(comment);
-            employer.setViewsCount(counter);
-            employerDao.save(employer);
-        }
+        IntStream.range(1, numOfEmployers + 1)
+                .mapToObj(i -> createAndSaveEmployerWithId(i))
+                .forEach(employerDao::save);
     }
 
-    private EmployerDtoById getEmployerDtoFromJson(String pathToJson) throws IOException {
-        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + pathToJson));
-        return employerMapper.mapDataFromApiById(jsonString);
-    }
-
-    private void assertDtoFromJsonAndEntityAreSame(EmployerDtoById jsonDto, Employer entity) {
+    private void assertEmployerDtoFromJsonAndEntityAreSame(EmployerDtoById jsonDto, Employer entity) {
         assertEquals(jsonDto.getId(), entity.getId());
         assertEquals(jsonDto.getName(), entity.getName());
         assertEquals(jsonDto.getDescription(), entity.getDescription());
@@ -387,7 +350,7 @@ public class EmployerResourceTest extends AppBaseTest {
         assertEquals(jsonDto.getArea().getName(), entity.getArea().getName());
     }
 
-    private void assertDtoFromJsonAndDtoFromResponseAreSame(EmployerDtoById jsonDto, FavoriteEmployerDto responseDto) {
+    private void assertEmployerDtoFromJsonAndDtoFromResponseAreSame(EmployerDtoById jsonDto, FavoriteEmployerDto responseDto) {
         assertEquals(jsonDto.getId(), responseDto.getId());
         assertEquals(jsonDto.getName(), responseDto.getName());
         assertEquals(jsonDto.getDescription(), responseDto.getDescription());

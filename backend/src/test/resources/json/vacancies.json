@@ -1,15 +1,15 @@
 {
   "items": [
     {
-      "id": "42859569",
+      "id": "1",
       "premium": false,
-      "name": "Junior Java / Kotlin разработчик",
+      "name": "Junior Java",
       "department": null,
       "has_test": false,
       "response_letter_required": false,
       "area": {
-        "id": "1",
-        "name": "Москва",
+        "id": "5",
+        "name": "Moscow",
         "url": "https://api.hh.ru/areas/1"
       },
       "salary": {

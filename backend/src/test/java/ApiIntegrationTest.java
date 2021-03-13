@@ -2,10 +2,7 @@
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import ru.hh.school.dto.*;
-import ru.hh.school.service.ApiService;
 
-
-import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
@@ -20,39 +17,43 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = AppTestConfig.class)
 public class ApiIntegrationTest extends AppBaseTest {
 
-    @Inject
-    private ApiService apiService;
-
     @Test
     public void getEmployerByIdEndpointReturnsValidDto() throws IOException {
         String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/employer.json"));
         when(apiService.fetchEmployersFromApiById(employerId)).thenReturn(jsonString);
+
         Response response = executeGetRequestWithParams(EMPLOYER_BASE_URL + "/" + employerId, "");
-        EmployerDtoById employer = response.readEntity(EmployerDtoById.class);
-        AreaDto areaDto = employer.getArea();
         assertEquals(200, response.getStatus());
-        assertEquals(employerId, employer.getId());
-        assertEquals("Black Wood", employer.getName());
-        assertEquals("Random description", employer.getDescription());
-        assertEquals(1381, areaDto.getId());
-        assertEquals("Black", areaDto.getName());
+
+        EmployerDtoById employer = response.readEntity(EmployerDtoById.class);
+        EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/employer.json");
+
+        assertEquals(jsonEmployer.getId(), employer.getId());
+        assertEquals(jsonEmployer.getName(), employer.getName());
+        assertEquals(jsonEmployer.getDescription(), employer.getDescription());
+        assertEquals(jsonEmployer.getArea().getId(), employer.getArea().getId());
+        assertEquals(jsonEmployer.getArea().getName(), employer.getArea().getName());
     }
 
     @Test
     public void getEmployersEndpointReturnsValidDtoList() throws IOException {
         String jsonString = Files.readString(Path.of(JSON_BASE_PATH + "/employers.json"));
         when(apiService.fetchEmployersFromApi("", 0, 20)).thenReturn(jsonString);
+
         Response response = executeGetRequestWithParams(EMPLOYER_BASE_URL, "");
-        List<EmployerDto> employers = response.readEntity(new GenericType<>() {});
         assertEquals(200, response.getStatus());
+
+        List<EmployerDto> employers = response.readEntity(new GenericType<>() {});
         assertEquals(20, employers.size());
         employers.stream().forEach( employerDto -> {
                     assertNotNull(employerDto.getId());
                     assertNotNull(employerDto.getName());
                 }
         );
-        assertEquals(employerId, employers.get(0).getId());
-        assertEquals("Black Wood", employers.get(0).getName());
+
+        EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/employer.json");
+        assertEquals(jsonEmployer.getId(), employers.get(0).getId());
+        assertEquals(jsonEmployer.getName(), employers.get(0).getName());
     }
 
     @Test

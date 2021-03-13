@@ -3,12 +3,12 @@ import org.hibernate.Transaction;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
-import ru.hh.nab.testbase.NabTestBase;
 import ru.hh.school.dao.EmployerDao;
+import ru.hh.school.dao.VacancyDao;
 import ru.hh.school.dto.EmployerDtoById;
 import ru.hh.school.dto.FavoriteEmployerDto;
 import ru.hh.school.entity.*;
-import ru.hh.school.util.EmployerMapper;
+import ru.hh.school.util.VacancyMapper;
 
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
@@ -19,6 +19,7 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,60 +32,49 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = AppTestConfig.class)
-public class VacancyResourceTest extends NabTestBase {
+public class VacancyResourceTest extends AppBaseTest {
 
-    private final Map<String, String> parametersMap = new HashMap<>();
+
+
+    @Inject
+    private VacancyDao vacancyDao;
 
     @Inject
     private EmployerDao employerDao;
 
     @Inject
-    private EmployerMapper employerMapper;
-
-    @Before
-    public void init() throws IOException {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.getTransaction();
-        transaction.begin();
-        String truncateQuery =
-                Files.readString(Path.of("src/test/resources/truncate.sql"));
-        List.of(truncateQuery.split(";")).stream()
-                .forEach(query -> session.createNativeQuery(query).executeUpdate());
-        parametersMap.clear();
-        transaction.commit();
-        session.close();
-    }
+    private VacancyMapper vacancyMapper;
 
     @Test
-    public void postSingleFavoriteEmployerShouldSaveEntityToDatabase() throws IOException {
-        HttpResponse response = saveSingleEmployerToDatabase("/employer.json");
+    public void postSingleFavoriteVacancyShouldSaveVacancyAndEmployerToDatabase() throws IOException {
+        HttpResponse response = saveSingleVacancyToDatabase("/vacancy.json");
         assertEquals(200, response.statusCode());
 
-        Employer employer = employerDao.getEager(employerId);
+        Vacancy vacancy = vacancyDao.getEager(employerId);
         EmployerDtoById jsonEmployer = getEmployerDtoFromJson("/employer.json");
         assertDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
         assertEquals(0, (int) employer.getViewsCount().getCounter());
         assertEquals(DEFAULT_COMMENT, employer.getComment().getComment());
     }
 
-    @Test
+    /*@Test
     public void postSameFavoriteEmployerTwiceShouldReturnBadRequestStatus() throws IOException {
         HttpResponse first = saveSingleEmployerToDatabase("/employer.json");
         assertEquals(200, first.statusCode());
         HttpResponse second = saveSingleEmployerToDatabase("/employer.json");
         assertEquals(400, second.statusCode());
-    }
+    }*/
 
-    @Test
+   /* @Test
     public void getFavoriteEmployerEndpointWithEmptyTableReturnsEmptyList() {
         Response response = executeGet(FAVORITE_EMPLOYER_BASE_URL);
         List<FavoriteEmployerDto> employers = response.readEntity(new GenericType<>() {
         });
         assertEquals(200, response.getStatus());
         assertEquals(0, employers.size());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void getFavoriteEmployerEndpointWithNonEmptyTableReturnsListOfValidDto() throws IOException {
         HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
         assertEquals(200, postResponse.statusCode());
@@ -101,9 +91,9 @@ public class VacancyResourceTest extends NabTestBase {
         assertEquals(1, employer.getViewsCount());
         assertEquals(DEFAULT_COMMENT, employer.getComment());
         assertEquals(Popularity.REGULAR, employer.getPopularity());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void getFavoriteEmployerEndpointPaginationWorks() throws IOException {
         saveMultipleEmployersToDatabase(30);
         //Default parameters
@@ -150,9 +140,9 @@ public class VacancyResourceTest extends NabTestBase {
         Response depthTestResponse = executeGet(FAVORITE_EMPLOYER_BASE_URL + "?page=96&per_page=21");
         assertEquals(400, depthTestResponse.getStatus());
         System.out.println(depthTestResponse.readEntity(String.class));
-    }
+    }*/
 
-    @Test
+   /* @Test
     public void getFavoriteEmployerEndpointShouldIncrementCounterByOne() throws IOException {
         HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
         assertEquals(200, postResponse.statusCode());
@@ -166,9 +156,9 @@ public class VacancyResourceTest extends NabTestBase {
         assertEquals(200, response.getStatus());
         assertEquals(1, employers.size());
         assertEquals(21, employer.getViewsCount());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void afterFileSettingsThresholdEmployerBecomesPopular() throws IOException {
         HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
         assertEquals(200, postResponse.statusCode());
@@ -191,9 +181,9 @@ public class VacancyResourceTest extends NabTestBase {
         assertEquals(200, response.getStatus());
         assertEquals(50, employer.getViewsCount());
         assertEquals(Popularity.POPULAR, employer.getPopularity());
-    }
+    }*/
 
-    @Test
+   /* @Test
     public void counterIsThreadSafeForSingleEntry() throws IOException, InterruptedException {
         saveSingleEmployerToDatabase("/employer.json");
         ExecutorService executor = Executors.newFixedThreadPool(3);
@@ -202,9 +192,9 @@ public class VacancyResourceTest extends NabTestBase {
 
         Employer employer = employerDao.getEager(employerId);
         assertEquals(200, (int) employer.getViewsCount().getCounter());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void counterIsThreadSafeForMultipleEntries() throws IOException {
         saveMultipleEmployersToDatabase(10);
         ExecutorService executor = Executors.newFixedThreadPool(3);
@@ -216,10 +206,10 @@ public class VacancyResourceTest extends NabTestBase {
                 .map(employer -> employer.getViewsCount().getCounter())
                 .peek(counter -> logger.info("Views count: " + counter))
                 .forEach(counter -> assertEquals(200, (int) counter));
-    }
+    }*/
 
 
-    @Test
+    /*@Test
     public void deleteEmployerWhileGettingFavorites() throws IOException, InterruptedException {
         saveMultipleEmployersToDatabase(10);
         ExecutorService executor = Executors.newFixedThreadPool(3);
@@ -237,16 +227,16 @@ public class VacancyResourceTest extends NabTestBase {
                 .map(employer -> employer.getViewsCount().getCounter())
                 .peek(counter -> logger.info("Views count: " + counter))
                 .forEach(counter -> assertEquals(200, (int) counter));
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void putNonExistingFavoriteEmployerEndpointReturns404() {
         parametersMap.put("comment", "different comment");
         HttpResponse response = executePutRequestWithParams(FAVORITE_EMPLOYER_BASE_URL + "/" + employerId, parametersMap);
         assertEquals(404, response.statusCode());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void putFavoriteEmployerEndpointShouldUpdateEmployerCommentInDatabase() throws IOException {
         HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
         assertEquals(200, postResponse.statusCode());
@@ -260,15 +250,15 @@ public class VacancyResourceTest extends NabTestBase {
 
         Employer updatedEmployer = employerDao.getEager(employerId);
         assertEquals("different comment", updatedEmployer.getComment().getComment());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void deleteNonExistingFavoriteEmployerEndpointReturns404() {
         HttpResponse response = executeDeleteRequest(FAVORITE_EMPLOYER_BASE_URL + "/" + employerId);
         assertEquals(404, response.statusCode());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void deleteFavoriteEmployerEndpointShouldDeleteEmployerFromDatabase() throws IOException {
         exceptionRule.expect(NoResultException.class);
         HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
@@ -280,9 +270,9 @@ public class VacancyResourceTest extends NabTestBase {
         HttpResponse response = executeDeleteRequest(FAVORITE_EMPLOYER_BASE_URL + "/" + employerId);
         assertEquals(200, response.statusCode());
         employerDao.getEager(employerId);
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void deleteFavoriteEmployerEndpointShouldDeleteEmployerCounterAndComment() throws IOException {
         HttpResponse postResponse = saveSingleEmployerToDatabase("/employer.json");
         assertEquals(200, postResponse.statusCode());
@@ -295,15 +285,15 @@ public class VacancyResourceTest extends NabTestBase {
 
         assertTrue(employerDao.get(EmployerComment.class, employerId).isEmpty());
         assertTrue(employerDao.get(EmployerCounter.class, employerId).isEmpty());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void refreshNonExistingFavoriteEmployerEndpointReturns404() {
         HttpResponse response = executePostRequest(FAVORITE_EMPLOYER_BASE_URL + "/" + employerId + "/refresh");
         assertEquals(404, response.statusCode());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void refreshFavoriteEmployerEndpointShouldUpdateEmployerFieldsInDatabase() throws IOException {
         HttpResponse postResponse = saveSingleEmployerToDatabase("/changed_employer.json");
         assertEquals(200, postResponse.statusCode());
@@ -320,9 +310,9 @@ public class VacancyResourceTest extends NabTestBase {
         employer = employerDao.getEager(employerId);
         jsonEmployer = getEmployerDtoFromJson("/employer.json");
         assertDtoFromJsonAndEntityAreSame(jsonEmployer, employer);
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void refreshEmployerWhileGettingFavorites() throws IOException {
         saveMultipleEmployersToDatabase(10);
         ExecutorService executor = Executors.newFixedThreadPool(3);
@@ -345,42 +335,41 @@ public class VacancyResourceTest extends NabTestBase {
                 .map(employer -> employer.getViewsCount().getCounter())
                 .peek(counter -> logger.info("Views count: " + counter))
                 .forEach(counter -> assertEquals(200, (int) counter));
-    }
+    }*/
 
-    private HttpResponse saveSingleEmployerToDatabase(String pathToJson) throws IOException {
-        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + pathToJson));
-        when(apiService.fetchEmployersFromApiById(employerId)).thenReturn(jsonString);
-        parametersMap.put("employer_id", String.valueOf(employerId));
+    private HttpResponse saveSingleVacancyToDatabase(String pathToVacancyJson) throws IOException {
+        String employerJsonString = Files.readString(Path.of(JSON_BASE_PATH + "/employer.json"));
+        String vacancyJsonString = Files.readString(Path.of(JSON_BASE_PATH + pathToVacancyJson));
+        when(apiService.fetchEmployersFromApiById(employerId)).thenReturn(employerJsonString);
+        when(apiService.fetchVacanciesFromApiById(vacancyId)).thenReturn(vacancyJsonString);
+        parametersMap.put("vacancy_id", String.valueOf(employerId));
         parametersMap.put("comment", DEFAULT_COMMENT);
-        HttpResponse response = executePostRequestWithParams(FAVORITE_EMPLOYER_BASE_URL, parametersMap);
+        HttpResponse response = executePostRequestWithParams(FAVORITE_VACANCY_BASE_URL, parametersMap);
         parametersMap.clear();
         return response;
     }
 
-    private void saveMultipleEmployersToDatabase(Integer numOfEmployers) {
+    private void saveMultipleVacanciesToDatabase(Integer numOfVacancies) {
         Area area = new Area();
-        area.setId(1);
-        area.setName("Area name");
-        for (int i = 1; i <= numOfEmployers; i++) {
-            Employer employer = new Employer();
-            EmployerComment comment = new EmployerComment(DEFAULT_COMMENT);
-            EmployerCounter counter = new EmployerCounter();
-            comment.setEmployer(employer);
-            counter.setEmployer(employer);
-            employer.setId(i);
-            employer.setName("Random name " + i);
-            employer.setDescription("Random description");
-            employer.setArea(area);
-            employer.setComment(comment);
-            employer.setViewsCount(counter);
-            employerDao.save(employer);
+        area.setId(2);
+        area.setName("Area name 2");
+        for (int i = 1; i <= numOfVacancies; i++) {
+            Vacancy vacancy = new Vacancy();
+            Employer employer = createAndSaveEmployerWithId(i);
+            VacancyComment comment = new VacancyComment(DEFAULT_COMMENT);
+            VacancyCounter counter = new VacancyCounter();
+            comment.setVacancy(vacancy);
+            counter.setVacancy(vacancy);
+            vacancy.setId(i);
+            vacancy.setName("Random name " + i);
+            vacancy.setCreatedAt(OffsetDateTime.now());
+            vacancy.setArea(area);
+            vacancy.setComment(comment);
+            vacancy.setViewsCount(counter);
+            vacancyDao.save(vacancy);
         }
     }
 
-    private EmployerDtoById getEmployerDtoFromJson(String pathToJson) throws IOException {
-        String jsonString = Files.readString(Path.of(JSON_BASE_PATH + pathToJson));
-        return employerMapper.mapDataFromApiById(jsonString);
-    }
 
     private void assertDtoFromJsonAndEntityAreSame(EmployerDtoById jsonDto, Employer entity) {
         assertEquals(jsonDto.getId(), entity.getId());
