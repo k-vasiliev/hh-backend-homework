@@ -6,9 +6,9 @@ import ru.hh.school.dao.VacancyDao;
 import ru.hh.school.dto.FavoriteVacancyDto;
 import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.entity.Vacancy;
-import ru.hh.school.util.IdParameterValidator;
-import ru.hh.school.util.PaginationValidator;
-import ru.hh.school.util.VacancyMapper;
+import ru.hh.school.component.IdParameterValidator;
+import ru.hh.school.component.PaginationValidator;
+import ru.hh.school.component.VacancyMapper;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;

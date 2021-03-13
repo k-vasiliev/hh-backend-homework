@@ -202,18 +202,18 @@ public class VacancyResourceTest extends AppBaseTest {
     public void counterIsThreadSafeForMultipleEntries() throws IOException {
         saveMultipleVacanciesToDatabase(10);
         ExecutorService executor = Executors.newFixedThreadPool(4);
-        IntStream.range(0, 300).forEach(i -> executor.execute(() -> executeGet(FAVORITE_VACANCY_BASE_URL)));
+        IntStream.range(0, 200).forEach(i -> executor.execute(() -> executeGet(FAVORITE_VACANCY_BASE_URL)));
         awaitExecutorTermination(executor);
         IntStream.range(1, 11)
                 .mapToObj(i -> vacancyDao.getEager(i))
                 .peek(vacancy -> logger.info(vacancy.getId() + " - " + vacancy.getName()))
                 .peek(vacancy ->
                         assertEquals(
-                                300, (int) vacancy.getEmployer().getViewsCount().getCounter()
+                                200, (int) vacancy.getEmployer().getViewsCount().getCounter()
                         ))
                 .map(vacancy -> vacancy.getViewsCount().getCounter())
                 .peek(counter -> logger.info("Views count: " + counter))
-                .forEach(counter -> assertEquals(300, (int) counter));
+                .forEach(counter -> assertEquals(200, (int) counter));
     }
 
 
@@ -221,7 +221,7 @@ public class VacancyResourceTest extends AppBaseTest {
     public void deleteVacancyWhileGettingFavorites() throws IOException, InterruptedException {
         saveMultipleVacanciesToDatabase(10);
         ExecutorService executor = Executors.newFixedThreadPool(3);
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 200; i++) {
             if (i == 100) {
                 executor.execute(() -> executeDeleteRequest(FAVORITE_VACANCY_BASE_URL + "/" + 2));
             }
@@ -235,11 +235,11 @@ public class VacancyResourceTest extends AppBaseTest {
                 .peek(vacancy -> logger.info(vacancy.getId() + " - " + vacancy.getName()))
                 .peek(vacancy ->
                         assertEquals(
-                                300, (int) vacancy.getEmployer().getViewsCount().getCounter()
+                                200, (int) vacancy.getEmployer().getViewsCount().getCounter()
                         ))
                 .map(vacancy -> vacancy.getViewsCount().getCounter())
                 .peek(counter -> logger.info("Views count: " + counter))
-                .forEach(counter -> assertEquals(300, (int) counter));
+                .forEach(counter -> assertEquals(200, (int) counter));
     }
 
     @Test

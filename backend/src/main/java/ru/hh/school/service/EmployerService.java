@@ -5,9 +5,9 @@ import ru.hh.school.dao.EmployerDao;
 import ru.hh.school.dto.EmployerDtoById;
 import ru.hh.school.dto.FavoriteEmployerDto;
 import ru.hh.school.entity.Employer;
-import ru.hh.school.util.EmployerMapper;
-import ru.hh.school.util.IdParameterValidator;
-import ru.hh.school.util.PaginationValidator;
+import ru.hh.school.component.EmployerMapper;
+import ru.hh.school.component.IdParameterValidator;
+import ru.hh.school.component.PaginationValidator;
 
 import javax.transaction.Transactional;
 import javax.ws.rs.BadRequestException;

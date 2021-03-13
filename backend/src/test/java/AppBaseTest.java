@@ -14,8 +14,8 @@ import ru.hh.school.entity.Employer;
 import ru.hh.school.entity.EmployerComment;
 import ru.hh.school.entity.EmployerCounter;
 import ru.hh.school.service.ApiService;
-import ru.hh.school.util.EmployerMapper;
-import ru.hh.school.util.VacancyMapper;
+import ru.hh.school.component.EmployerMapper;
+import ru.hh.school.component.VacancyMapper;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;

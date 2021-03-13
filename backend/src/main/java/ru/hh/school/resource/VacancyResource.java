@@ -2,10 +2,9 @@ package ru.hh.school.resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.service.ApiService;
-import ru.hh.school.util.VacancyMapper;
+import ru.hh.school.component.VacancyMapper;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;

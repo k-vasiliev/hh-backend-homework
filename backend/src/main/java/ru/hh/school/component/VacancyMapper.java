@@ -1,4 +1,4 @@
-package ru.hh.school.util;
+package ru.hh.school.component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -8,7 +8,6 @@ import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.school.dao.*;
 import ru.hh.school.dto.AreaDto;
 import ru.hh.school.dto.FavoriteVacancyDto;
-import ru.hh.school.dto.SalaryDto;
 import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.entity.*;
 import ru.hh.school.service.EmployerService;
@@ -28,17 +27,13 @@ public class VacancyMapper {
     private final VacancyDao vacancyDao;
     private final AreaDao areaDao;
     private final AreaMapper areaMapper;
-    private final CommentDao commentDao;
-    private final ViewsCounterDao viewsCounterDao;
     private final FileSettings fileSettings;
 
-    public VacancyMapper(EmployerService employerService, VacancyDao vacancyDao, AreaDao areaDao, AreaMapper areaMapper, CommentDao commentDao, ViewsCounterDao viewsCounterDao, FileSettings fileSettings) {
+    public VacancyMapper(EmployerService employerService, VacancyDao vacancyDao, AreaDao areaDao, AreaMapper areaMapper, FileSettings fileSettings) {
         this.employerService = employerService;
         this.vacancyDao = vacancyDao;
         this.areaDao = areaDao;
         this.areaMapper = areaMapper;
-        this.commentDao = commentDao;
-        this.viewsCounterDao = viewsCounterDao;
         this.fileSettings = fileSettings;
     }
 
@@ -127,7 +122,8 @@ public class VacancyMapper {
         Employer employer = refreshOrCreateEmployer(employerId);
 
         AreaDto areaDto = vacancyDto.getArea();
-        Area area = areaDao.get(Area.class, areaDto.getId()).orElse(areaMapper.mapToEntity(areaDto));
+        Area area = areaDao.get(Area.class, areaDto.getId())
+                .orElse(objectMapper.convertValue(areaDto, Area.class));
 
         Salary salary = objectMapper.convertValue(vacancyDto.getSalary(), Salary.class);
 

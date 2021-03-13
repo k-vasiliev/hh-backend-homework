@@ -1,4 +1,4 @@
-package ru.hh.school.util;
+package ru.hh.school.component;
 
 import org.jvnet.hk2.annotations.Service;
 

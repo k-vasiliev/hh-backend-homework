@@ -4,7 +4,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.hh.school.entity.Employer;
-import ru.hh.school.entity.Popularity;
 
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
@@ -20,7 +19,7 @@ public class EmployerDao extends GenericDao {
         super(sessionFactory);
     }
 
-    private Query eagerQuery() {
+    private Query<Employer> eagerQuery() {
         return getSession().createQuery(
                 "from Employer employer " +
                         "join fetch employer.area a " +

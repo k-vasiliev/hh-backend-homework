@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.service.ApiService;
-import ru.hh.school.util.EmployerMapper;
+import ru.hh.school.component.EmployerMapper;
 
 import javax.inject.Singleton;
 import javax.ws.rs.*;

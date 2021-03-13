@@ -12,8 +12,8 @@ import ru.hh.nab.testbase.hibernate.NabHibernateTestBaseConfig;
 import ru.hh.school.config.CommonConfig;
 import ru.hh.school.http.HhClient;
 import ru.hh.school.service.ApiService;
-import ru.hh.school.util.IdParameterValidator;
-import ru.hh.school.util.PaginationValidator;
+import ru.hh.school.component.IdParameterValidator;
+import ru.hh.school.component.PaginationValidator;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;

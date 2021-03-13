@@ -1,4 +1,4 @@
-package ru.hh.school.util;
+package ru.hh.school.component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -26,15 +26,11 @@ public class EmployerMapper {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final AreaMapper areaMapper;
     private final AreaDao areaDao;
-    private final CommentDao commentDao;
-    private final ViewsCounterDao viewsCounterDao;
     private final FileSettings fileSettings;
 
-    public EmployerMapper(AreaMapper areaMapper, AreaDao areaDao, CommentDao commentDao, ViewsCounterDao viewsCounterDao, FileSettings fileSettings) {
+    public EmployerMapper(AreaMapper areaMapper, AreaDao areaDao, FileSettings fileSettings) {
         this.areaMapper = areaMapper;
         this.areaDao = areaDao;
-        this.commentDao = commentDao;
-        this.viewsCounterDao = viewsCounterDao;
         this.fileSettings = fileSettings;
     }
 

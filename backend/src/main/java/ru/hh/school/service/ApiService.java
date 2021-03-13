@@ -2,7 +2,7 @@ package ru.hh.school.service;
 
 import org.jvnet.hk2.annotations.Service;
 import ru.hh.school.http.HhClient;
-import ru.hh.school.util.*;
+import ru.hh.school.component.*;
 
 
 @Service
