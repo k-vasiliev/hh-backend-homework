@@ -59,7 +59,7 @@ public class SalaryDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SalaryDto) || o == null) return false;
+        if (!(o instanceof SalaryDto)) return false;
         SalaryDto salaryDto = (SalaryDto) o;
         return Objects.equals(to, salaryDto.to) &&
                 Objects.equals(from, salaryDto.from) &&

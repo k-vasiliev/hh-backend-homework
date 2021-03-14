@@ -2,7 +2,6 @@ package ru.hh.school.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;

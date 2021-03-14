@@ -36,7 +36,7 @@ public class AreaDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AreaDto) || o == null) return false;
+        if (!(o instanceof AreaDto)) return false;
         AreaDto areaDto = (AreaDto) o;
         return id == areaDto.id &&
                 Objects.equals(name, areaDto.name);

@@ -64,7 +64,6 @@ public class VacancyResourceTest extends AppBaseTest {
         parametersMap.put("comment", DEFAULT_COMMENT);
         HttpResponse response = executePostRequestWithParams(FAVORITE_VACANCY_BASE_URL, parametersMap);
         assertEquals(200, response.statusCode());
-        System.out.println("HERE");
         Vacancy vacancy = vacancyDao.getEager(vacancyId);
         Employer vacancyEmployer = vacancy.getEmployer();
         assertEquals(employer.getId(), vacancyEmployer.getId());
@@ -332,7 +331,6 @@ public class VacancyResourceTest extends AppBaseTest {
 
         vacancy = vacancyDao.getEager(vacancyId);
         jsonVacancy = getVacancyDtoFromJson(SINGLE_VACANCY_JSON);
-        System.out.println(jsonVacancy + " - " + vacancy);
         assertVacancyDtoFromJsonAndEntityAreSame(jsonVacancy, vacancy);
     }
 

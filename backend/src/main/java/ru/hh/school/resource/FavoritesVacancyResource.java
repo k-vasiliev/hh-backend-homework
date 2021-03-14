@@ -2,9 +2,7 @@ package ru.hh.school.resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.hh.school.dto.FavoriteEmployerDto;
 import ru.hh.school.dto.FavoriteVacancyDto;
-import ru.hh.school.service.EmployerService;
 import ru.hh.school.service.VacancyService;
 
 import javax.inject.Singleton;
