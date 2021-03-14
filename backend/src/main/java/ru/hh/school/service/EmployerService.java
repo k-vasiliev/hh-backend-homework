@@ -10,12 +10,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.stereotype.Service;
-
 import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.feignclient.HhApi;
 
-@Service
 public class EmployerService {
 
   private static HhApi api;
