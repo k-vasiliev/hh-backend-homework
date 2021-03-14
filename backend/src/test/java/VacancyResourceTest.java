@@ -7,6 +7,8 @@ import ru.hh.school.dto.FavoriteVacancyDto;
 import ru.hh.school.dto.SalaryDto;
 import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.entity.*;
+import ru.hh.school.entity.comment.VacancyComment;
+import ru.hh.school.entity.counter.VacancyCounter;
 
 import javax.inject.Inject;
 import javax.persistence.NoResultException;

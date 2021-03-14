@@ -4,8 +4,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.hh.school.entity.Comment;
-import ru.hh.school.entity.EmployerComment;
+import ru.hh.school.entity.comment.Comment;
+import ru.hh.school.entity.comment.EmployerComment;
 
 import javax.ws.rs.NotFoundException;
 

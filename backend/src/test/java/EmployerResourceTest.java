@@ -4,8 +4,8 @@ import ru.hh.school.dao.EmployerDao;
 import ru.hh.school.dto.EmployerDtoById;
 import ru.hh.school.dto.FavoriteEmployerDto;
 import ru.hh.school.entity.Employer;
-import ru.hh.school.entity.EmployerComment;
-import ru.hh.school.entity.EmployerCounter;
+import ru.hh.school.entity.comment.EmployerComment;
+import ru.hh.school.entity.counter.EmployerCounter;
 import ru.hh.school.entity.Popularity;
 
 import javax.inject.Inject;

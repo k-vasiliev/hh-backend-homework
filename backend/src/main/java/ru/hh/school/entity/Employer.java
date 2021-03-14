@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
+import ru.hh.school.entity.comment.EmployerComment;
+import ru.hh.school.entity.counter.EmployerCounter;
 
 import javax.persistence.*;
 import java.time.LocalDate;

@@ -10,19 +10,17 @@ import ru.hh.school.dto.AreaDto;
 import ru.hh.school.dto.FavoriteVacancyDto;
 import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.entity.*;
+import ru.hh.school.entity.comment.VacancyComment;
+import ru.hh.school.entity.counter.VacancyCounter;
 import ru.hh.school.service.EmployerService;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
-public class VacancyMapper {
+public class VacancyMapper extends HhJsonParser {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final EmployerService employerService;
     private final VacancyDao vacancyDao;
     private final AreaDao areaDao;
@@ -38,31 +36,12 @@ public class VacancyMapper {
     }
 
     public List<VacancyDto> mapDataFromApi(String vacancyData) {
-        try {
-            JsonNode rootNode = objectMapper.readTree(vacancyData);
-            JsonNode items = rootNode.path("items");
-            Iterator<JsonNode> elements = items.elements();
-            Iterable<JsonNode> iterable = () -> elements;
-            List<VacancyDto> vacancies = StreamSupport.stream(iterable.spliterator(), false)
-                    .map(vacancy -> convertJsonNodeToValue(vacancy, VacancyDto.class))
-                    .collect(Collectors.toList());
-            return vacancies;
-        } catch (JsonProcessingException e) {
-            throw new ServerErrorException(500);
-        }
+        return super.mapDataFromApi(vacancyData, VacancyDto.class);
     }
 
     public VacancyDto mapDataFromApiById(String vacancyData) {
         try {
             return objectMapper.readValue(vacancyData, VacancyDto.class);
-        } catch (JsonProcessingException e) {
-            throw new ServerErrorException(500);
-        }
-    }
-
-    private <T> T convertJsonNodeToValue(JsonNode node, Class<T> clz) {
-        try {
-            return objectMapper.treeToValue(node, clz);
         } catch (JsonProcessingException e) {
             throw new ServerErrorException(500);
         }

@@ -11,6 +11,8 @@ import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.dto.EmployerDtoById;
 import ru.hh.school.dto.FavoriteEmployerDto;
 import ru.hh.school.entity.*;
+import ru.hh.school.entity.comment.EmployerComment;
+import ru.hh.school.entity.counter.EmployerCounter;
 
 import javax.ws.rs.ServerErrorException;
 import java.util.Iterator;
@@ -19,9 +21,8 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class EmployerMapper {
+public class EmployerMapper extends HhJsonParser {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final AreaMapper areaMapper;
     private final AreaDao areaDao;
     private final FileSettings fileSettings;
@@ -33,27 +34,7 @@ public class EmployerMapper {
     }
 
     public List<EmployerDto> mapDataFromApi(String employersData) {
-        try {
-            JsonNode rootNode = objectMapper.readTree(employersData);
-            JsonNode items = rootNode.path("items");
-            Iterator<JsonNode> elements = items.elements();
-            Iterable<JsonNode> iterable = () -> elements;
-            List<EmployerDto> employers = StreamSupport.stream(iterable.spliterator(), false)
-                    .map(employer -> convertJsonNodeToValue(employer, EmployerDto.class))
-                    .collect(Collectors.toList());
-            return employers;
-        } catch (JsonProcessingException e) {
-            throw new ServerErrorException(500);
-        }
-    }
-
-    private <T> T convertJsonNodeToValue(JsonNode node, Class<T> clz) {
-        try {
-            return objectMapper.treeToValue(node, clz);
-        } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
-            throw new ServerErrorException(500);
-        }
+        return super.mapDataFromApi(employersData, EmployerDto.class);
     }
 
     public EmployerDtoById mapDataFromApiById(String employerData) {

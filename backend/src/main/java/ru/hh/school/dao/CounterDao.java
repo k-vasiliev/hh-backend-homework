@@ -3,8 +3,8 @@ package ru.hh.school.dao;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.hh.school.entity.EmployerCounter;
-import ru.hh.school.entity.VacancyCounter;
+import ru.hh.school.entity.counter.EmployerCounter;
+import ru.hh.school.entity.counter.VacancyCounter;
 
 import javax.ws.rs.NotFoundException;
 

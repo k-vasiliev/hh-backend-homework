@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
-import ru.hh.school.serialize.LocalDateSerializer;
+import ru.hh.school.entity.comment.VacancyComment;
+import ru.hh.school.entity.counter.VacancyCounter;
 import ru.hh.school.serialize.OffsetDateTimeDeserializer;
 import ru.hh.school.serialize.OffsetDateTimeSerializer;
 

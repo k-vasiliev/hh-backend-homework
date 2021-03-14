@@ -1,4 +1,4 @@
-package ru.hh.school.entity;
+package ru.hh.school.entity.counter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

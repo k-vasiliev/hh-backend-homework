@@ -1,17 +1,22 @@
-package ru.hh.school.entity;
+package ru.hh.school.entity.comment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
+import ru.hh.school.entity.Employer;
 
 import javax.persistence.*;
 
 @Entity
 @OptimisticLocking(type = OptimisticLockType.VERSION)
-@Table(name = "employer_counter")
-public class EmployerCounter extends Counter {
+@Table(name = "employer_comment")
+public class EmployerComment extends Comment {
 
-    public EmployerCounter() {}
+    public EmployerComment() {}
+
+    public EmployerComment(String comment) {
+        super(comment);
+    }
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
@@ -26,10 +31,4 @@ public class EmployerCounter extends Counter {
     public void setEmployer(Employer employer) {
         this.employer = employer;
     }
-
-    @Override
-    public String toString() {
-        return super.toString() + ", employer = " + employer.getName() + "]";
-    }
-
 }

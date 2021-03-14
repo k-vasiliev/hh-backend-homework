@@ -1,4 +1,4 @@
-package ru.hh.school.entity;
+package ru.hh.school.entity.comment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

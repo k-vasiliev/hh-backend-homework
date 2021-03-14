@@ -1,21 +1,18 @@
-package ru.hh.school.entity;
+package ru.hh.school.entity.counter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
+import ru.hh.school.entity.Vacancy;
 
 import javax.persistence.*;
 
 @Entity
 @OptimisticLocking(type = OptimisticLockType.VERSION)
-@Table(name = "vacancy_comment")
-public class VacancyComment extends Comment {
+@Table(name = "vacancy_counter")
+public class VacancyCounter extends Counter {
 
-    public VacancyComment() {}
-
-    public VacancyComment(String comment) {
-        super(comment);
-    }
+    public VacancyCounter() {}
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
@@ -29,6 +26,11 @@ public class VacancyComment extends Comment {
 
     public void setVacancy(Vacancy vacancy) {
         this.vacancy = vacancy;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", vacancy = " + vacancy.getName() + ']';
     }
 
 }
