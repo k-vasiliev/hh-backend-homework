@@ -66,7 +66,8 @@ public class VacancyService {
 
     @Transactional
     public void deleteVacancy(Integer vacancyId) {
-        Vacancy vacancy = vacancyDao.getWithPessimisticLocking(vacancyId).orElseThrow(NotFoundException::new);
+        Vacancy vacancy = vacancyDao
+                .getWithPessimisticLocking(vacancyId).orElseThrow(NotFoundException::new);
         vacancyDao.delete(vacancy);
     }
 

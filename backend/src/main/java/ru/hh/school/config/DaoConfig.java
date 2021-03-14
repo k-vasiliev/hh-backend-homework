@@ -10,7 +10,7 @@ import ru.hh.school.dao.*;
         AreaDao.class,
         VacancyDao.class,
         CommentDao.class,
-        ViewsCounterDao.class
+        CounterDao.class
 })
 public class DaoConfig {
 }

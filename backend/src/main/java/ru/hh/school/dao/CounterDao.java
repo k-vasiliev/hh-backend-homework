@@ -8,9 +8,9 @@ import ru.hh.school.entity.VacancyCounter;
 
 import javax.ws.rs.NotFoundException;
 
-public class ViewsCounterDao extends GenericDao {
+public class CounterDao extends GenericDao {
 
-    public ViewsCounterDao(SessionFactory sessionFactory) {
+    public CounterDao(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 

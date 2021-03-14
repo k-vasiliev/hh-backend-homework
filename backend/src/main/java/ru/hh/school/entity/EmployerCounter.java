@@ -9,49 +9,15 @@ import javax.persistence.*;
 @Entity
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 @Table(name = "employer_counter")
-public class EmployerCounter {
+public class EmployerCounter extends Counter {
 
     public EmployerCounter() {}
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(columnDefinition = "integer default 0")
-    private Integer counter = 0;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id")
     @JsonIgnore
     private Employer employer;
-
-    @Version
-    private Integer version;
-
-    public Integer getCounter() {
-        return counter;
-    }
-
-    public void setCounter(Integer counter) {
-        this.counter = counter;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
 
     public Employer getEmployer() {
         return employer;
@@ -63,10 +29,7 @@ public class EmployerCounter {
 
     @Override
     public String toString() {
-        return "ViewsCounter[" +
-                "id=" + id +
-                ", counter=" + counter +
-                ", version=" + version +
-                ']';
+        return super.toString() + ", employer = " + employer.getName() + "]";
     }
+
 }

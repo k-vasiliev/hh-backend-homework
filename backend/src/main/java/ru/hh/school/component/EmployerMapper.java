@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jvnet.hk2.annotations.Service;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.school.dao.AreaDao;
-import ru.hh.school.dao.CommentDao;
-import ru.hh.school.dao.ViewsCounterDao;
 import ru.hh.school.dto.AreaDto;
 import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.dto.EmployerDtoById;

@@ -122,8 +122,7 @@ public class VacancyMapper {
         Employer employer = refreshOrCreateEmployer(employerId);
 
         AreaDto areaDto = vacancyDto.getArea();
-        Area area = areaDao.get(Area.class, areaDto.getId())
-                .orElse(objectMapper.convertValue(areaDto, Area.class));
+        Area area = areaDao.get(Area.class, areaDto.getId()).orElse(areaMapper.mapToEntity(areaDto));
 
         Salary salary = objectMapper.convertValue(vacancyDto.getSalary(), Salary.class);
 

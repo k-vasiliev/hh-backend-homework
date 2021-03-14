@@ -21,7 +21,6 @@ public class Area {
     @NotNull
     private String name;
 
-
     public int getId() {
         return id;
     }

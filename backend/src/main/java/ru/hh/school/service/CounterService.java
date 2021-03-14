@@ -6,17 +6,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Transactional;
-import ru.hh.school.dao.ViewsCounterDao;
+import ru.hh.school.dao.CounterDao;
 
 import javax.ws.rs.NotFoundException;
 
 @Service
 public class CounterService {
 
-    private final ViewsCounterDao counterDao;
+    private final CounterDao counterDao;
     private static final Logger logger = LoggerFactory.getLogger(CommentService.class);
 
-    public CounterService(ViewsCounterDao counterDao) {
+    public CounterService(CounterDao counterDao) {
         this.counterDao = counterDao;
     }
 

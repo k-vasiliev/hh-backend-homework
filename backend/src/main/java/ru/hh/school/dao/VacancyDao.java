@@ -14,7 +14,7 @@ public class VacancyDao extends GenericDao {
         super(sessionFactory);
     }
 
-    private Query eagerQuery() {
+    private Query<Vacancy> eagerQuery() {
         return getSession().createQuery(
                 "from Vacancy vacancy " +
                         "join fetch vacancy.area a " +

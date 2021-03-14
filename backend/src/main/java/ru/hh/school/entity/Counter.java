@@ -5,21 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @MappedSuperclass
-public abstract class Comment {
+public abstract class Counter {
 
-    public Comment() {}
-
-    public Comment(String comment) {
-        this.comment = comment;
-    }
+    public Counter() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private int id;
 
-    @Column(name = "comment")
-    private String comment;
+    @Column(columnDefinition = "integer default 0")
+    private Integer counter = 0;
 
     @Version
     @JsonIgnore
@@ -33,12 +29,12 @@ public abstract class Comment {
         this.id = id;
     }
 
-    public String getComment() {
-        return comment;
+    public Integer getCounter() {
+        return counter;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setCounter(Integer counter) {
+        this.counter = counter;
     }
 
     public Integer getVersion() {
@@ -51,11 +47,8 @@ public abstract class Comment {
 
     @Override
     public String toString() {
-        return "Comment[" +
+        return "Counter [" +
                 "id=" + id +
-                ", comment='" + comment + '\'' +
-                ", version=" + version +
-                ']';
+                ", counter=" + counter;
     }
-
 }
