@@ -6,12 +6,16 @@ import org.springframework.context.annotation.Import;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.starter.NabCommonConfig;
 import ru.hh.school.resource.ExampleResource;
+import ru.hh.school.dao.FavouritesDao;
+import ru.hh.school.hhapiclient.HHClient;
 
 @Configuration
 @Import({
   // import your beans here
   ExampleResource.class,
-  NabCommonConfig.class
+  NabCommonConfig.class,
+  FavouritesDao.class,
+  HHClient.class
 })
 public class CommonConfig {
 
