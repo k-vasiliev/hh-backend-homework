@@ -19,7 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import feign.FeignException;
 import ru.hh.nab.starter.NabApplication;
 import ru.hh.nab.testbase.NabTestBase;
-import ru.hh.school.entity.Employer;
+import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.exceptionmapper.FeignExceptionMapper;
 import ru.hh.school.resource.EmployerResource;
 import ru.hh.school.service.EmployerService;
@@ -48,7 +48,7 @@ public class EmployerResourceTest extends NabTestBase {
   @Test
   public void getEmployersShouldReturnOk() throws IOException {
     when(service.getEmployers("test", null, null))
-      .thenReturn(List.of(new Employer()));
+      .thenReturn(List.of(new EmployerDto()));
     Response response = createRequest("/employer?query=test").get();
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
   }
@@ -56,7 +56,7 @@ public class EmployerResourceTest extends NabTestBase {
   @Test
   public void getEmployerShouldReturnOk() throws JsonProcessingException {
     when(service.getEmployer(0))
-      .thenReturn(new Employer());
+      .thenReturn(new EmployerDto());
     Response response = createRequest("/employer/0").get();
     assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
   }

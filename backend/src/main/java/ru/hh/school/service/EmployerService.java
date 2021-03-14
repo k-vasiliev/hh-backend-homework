@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.stereotype.Service;
 
-import ru.hh.school.entity.Employer;
+import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.feignclient.HhApi;
 
 @Service
@@ -28,13 +28,13 @@ public class EmployerService {
     mapper = objectMapper;
   }
 
-  public List<Employer> getEmployers(String query, Integer page, Integer perPage)
+  public List<EmployerDto> getEmployers(String query, Integer page, Integer perPage)
       throws JsonProcessingException, IOException {
     JsonNode employers = mapper.readTree(api.getEmployers(query, page, perPage)).get("items");
-    return mapper.readerFor(new TypeReference<List<Employer>>(){}).readValue(employers);
+    return mapper.readerFor(new TypeReference<List<EmployerDto>>(){}).readValue(employers);
   }
 
-  public Employer getEmployer(Integer employerId) throws JsonProcessingException {
-    return mapper.readValue(api.getEmployer(employerId), Employer.class);
+  public EmployerDto getEmployer(Integer employerId) throws JsonProcessingException {
+    return mapper.readValue(api.getEmployer(employerId), EmployerDto.class);
   }
 }

@@ -19,8 +19,8 @@ import feign.FeignException;
 import ru.hh.nab.starter.NabApplication;
 import ru.hh.nab.starter.jersey.ObjectMapperContextResolver;
 import ru.hh.nab.testbase.NabTestBase;
-import ru.hh.school.entity.Employer;
-import ru.hh.school.entity.Vacancy;
+import ru.hh.school.dto.EmployerDto;
+import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.exceptionmapper.FeignExceptionMapper;
 import ru.hh.school.resource.VacancyResource;
 import ru.hh.school.service.VacancyService;
@@ -46,9 +46,9 @@ public class VacancyResourceTest extends NabTestBase {
     MockitoAnnotations.initMocks(this);
   }
 
-  private static Vacancy getEmptyVacancy() {
-    Vacancy vacancy = new Vacancy();
-    vacancy.setEmployer(new Employer());
+  private static VacancyDto getEmptyVacancy() {
+    VacancyDto vacancy = new VacancyDto();
+    vacancy.setEmployer(new EmployerDto());
     return vacancy;
   }
 

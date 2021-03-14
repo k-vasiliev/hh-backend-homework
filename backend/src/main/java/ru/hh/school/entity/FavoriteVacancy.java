@@ -6,33 +6,28 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
-
 @Entity
-@Table(name = "vacancy")
-public class Vacancy {
+@Table(name = "favorite_vacancy")
+public class FavoriteVacancy {
+
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "vacancy_id")
   private Integer id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "employer_id")
-  private Employer employer;
+  private FavoriteEmployer employer;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "area_id")
   private Area area;
 
-  @Column(name = "name")
+  @Column(name = "vacancy_name")
   private String name;
 
   @Column(name = "compensation_from")
@@ -47,23 +42,16 @@ public class Vacancy {
   @Column(name = "compensation_currency")
   private String compensationCurrency;
 
-  @JsonProperty("created_at")
   @Column(name = "creation_time")
   private OffsetDateTime creationTime;
 
   @Column(name = "archiving_time")
   private OffsetDateTime archivingTime;
 
-  public Vacancy() {}
+  @Column(name = "views_count", columnDefinition = "integer default 0")
+  private Integer viewsCount;
 
-  public Vacancy(@JsonProperty("salary") JsonNode salary) {
-    if (salary.isNull())
-      return;
-    compensationCurrency = salary.get("currency").isNull() ? null : salary.get("currency").textValue();
-    compensationFrom = salary.get("from").isNull() ? null : salary.get("from").intValue();
-    compensationTo = salary.get("to").isNull() ? null : salary.get("to").intValue();
-    compensationGross = salary.get("gross").isNull() ? null : salary.get("gross").booleanValue();
-  }
+  private String comment;
 
   public Integer getId() {
     return id;
@@ -73,11 +61,11 @@ public class Vacancy {
     this.id = id;
   }
 
-  public Employer getEmployer() {
+  public FavoriteEmployer getEmployer() {
     return employer;
   }
 
-  public void setEmployer(Employer employer) {
+  public void setEmployer(FavoriteEmployer employer) {
     this.employer = employer;
   }
 
@@ -145,16 +133,32 @@ public class Vacancy {
     this.archivingTime = archivingTime;
   }
 
+  public Integer getViewsCount() {
+    return viewsCount;
+  }
+
+  public void setViewsCount(Integer viewsCount) {
+    this.viewsCount = viewsCount;
+  }
+
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Vacancy vacancy = (Vacancy) o;
+    FavoriteVacancy vacancy = (FavoriteVacancy) o;
     return Objects.equals(id, vacancy.id);
   }
 
   @Override
   public int hashCode() {
-    return 17;
+    return Objects.hash(id);
   }
 }

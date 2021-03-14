@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import ru.hh.school.config.CommonConfig;
-import ru.hh.school.entity.Vacancy;
+import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.feignclient.HhApi;
 import ru.hh.school.service.VacancyService;
 
@@ -45,7 +45,7 @@ public class VacancyServiceTest {
   @Test
   public void getVacanciesShouldReturnVacancyListOnValidJson() throws IOException {
     when(api.getVacancies("test", null, null)).thenReturn(ONE_ITEM_JSON);
-    List<Vacancy> vacancies = service.getVacancies("test", null, null);
+    List<VacancyDto> vacancies = service.getVacancies("test", null, null);
     assertTrue(vacancies.size() == 1);
     assertEquals("test", vacancies.get(0).getName());
   }

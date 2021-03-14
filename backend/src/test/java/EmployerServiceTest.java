@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import ru.hh.school.config.CommonConfig;
-import ru.hh.school.entity.Employer;
+import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.feignclient.HhApi;
 import ru.hh.school.service.EmployerService;
 
@@ -45,7 +45,7 @@ public class EmployerServiceTest {
   @Test
   public void getEmployersShouldReturnEmployerListOnValidJson() throws IOException {
     when(api.getEmployers("test", null, null)).thenReturn(ONE_ITEM_JSON);
-    List<Employer> employers = service.getEmployers("test", null, null);
+    List<EmployerDto> employers = service.getEmployers("test", null, null);
     assertTrue(employers.size() == 1);
     assertEquals("test", employers.get(0).getName());
   }

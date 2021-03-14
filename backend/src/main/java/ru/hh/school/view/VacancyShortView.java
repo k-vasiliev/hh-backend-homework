@@ -4,8 +4,8 @@ import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import ru.hh.school.entity.Area;
-import ru.hh.school.entity.Vacancy;
+import ru.hh.school.dto.AreaDto;
+import ru.hh.school.dto.VacancyDto;
 
 public class VacancyShortView {
 
@@ -13,7 +13,7 @@ public class VacancyShortView {
 
   private String name;
 
-  private Area area;
+  private AreaDto area;
 
   private Salary salary;
 
@@ -22,7 +22,7 @@ public class VacancyShortView {
 
   private EmployerShortView employer;
 
-  public VacancyShortView(Vacancy vacancy) {
+  public VacancyShortView(VacancyDto vacancy) {
     id = vacancy.getId();
     name = vacancy.getName();
     area = vacancy.getArea();
@@ -44,7 +44,7 @@ public class VacancyShortView {
     return name;
   }
 
-  public Area getArea() {
+  public AreaDto getArea() {
     return area;
   }
 
