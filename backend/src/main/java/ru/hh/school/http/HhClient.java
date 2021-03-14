@@ -2,9 +2,6 @@ package ru.hh.school.http;
 
 import org.jvnet.hk2.annotations.Service;
 
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
 import java.net.URI;

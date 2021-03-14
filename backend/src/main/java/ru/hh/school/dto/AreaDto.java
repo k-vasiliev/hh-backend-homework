@@ -1,7 +1,6 @@
 package ru.hh.school.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import ru.hh.school.entity.Area;
 
 import java.util.Objects;
 
@@ -12,11 +11,6 @@ public class AreaDto {
     private String name;
 
     public AreaDto() {}
-
-    public AreaDto(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public int getId() {
         return id;

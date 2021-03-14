@@ -1,6 +1,7 @@
 package ru.hh.school.dao;
 
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.entity.counter.EmployerCounter;
@@ -8,6 +9,7 @@ import ru.hh.school.entity.counter.VacancyCounter;
 
 import javax.ws.rs.NotFoundException;
 
+@Repository
 public class CounterDao extends GenericDao {
 
     public CounterDao(SessionFactory sessionFactory) {

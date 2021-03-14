@@ -8,9 +8,8 @@ import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Optional;
 
-@Repository
 @Transactional
-public class GenericDao {
+public abstract class GenericDao {
 
     private final SessionFactory sessionFactory;
 

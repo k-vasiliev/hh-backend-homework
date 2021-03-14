@@ -6,7 +6,6 @@ import ru.hh.school.component.*;
 
 @Configuration
 @Import({
-        AreaMapper.class,
         EmployerMapper.class,
         VacancyMapper.class,
         IdParameterValidator.class,

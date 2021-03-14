@@ -2,13 +2,17 @@ package ru.hh.school.dao;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 import ru.hh.school.entity.Vacancy;
 
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
+@Transactional
 public class VacancyDao extends GenericDao {
     public VacancyDao(SessionFactory sessionFactory) {
         super(sessionFactory);
