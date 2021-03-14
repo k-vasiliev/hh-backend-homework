@@ -10,7 +10,8 @@ import ru.hh.school.service.*;
         CommentService.class,
         CounterService.class,
         EmployerService.class,
-        VacancyService.class
+        VacancyService.class,
+        AreaService.class
 })
 public class ServiceConfig {
 }

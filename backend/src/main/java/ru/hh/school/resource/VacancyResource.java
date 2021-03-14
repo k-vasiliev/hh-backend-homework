@@ -35,7 +35,7 @@ public class VacancyResource {
     ) {
         try {
             String dataFromApi = apiService.fetchVacanciesFromApi(query, page, perPage);
-            List<VacancyDto> vacancies = vacancyMapper.mapDataFromApi(dataFromApi);
+            List<VacancyDto> vacancies = vacancyMapper.mapListOfItemsFromApi(dataFromApi);
             return Response.ok().entity(vacancies).build();
         } catch (WebApplicationException exception) {
             throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());
@@ -48,7 +48,7 @@ public class VacancyResource {
     public Response getVacancyFromApiById(@PathParam("vacancy_id") Integer vacancyId) {
         try {
             String dataFromApi = apiService.fetchVacanciesFromApiById(vacancyId);
-            VacancyDto vacancy = vacancyMapper.mapDataFromApiById(dataFromApi);
+            VacancyDto vacancy = vacancyMapper.mapSingleItemFromApiToDto(dataFromApi);
             return Response.ok().entity(vacancy).build();
         } catch (WebApplicationException exception) {
             throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());

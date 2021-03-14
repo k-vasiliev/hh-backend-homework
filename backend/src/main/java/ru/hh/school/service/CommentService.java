@@ -6,6 +6,9 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.CommentDao;
+import ru.hh.school.entity.comment.EmployerComment;
+import ru.hh.school.entity.comment.VacancyComment;
+
 
 @Service
 public class CommentService {
@@ -15,6 +18,14 @@ public class CommentService {
 
     public CommentService(CommentDao commentDao) {
         this.commentDao = commentDao;
+    }
+
+    public EmployerComment createEmployerComment(String comment) {
+        return new EmployerComment(comment);
+    }
+
+    public VacancyComment createVacancyComment(String comment) {
+        return new VacancyComment(comment);
     }
 
     @Transactional

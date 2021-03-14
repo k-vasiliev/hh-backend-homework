@@ -206,12 +206,12 @@ public abstract class AppBaseTest extends NabTestBase {
 
     protected EmployerDtoById getEmployerDtoFromJson(String pathToJson) throws IOException {
         String jsonString = Files.readString(Path.of(JSON_BASE_PATH + pathToJson));
-        return employerMapper.mapDataFromApiById(jsonString);
+        return employerMapper.mapSingleItemFromApiToDto(jsonString);
     }
 
     protected VacancyDto getVacancyDtoFromJson(String pathToJson) throws IOException {
         String jsonString = Files.readString(Path.of(JSON_BASE_PATH + pathToJson));
-        return vacancyMapper.mapDataFromApiById(jsonString);
+        return vacancyMapper.mapSingleItemFromApiToDto(jsonString);
     }
 
 

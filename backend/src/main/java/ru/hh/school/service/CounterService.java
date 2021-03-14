@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Transactional;
 import ru.hh.school.dao.CounterDao;
+import ru.hh.school.entity.counter.EmployerCounter;
+import ru.hh.school.entity.counter.VacancyCounter;
 
 import javax.ws.rs.NotFoundException;
 
@@ -18,6 +20,14 @@ public class CounterService {
 
     public CounterService(CounterDao counterDao) {
         this.counterDao = counterDao;
+    }
+
+    public EmployerCounter createEmployerCounter() {
+        return new EmployerCounter();
+    }
+
+    public VacancyCounter createVacancyCounter() {
+        return new VacancyCounter();
     }
 
     @Transactional

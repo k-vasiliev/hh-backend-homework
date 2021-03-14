@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class HhJsonParser {
+public abstract class HhJsonParser {
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
 
-    protected  <T> List<T> mapDataFromApi(String apiData, Class<T> clz) {
+    protected  <T> List<T> mapListOfItemsFromApi(String apiData, Class<T> clz) {
         try {
             JsonNode rootNode = objectMapper.readTree(apiData);
             JsonNode items = rootNode.path("items");
@@ -24,6 +24,14 @@ public class HhJsonParser {
                     .map(employer -> convertJsonNodeToValue(employer, clz))
                     .collect(Collectors.toList());
             return employers;
+        } catch (JsonProcessingException e) {
+            throw new ServerErrorException(500);
+        }
+    }
+
+    protected <T> T mapSingleItemFromApi(String apiData, Class<T> clz) {
+        try {
+            return objectMapper.readValue(apiData, clz);
         } catch (JsonProcessingException e) {
             throw new ServerErrorException(500);
         }

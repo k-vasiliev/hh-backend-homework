@@ -35,7 +35,7 @@ public class EmployerResource {
     ) {
         try {
             String dataFromApi = apiService.fetchEmployersFromApi(query, page, perPage);
-            List<EmployerDto> employers = employerMapper.mapDataFromApi(dataFromApi);
+            List<EmployerDto> employers = employerMapper.mapListOfItemsFromApi(dataFromApi);
             return Response.ok().entity(employers).build();
         } catch (WebApplicationException exception) {
             throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());
@@ -48,7 +48,7 @@ public class EmployerResource {
     public Response getEmployerFromApiById(@PathParam("employer_id") Integer employerId) {
         try {
             String dataFromApi = apiService.fetchEmployersFromApiById(employerId);
-            EmployerDto employer = employerMapper.mapDataFromApiById(dataFromApi);
+            EmployerDto employer = employerMapper.mapSingleItemFromApiToDto(dataFromApi);
             return Response.ok().entity(employer).build();
         } catch (WebApplicationException exception) {
             throw new WebApplicationException(exception.getMessage(), exception.getResponse().getStatus());

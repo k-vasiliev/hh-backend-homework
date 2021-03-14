@@ -2,6 +2,7 @@ package ru.hh.school.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
@@ -42,10 +43,12 @@ public class Employer {
 
     @OneToOne(mappedBy = "employer", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+    @JsonUnwrapped
     private EmployerComment comment;
 
     @OneToOne(mappedBy = "employer", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+    @JsonUnwrapped
     private EmployerCounter employerCounter;
 
     @OneToMany(mappedBy = "employer", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
