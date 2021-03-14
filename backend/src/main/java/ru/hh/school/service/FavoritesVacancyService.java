@@ -53,6 +53,7 @@ public class FavoritesVacancyService {
         }
         // иду в апи хх, чтобы сохранить данные об вакансии
         // TODO можно ли сделать в отдельном не блокирующем потоке?
+        // TODO если операция будет долгой или свалится с ошибкой что будет с транзакцией?
         VacancyDto vacancyDto = apiHhService.getVacancyBy(id);
         Vacancy vacancy = vacancyMapper.map(vacancyDto);
         vacancyService.saveOrUpdate(vacancy);

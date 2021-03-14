@@ -59,6 +59,7 @@ public class FavoritesEmployerService {
         }
         // иду в апи хх, чтобы сохранить данные об работодателе
         // TODO можно ли сделать в отдельном не блокирующем потоке?
+        // TODO если операция будет долгой или свалится с ошибкой что будет с транзакцией?
         EmployerApiHh employerApiHh = apiHhService.getEmployerBy(id);
         Employer employer = employerMapper.map(employerApiHh);
         employerService.saveOrUpdate(employer);
@@ -90,6 +91,7 @@ public class FavoritesEmployerService {
         }
 
         // TODO возможен рейс? на подумать
+        // TODO или транзакция защитит от рейса?
         favoritesEmployers.stream()
                 .peek(employer -> employer.setViewsCount(employer.getViewsCount() + 1))
                 .forEach(favoritesEmployerDao::update);
