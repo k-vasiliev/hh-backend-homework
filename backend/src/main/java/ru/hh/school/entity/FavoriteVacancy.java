@@ -48,7 +48,7 @@ public class FavoriteVacancy {
   @Column(name = "archiving_time")
   private OffsetDateTime archivingTime;
 
-  @Column(name = "views_count", columnDefinition = "integer default 0")
+  @Column(name = "views_count")
   private Integer viewsCount;
 
   private String comment;

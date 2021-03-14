@@ -16,15 +16,14 @@ create table if not exists favorite_employer (
 create table if not exists favorite_vacancy (
   vacancy_id serial primary key,
   vacancy_name varchar(100) not null,
-  archiving_time timestamptz default NOW(),
+  archiving_time timestamptz,
   area_id int,
   compensation_from int,
   compensation_to int,
   compensation_gross boolean,
-  compensation_currency varchar(3) -- poor cryptocurrencies should follow ISO convention
+  compensation_currency varchar(3), -- poor cryptocurrencies should follow ISO convention
   creation_time timestamptz,
-  employer_id int not null,
-  foreign key (employer_id) references favorite_employer(employer_id),
+  employer_id int not null references favorite_employer(employer_id),
   views_count int,
   comment varchar(100)
 );

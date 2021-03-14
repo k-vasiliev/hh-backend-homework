@@ -39,7 +39,7 @@ public class FavoriteEmployer {
   @Column(name = "comment")
   private String comment;
 
-  @Column(name = "views_count", columnDefinition = "integer default 0")
+  @Column(name = "views_count")
   private Integer viewsCount;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "employer", orphanRemoval = true)
