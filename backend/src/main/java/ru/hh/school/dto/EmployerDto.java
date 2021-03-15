@@ -1,6 +1,6 @@
 package ru.hh.school.dto;
 
-public class EmployerDto {
+public class EmployerDto implements EmployerData {
 
   private Integer id;
 

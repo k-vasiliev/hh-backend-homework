@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import ru.hh.school.dto.EmployerData;
+
 @Entity
 @Table(name = "favorite_employer")
 public class FavoriteEmployer {
@@ -44,6 +46,15 @@ public class FavoriteEmployer {
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "employer", orphanRemoval = true)
   private List<FavoriteVacancy> vacancies = new ArrayList<>();
+
+  public FavoriteEmployer() {}
+
+  public FavoriteEmployer(EmployerData data) {
+    id = data.getId();
+    name = data.getName();
+    description = data.getDescription();
+    area = new Area(data.getArea());
+  }
 
   public Integer getId() {
     return id;

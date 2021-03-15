@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import ru.hh.school.dto.AreaData;
+
 @Entity
 @Table(name = "area")
 public class Area {
@@ -15,6 +17,13 @@ public class Area {
 
   @Column(name = "area_name")
   private String name;
+
+  public Area() {}
+
+  public Area(AreaData data) {
+    id = data.getId();
+    name = data.getName();
+  }
 
   public Integer getId() {
     return id;

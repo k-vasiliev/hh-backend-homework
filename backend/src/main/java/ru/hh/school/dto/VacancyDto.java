@@ -5,7 +5,7 @@ import java.time.OffsetDateTime;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class VacancyDto {
+public class VacancyDto implements VacancyData {
 
   private Integer id;
 

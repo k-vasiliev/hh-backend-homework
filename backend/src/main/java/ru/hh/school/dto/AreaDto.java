@@ -1,6 +1,6 @@
 package ru.hh.school.dto;
 
-public class AreaDto {
+public class AreaDto implements AreaData {
 
   private Integer id;
 
