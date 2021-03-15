@@ -1,15 +1,15 @@
 package ru.hh.school.view;
 
-import ru.hh.school.dto.AreaDto;
-import ru.hh.school.dto.EmployerDto;
+import ru.hh.school.dto.AreaData;
+import ru.hh.school.dto.EmployerData;
 
 public class EmployerExtendedView extends EmployerShortView {
 
   private String description;
 
-  private AreaDto area;
+  private AreaData area;
 
-  public EmployerExtendedView(EmployerDto employer) {
+  public EmployerExtendedView(EmployerData employer) {
     super(employer);
     description = employer.getDescription();
     area = employer.getArea();
@@ -19,7 +19,7 @@ public class EmployerExtendedView extends EmployerShortView {
     return description;
   }
 
-  public AreaDto getArea() {
+  public AreaData getArea() {
     return area;
   }
 }

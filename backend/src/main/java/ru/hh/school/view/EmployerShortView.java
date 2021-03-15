@@ -1,6 +1,6 @@
 package ru.hh.school.view;
 
-import ru.hh.school.dto.EmployerDto;
+import ru.hh.school.dto.EmployerData;
 
 public class EmployerShortView {
 
@@ -8,7 +8,7 @@ public class EmployerShortView {
 
   private String name;
 
-  public EmployerShortView(EmployerDto employer) {
+  public EmployerShortView(EmployerData employer) {
     id = employer.getId();
     name = employer.getName();
   }

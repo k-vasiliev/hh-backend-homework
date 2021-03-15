@@ -1,10 +1,10 @@
 package ru.hh.school.view;
 
-import ru.hh.school.dto.VacancyDto;
+import ru.hh.school.dto.VacancyData;
 
 public class VacancyExtendedView extends VacancyShortView {
 
-  public VacancyExtendedView(VacancyDto vacancy) {
+  public VacancyExtendedView(VacancyData vacancy) {
     super(vacancy);
   }
 }
