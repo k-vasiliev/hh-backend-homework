@@ -15,14 +15,14 @@ import ru.hh.school.feignclient.HhApi;
 
 public class EmployerService {
 
-  private static HhApi api;
+  private final HhApi api;
 
-  private static ObjectMapper mapper;
+  private final ObjectMapper mapper;
 
   @Inject
-  public EmployerService(HhApi hhApi, ObjectMapper objectMapper) {
-    api = hhApi;
-    mapper = objectMapper;
+  public EmployerService(HhApi api, ObjectMapper mapper) {
+    this.api = api;
+    this.mapper = mapper;
   }
 
   public List<EmployerDto> getEmployers(String query, Integer page, Integer perPage)

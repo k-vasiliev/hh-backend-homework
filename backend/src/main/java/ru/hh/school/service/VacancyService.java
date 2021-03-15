@@ -15,14 +15,14 @@ import ru.hh.school.feignclient.HhApi;
 
 public class VacancyService {
 
-  private static HhApi api;
+  private final HhApi api;
 
-  private static ObjectMapper mapper;
+  private final ObjectMapper mapper;
 
   @Inject
-  public VacancyService(HhApi hhApi, ObjectMapper objectMapper) {
-    api = hhApi;
-    mapper = objectMapper;
+  public VacancyService(HhApi api, ObjectMapper mapper) {
+    this.api = api;
+    this.mapper = mapper;
   }
 
   public List<VacancyDto> getVacancies(String query, Integer page, Integer perPage)
