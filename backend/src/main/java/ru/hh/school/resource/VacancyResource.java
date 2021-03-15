@@ -23,7 +23,7 @@ import ru.hh.school.view.VacancyShortView;
 @Produces(MediaType.APPLICATION_JSON)
 public class VacancyResource {
 
-  private static VacancyService vacancyService;
+  private final VacancyService vacancyService;
 
   @Inject
   private VacancyResource(VacancyService vService) {

@@ -23,7 +23,7 @@ import ru.hh.school.view.EmployerShortView;
 @Produces(MediaType.APPLICATION_JSON)
 public class EmployerResource {
 
-  private static EmployerService employerService;
+  private final EmployerService employerService;
 
   @Inject
   private EmployerResource(EmployerService eService) {

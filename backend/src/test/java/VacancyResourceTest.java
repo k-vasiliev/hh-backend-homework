@@ -4,15 +4,19 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.ContextConfiguration;
 
 import feign.FeignException;
@@ -22,17 +26,13 @@ import ru.hh.nab.testbase.NabTestBase;
 import ru.hh.school.dto.EmployerDto;
 import ru.hh.school.dto.VacancyDto;
 import ru.hh.school.exceptionmapper.FeignExceptionMapper;
-import ru.hh.school.resource.VacancyResource;
 import ru.hh.school.service.VacancyService;
 
-@ContextConfiguration(classes = AppTestConfig.class)
+@ContextConfiguration(classes = VacancyResourceTest.Config.class)
 public class VacancyResourceTest extends NabTestBase {
 
-  @Mock
-  VacancyService service;
-
-  @InjectMocks
-  VacancyResource res;
+  @Inject
+  private VacancyService service;
 
   @Override
   protected NabApplication getApplication() {
@@ -82,5 +82,16 @@ public class VacancyResourceTest extends NabTestBase {
       .thenThrow(new FeignException(404, "Not found") {});
     Response response = createRequest("/vacancy/-1").get();
     assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
+  }
+
+  @Configuration
+  @Import(AppTestConfig.class)
+  public static class Config {
+
+    @Bean
+    @Primary
+    public VacancyService getVacancyService() {
+      return Mockito.mock(VacancyService.class);
+    }
   }
 }
