@@ -12,7 +12,7 @@ public class GenericExceptionMapper implements ExceptionMapper<Exception> {
 
   @Override
   public Response toResponse(Exception e) {
-    logger.error("ERROR: ", e);
+    logger.error("UNHANDLED RESOURCE EXCEPTION", e);
     return Response.serverError().build();
   }
 }
