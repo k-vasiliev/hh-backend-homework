@@ -59,7 +59,7 @@ public class GenericDao {
         getSession().delete(object);
     }
 
-    protected Session getSession() {
+    public Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 

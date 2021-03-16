@@ -29,7 +29,7 @@ public class VacancyEntity {
     private VacancyEmployerEntity employer;
 
     @Transient
-    private String popularity;
+    private Popularity popularity;
 
     @Column(name = "views_count")
     private Integer viewsCount;
@@ -40,7 +40,7 @@ public class VacancyEntity {
     }
 
     public VacancyEntity(Integer id, String name, LocalDateTime dateCreate, AreaEntity area,
-                         Double salary, String createdAt, VacancyEmployerEntity employer, String popularity,
+                         Double salary, String createdAt, VacancyEmployerEntity employer, Popularity popularity,
                      Integer viewsCount, String comment) {
         this.id = id;
         this.name = name;
@@ -110,11 +110,11 @@ public class VacancyEntity {
         this.employer = employer;
     }
 
-    public String getPopularity() {
+    public Popularity getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(String popularity) {
+    public void setPopularity(Popularity popularity) {
         this.popularity = popularity;
     }
 

@@ -1,10 +1,9 @@
 package ru.hh.school.resource;
 
 import org.springframework.validation.annotation.Validated;
-import ru.hh.school.dto.EmployerDetailed;
 import ru.hh.school.dto.Vacancies;
 import ru.hh.school.dto.Vacancy;
-import ru.hh.school.service.VacancyService;
+import ru.hh.school.service.HhService;
 
 import javax.inject.Singleton;
 import javax.validation.constraints.Max;
@@ -20,10 +19,10 @@ import javax.ws.rs.core.Response;
 @Validated
 public class VacancyResource {
 
-    private final VacancyService vacancyService;
+    private final HhService hhService;
 
-    public VacancyResource(VacancyService vacancyService) {
-        this.vacancyService = vacancyService;
+    public VacancyResource(HhService hhService) {
+        this.hhService = hhService;
     }
 
     @GET
@@ -31,7 +30,7 @@ public class VacancyResource {
     public Response getVacancies(@QueryParam(value = "page") @Min(0) Integer page,
                                  @QueryParam(value = "per_page") @Min(0) @Max(100) Integer perPage,
                                  @QueryParam(value = "query") @NotBlank String query) {
-        Vacancies vacancies = vacancyService.findVacancies(page, perPage, query);
+        Vacancies vacancies = hhService.findVacancies(page, perPage, query);
 
         return Response.ok(vacancies).build();
     }
@@ -40,7 +39,7 @@ public class VacancyResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployer(@PathParam("id") @NotNull Integer id) {
-        Vacancy vacancy = vacancyService.get(id);
+        Vacancy vacancy = hhService.getVacancy(id);
 
         return Response.ok(vacancy).build();
     }

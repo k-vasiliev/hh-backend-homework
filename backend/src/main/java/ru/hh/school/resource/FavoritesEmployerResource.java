@@ -36,9 +36,11 @@ public class FavoritesEmployerResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFavoriteEmployers(@QueryParam(value = "page") Integer page,
                                  @QueryParam(value = "per_page") Integer perPage) {
-        List<EmployerEntity> employers = favoritesEmployerService.getEmployers(page, perPage);
+        synchronized (this) {
+            List<EmployerEntity> employers = favoritesEmployerService.getEmployers(page, perPage);
 
-        return Response.ok(employers).build();
+            return Response.ok(employers).build();
+        }
     }
 
     @PUT

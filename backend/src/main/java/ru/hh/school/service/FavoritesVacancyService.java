@@ -4,6 +4,7 @@ import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.school.dao.VacancyDao;
 import ru.hh.school.dto.Vacancy;
 import ru.hh.school.entity.AreaEntity;
+import ru.hh.school.entity.Popularity;
 import ru.hh.school.entity.VacancyEmployerEntity;
 import ru.hh.school.entity.VacancyEntity;
 import ru.hh.school.request.FavoritesVacancyRequest;
@@ -14,21 +15,21 @@ import java.util.List;
 
 public class FavoritesVacancyService {
 
-    private VacancyService vacancyService;
+    private HhService hhService;
 
     private VacancyDao vacancyDao;
 
     private FileSettings fileSettings;
 
-    public FavoritesVacancyService(VacancyService vacancyService, VacancyDao vacancyDao, FileSettings fileSettings) {
-        this.vacancyService = vacancyService;
+    public FavoritesVacancyService(HhService hhService, VacancyDao vacancyDao, FileSettings fileSettings) {
+        this.hhService = hhService;
         this.vacancyDao = vacancyDao;
         this.fileSettings = fileSettings;
     }
 
     @Transactional
     public void addVacancy(FavoritesVacancyRequest vacancyRequest) {
-        Vacancy vacancy = vacancyService.get(vacancyRequest.getVacancyId());
+        Vacancy vacancy = hhService.getVacancy(vacancyRequest.getVacancyId());
 
         AreaEntity areaEntity = new AreaEntity();
         areaEntity.setId(vacancy.getArea().getId());
@@ -57,14 +58,16 @@ public class FavoritesVacancyService {
     @Transactional
     public List<VacancyEntity> getVacancies(Integer page, Integer perPage) {
         Integer popularityThreshold = fileSettings.getInteger("popularityThreshold");
+
         List<VacancyEntity> vacancyEntities = vacancyDao.getByPage(VacancyEntity.class, page, perPage);
         vacancyEntities.forEach(vacancyEntity -> {
             vacancyEntity.setViewsCount(vacancyEntity.getViewsCount()+1);
             vacancyDao.update(vacancyEntity);
+            vacancyDao.getSession().flush();
             if (vacancyEntity.getViewsCount() > popularityThreshold) {
-                vacancyEntity.setPopularity("POPULAR");
+                vacancyEntity.setPopularity(Popularity.POPULAR);
             } else {
-                vacancyEntity.setPopularity("REGULAR");
+                vacancyEntity.setPopularity(Popularity.REGULAR);
             }
         });
 
@@ -95,7 +98,7 @@ public class FavoritesVacancyService {
             return;
         }
 
-        Vacancy vacancy = vacancyService.get(id);
+        Vacancy vacancy = hhService.getVacancy(id);
 
         AreaEntity areaEntity = vacancyEntity.getArea();
         areaEntity.setId(vacancy.getArea().getId());

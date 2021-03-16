@@ -27,13 +27,13 @@ public class EmployerEntity {
     private Integer viewsCount;
 
     @Transient
-    private String popularity;
+    private Popularity popularity;
 
     public EmployerEntity() {
     }
 
     public EmployerEntity(Integer id, String name, LocalDateTime dateCreate, String description,
-                          AreaEntity area, String comment, Integer viewsCount, String popularity) {
+                          AreaEntity area, String comment, Integer viewsCount, Popularity popularity) {
         this.id = id;
         this.name = name;
         this.dateCreate = dateCreate;
@@ -100,11 +100,11 @@ public class EmployerEntity {
         this.viewsCount = viewsCount;
     }
 
-    public String getPopularity() {
+    public Popularity getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(String popularity) {
+    public void setPopularity(Popularity popularity) {
         this.popularity = popularity;
     }
 

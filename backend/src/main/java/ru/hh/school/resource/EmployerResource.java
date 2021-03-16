@@ -4,10 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.server.ResponseStatusException;
 import ru.hh.school.dto.EmployerDetailed;
 import ru.hh.school.dto.Employers;
-import ru.hh.school.service.EmployerService;
+import ru.hh.school.service.HhService;
 
 import javax.inject.Singleton;
 import javax.validation.ConstraintViolation;
@@ -26,10 +25,10 @@ import java.util.Set;
 @Validated
 public class EmployerResource {
 
-    private final EmployerService employerService;
+    private final HhService hhService;
 
-    public EmployerResource(EmployerService employerService) {
-        this.employerService = employerService;
+    public EmployerResource(HhService hhService) {
+        this.hhService = hhService;
     }
 
     @GET
@@ -37,7 +36,7 @@ public class EmployerResource {
     public Response getEmployers(@QueryParam(value = "page") @Min(0) Integer page,
                                 @QueryParam(value = "per_page") @Min(0) @Max(100) Integer perPage,
                                 @QueryParam(value = "query") @NotBlank String query) {
-        Employers employers = employerService.findEmployers(page, perPage, query);
+        Employers employers = hhService.findEmployers(page, perPage, query);
 
         return Response.ok(employers).build();
     }
@@ -46,7 +45,7 @@ public class EmployerResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployer(@PathParam("id") @NotNull Integer id) {
-        EmployerDetailed employer = employerService.get(id);
+        EmployerDetailed employer = hhService.getEmployer(id);
 
         return Response.ok(employer).build();
     }

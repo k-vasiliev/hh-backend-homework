@@ -36,9 +36,11 @@ public class FavoritesVacancyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFavoriteVacancies(@QueryParam(value = "page") Integer page,
                                          @QueryParam(value = "per_page") Integer perPage) {
-        List<VacancyEntity> vacancies = favoritesVacancyService.getVacancies(page, perPage);
+        synchronized (this) {
+            List<VacancyEntity> vacancies = favoritesVacancyService.getVacancies(page, perPage);
 
-        return Response.ok(vacancies).build();
+            return Response.ok(vacancies).build();
+        }
     }
 
     @PUT

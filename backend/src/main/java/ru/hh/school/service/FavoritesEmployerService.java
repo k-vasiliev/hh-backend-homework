@@ -8,6 +8,7 @@ import ru.hh.school.dao.EmployerDao;
 import ru.hh.school.dto.EmployerDetailed;
 import ru.hh.school.entity.AreaEntity;
 import ru.hh.school.entity.EmployerEntity;
+import ru.hh.school.entity.Popularity;
 import ru.hh.school.request.FavoritesEmployerRequest;
 
 import javax.transaction.Transactional;
@@ -19,13 +20,13 @@ public class FavoritesEmployerService {
 
     private static final Logger logger = LoggerFactory.getLogger(FavoritesEmployerService.class);
 
-    private EmployerService employerService;
+    private HhService employerService;
 
     private EmployerDao employerDao;
 
     private FileSettings fileSettings;
 
-    public FavoritesEmployerService(EmployerService employerService, EmployerDao employerDao, FileSettings fileSettings) {
+    public FavoritesEmployerService(HhService employerService, EmployerDao employerDao, FileSettings fileSettings) {
         this.employerService = employerService;
         this.employerDao = employerDao;
         this.fileSettings = fileSettings;
@@ -33,7 +34,7 @@ public class FavoritesEmployerService {
 
     @Transactional
     public void addEmployer(FavoritesEmployerRequest employer) {
-        EmployerDetailed employerDetailed = employerService.get(employer.getEmployerId());
+        EmployerDetailed employerDetailed = employerService.getEmployer(employer.getEmployerId());
 
         AreaEntity areaEntity = new AreaEntity();
         areaEntity.setId(employerDetailed.getArea().getId());
@@ -54,18 +55,20 @@ public class FavoritesEmployerService {
     @Transactional
     public List<EmployerEntity> getEmployers(Integer page, Integer perPage) {
         Integer popularityThreshold = fileSettings.getInteger("popularityThreshold");
+
         List<EmployerEntity> employerEntities = employerDao.getByPage(EmployerEntity.class, page, perPage);
         employerEntities.forEach(employerEntity -> {
-            employerEntity.setViewsCount(employerEntity.getViewsCount()+1);
+            employerEntity.setViewsCount(employerEntity.getViewsCount() + 1);
             employerDao.update(employerEntity);
+            employerDao.getSession().flush();
             if (employerEntity.getViewsCount() > popularityThreshold) {
-                employerEntity.setPopularity("POPULAR");
+                employerEntity.setPopularity(Popularity.POPULAR);
             } else {
-                employerEntity.setPopularity("REGULAR");
+                employerEntity.setPopularity(Popularity.REGULAR);
             }
         });
 
-        return employerDao.getByPage(EmployerEntity.class, page, perPage);
+        return employerEntities;
     }
 
     @Transactional
@@ -90,7 +93,7 @@ public class FavoritesEmployerService {
         if (employerEntity == null) {
             return;
         }
-        EmployerDetailed employerDetailed = employerService.get(id);
+        EmployerDetailed employerDetailed = employerService.getEmployer(id);
 
         AreaEntity areaEntity = employerEntity.getArea();
         areaEntity.setId(employerDetailed.getArea().getId());

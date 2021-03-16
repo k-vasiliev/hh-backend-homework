@@ -1,6 +1,6 @@
 package ru.hh.school.resource;
 
-import ru.hh.school.service.MeService;
+import ru.hh.school.service.HhService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,9 +11,9 @@ import javax.ws.rs.core.Response;
 @Path("/me")
 public class MeResource {
 
-    private final MeService meService;
+    private final HhService meService;
 
-    public MeResource(MeService meService) {
+    public MeResource(HhService meService) {
         this.meService = meService;
     }
 
