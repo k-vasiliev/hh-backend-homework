@@ -9,10 +9,8 @@ import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -39,11 +37,6 @@ public class VacancyResourceTest extends NabTestBase {
     return NabApplication.builder().configureJersey()
       .registerResources(FeignExceptionMapper.class, ObjectMapperContextResolver.class)
       .bindToRoot().build();
-  }
-
-  @Before
-  public void before() throws IOException {
-    MockitoAnnotations.initMocks(this);
   }
 
   private static VacancyDto getEmptyVacancy() {
