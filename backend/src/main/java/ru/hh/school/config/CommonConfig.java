@@ -19,12 +19,16 @@ import ru.hh.school.feignclient.HhApi;
 import ru.hh.school.jackson.OffsetDateTimeDeserializer;
 import ru.hh.school.jackson.OffsetDateTimeSerializer;
 import ru.hh.school.resource.EmployerResource;
+import ru.hh.school.resource.FavoriteEmployerResource;
 import ru.hh.school.resource.VacancyResource;
 import ru.hh.school.service.EmployerService;
+import ru.hh.school.service.FavoriteEmployerService;
 import ru.hh.school.service.VacancyService;
 
 @Configuration
 @Import({
+  FavoriteEmployerService.class,
+  FavoriteEmployerResource.class,
   VacancyService.class,
   VacancyResource.class,
   EmployerService.class,
