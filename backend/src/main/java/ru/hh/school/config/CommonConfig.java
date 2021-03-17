@@ -1,5 +1,6 @@
 package ru.hh.school.config;
 
+import java.time.Clock;
 import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Primary;
 import feign.Feign;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.starter.NabCommonConfig;
+import ru.hh.school.dao.FavoriteEmployerDao;
 import ru.hh.school.feignclient.HhApi;
 import ru.hh.school.jackson.OffsetDateTimeDeserializer;
 import ru.hh.school.jackson.OffsetDateTimeSerializer;
@@ -27,6 +29,7 @@ import ru.hh.school.service.VacancyService;
 
 @Configuration
 @Import({
+  FavoriteEmployerDao.class,
   FavoriteEmployerService.class,
   FavoriteEmployerResource.class,
   VacancyService.class,
@@ -61,5 +64,10 @@ public class CommonConfig {
   @Bean
   public HhApi getHhApi() {
     return Feign.builder().target(HhApi.class, HhApi.API_URL);
+  }
+
+  @Bean
+  public Clock getClock() {
+    return Clock.systemDefaultZone();
   }
 }
