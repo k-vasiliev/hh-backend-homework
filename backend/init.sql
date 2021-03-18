@@ -10,7 +10,8 @@ create table if not exists favorite_employer (
   area_id int,
   creation_time timestamptz,
   comment varchar(100),
-  views_count int
+  views_count int,
+  version_column int
 );
 
 create table if not exists favorite_vacancy (
