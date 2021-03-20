@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,12 +17,13 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import ru.hh.school.dto.EmployerData;
 
 @Entity
 @Table(name = "favorite_employer")
-public class FavoriteEmployer {
+public class FavoriteEmployer implements EmployerData {
 
   @Id
   @Column(name = "employer_id")
@@ -36,7 +36,7 @@ public class FavoriteEmployer {
   private String description;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+  @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "area_id")
   private Area area;
 
@@ -54,7 +54,8 @@ public class FavoriteEmployer {
   @Column(name = "version_column")
   private Integer version;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "employer", orphanRemoval = true)
+  @OneToMany(mappedBy = "employer", orphanRemoval = true)
+  @Cascade(CascadeType.ALL)
   private List<FavoriteVacancy> vacancies = new ArrayList<>();
 
   public FavoriteEmployer() {}

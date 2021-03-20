@@ -8,7 +8,7 @@ public interface VacancyData {
 
   String getName();
 
-  AreaDto getArea();
+  AreaData getArea();
 
   Integer getCompensationFrom();
 
@@ -20,5 +20,5 @@ public interface VacancyData {
 
   OffsetDateTime getCreationTime();
 
-  EmployerDto getEmployer();
+  EmployerData getEmployer();
 }

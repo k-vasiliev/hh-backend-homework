@@ -16,19 +16,27 @@ import org.springframework.context.annotation.Primary;
 import feign.Feign;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.starter.NabCommonConfig;
+import ru.hh.school.dao.AreaDao;
 import ru.hh.school.dao.FavoriteEmployerDao;
+import ru.hh.school.dao.FavoriteVacancyDao;
 import ru.hh.school.feignclient.HhApi;
 import ru.hh.school.jackson.OffsetDateTimeDeserializer;
 import ru.hh.school.jackson.OffsetDateTimeSerializer;
 import ru.hh.school.resource.EmployerResource;
 import ru.hh.school.resource.FavoriteEmployerResource;
+import ru.hh.school.resource.FavoriteVacancyResource;
 import ru.hh.school.resource.VacancyResource;
 import ru.hh.school.service.EmployerService;
 import ru.hh.school.service.FavoriteEmployerService;
+import ru.hh.school.service.FavoriteVacancyService;
 import ru.hh.school.service.VacancyService;
 
 @Configuration
 @Import({
+  AreaDao.class,
+  FavoriteVacancyDao.class,
+  FavoriteVacancyService.class,
+  FavoriteVacancyResource.class,
   FavoriteEmployerDao.class,
   FavoriteEmployerService.class,
   FavoriteEmployerResource.class,

@@ -1,5 +1,7 @@
 package ru.hh.school.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +11,7 @@ import ru.hh.school.dto.AreaData;
 
 @Entity
 @Table(name = "area")
-public class Area {
+public class Area implements AreaData {
 
   @Id
   @Column(name = "area_id")
@@ -39,5 +41,18 @@ public class Area {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Area area = (Area) o;
+    return Objects.equals(id, area.id);
   }
 }

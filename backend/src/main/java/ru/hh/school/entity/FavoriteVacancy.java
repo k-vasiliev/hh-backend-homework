@@ -11,21 +11,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import ru.hh.school.dto.VacancyData;
 
 @Entity
 @Table(name = "favorite_vacancy")
-public class FavoriteVacancy {
+public class FavoriteVacancy implements VacancyData {
 
   @Id
   @Column(name = "vacancy_id")
   private Integer id;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "employer_id")
   private FavoriteEmployer employer;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @Cascade(CascadeType.SAVE_UPDATE)
   @JoinColumn(name = "area_id")
   private Area area;
 
@@ -60,13 +65,11 @@ public class FavoriteVacancy {
   public FavoriteVacancy(VacancyData data) {
     id = data.getId();
     name = data.getName();
-    area = new Area(data.getArea());
     compensationFrom = data.getCompensationFrom();
     compensationTo = data.getCompensationTo();
     compensationGross = data.getCompensationGross();
     compensationCurrency = data.getCompensationCurrency();
     creationTime = data.getCreationTime();
-    employer = new FavoriteEmployer(data.getEmployer());
   }
 
   public Integer getId() {

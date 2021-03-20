@@ -26,12 +26,8 @@ public class VacancyShortView {
     id = vacancy.getId();
     name = vacancy.getName();
     area = vacancy.getArea();
-    Integer from = vacancy.getCompensationFrom();
-    Integer to = vacancy.getCompensationTo();
-    String currency = vacancy.getCompensationCurrency();
-    Boolean gross = vacancy.getCompensationGross();
-    salary = (currency != null || from != null || to != null || gross != null) ?
-      new Salary(from, to, gross, currency) : null;
+    salary = Salary.getSalaryOrNull(vacancy.getCompensationFrom(), vacancy.getCompensationTo(),
+      vacancy.getCompensationGross(), vacancy.getCompensationCurrency());
     createdAt = vacancy.getCreationTime();
     employer = new EmployerShortView(vacancy.getEmployer());
   }
@@ -58,39 +54,5 @@ public class VacancyShortView {
 
   public EmployerShortView getEmployer() {
     return employer;
-  }
-}
-
-class Salary {
-
-  private Integer from;
-
-  private Integer to;
-
-  private Boolean gross;
-
-  private String currency;
-
-  public Salary(Integer from, Integer to, Boolean gross, String currency) {
-    this.from = from;
-    this.to = to;
-    this.gross = gross;
-    this.currency = currency;
-  }
-
-  public Integer getFrom() {
-    return from;
-  }
-
-  public Integer getTo() {
-    return to;
-  }
-
-  public Boolean getGross() {
-    return gross;
-  }
-
-  public String getCurrency() {
-    return currency;
   }
 }

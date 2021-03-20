@@ -21,6 +21,7 @@ public class VacancyDto implements VacancyData {
 
   private String compensationCurrency;
 
+  @JsonProperty("created_at")
   private OffsetDateTime creationTime;
 
   private EmployerDto employer;
