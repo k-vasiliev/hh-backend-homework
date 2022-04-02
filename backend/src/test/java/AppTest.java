@@ -21,7 +21,7 @@ public class AppTest extends NabTestBase {
 
   @Test
   public void createUserAndCompanyTest() {
-    Response response = createRequest("/")
+    Response response = createRequest("/employer/test")
             .buildGet()
             .invoke();
 
