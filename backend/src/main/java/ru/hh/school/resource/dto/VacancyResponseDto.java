@@ -2,19 +2,21 @@ package ru.hh.school.resource.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Date;
+
 public class VacancyResponseDto {
     private String id;
     private String name;
-    private String area;
-    private String salary; // зарплата в том же формате, что в api hh.ru
+    private AreaData area;
+    private SalaryData salary; // зарплата в том же формате, что в api hh.ru
     @JsonProperty(value = "created_at")
-    private String createdAt;
-    private String employer;
+    private Date createdAt;
+    private VacancyEmployerResponseDto employer;
 
     public VacancyResponseDto() {
     }
 
-    public VacancyResponseDto(String id, String name, String area, String salary, String createdAt, String employer) {
+    public VacancyResponseDto(String id, String name, AreaData area, SalaryData salary, Date createdAt, VacancyEmployerResponseDto employer) {
         this.id = id;
         this.name = name;
         this.area = area;
@@ -39,35 +41,35 @@ public class VacancyResponseDto {
         this.name = name;
     }
 
-    public String getArea() {
+    public AreaData getArea() {
         return area;
     }
 
-    public void setArea(String area) {
+    public void setArea(AreaData area) {
         this.area = area;
     }
 
-    public String getSalary() {
+    public SalaryData getSalary() {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(SalaryData salary) {
         this.salary = salary;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getEmployer() {
+    public VacancyEmployerResponseDto getEmployer() {
         return employer;
     }
 
-    public void setEmployer(String employer) {
+    public void setEmployer(VacancyEmployerResponseDto employer) {
         this.employer = employer;
     }
 }

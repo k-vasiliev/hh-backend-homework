@@ -10,7 +10,7 @@ public class FavouriteEmployersResponseData {
     @JsonProperty(value = "date_create")
     private Date dateCreate; // дата добавления в избранное
     private String description;
-    private String area;
+    private AreaData area;
     private String comment;
     private FavouriteEmployerPopularity popularity; // популярность компании
     @JsonProperty(value = "views_count")
@@ -19,7 +19,7 @@ public class FavouriteEmployersResponseData {
     public FavouriteEmployersResponseData() {
     }
 
-    public FavouriteEmployersResponseData(Long id, String name, Date dateCreate, String description, String area, String comment, FavouriteEmployerPopularity popularity, Long viewsCount) {
+    public FavouriteEmployersResponseData(Long id, String name, Date dateCreate, String description, AreaData area, String comment, FavouriteEmployerPopularity popularity, Long viewsCount) {
         this.id = id;
         this.name = name;
         this.dateCreate = dateCreate;
@@ -62,11 +62,11 @@ public class FavouriteEmployersResponseData {
         this.description = description;
     }
 
-    public String getArea() {
+    public AreaData getArea() {
         return area;
     }
 
-    public void setArea(String area) {
+    public void setArea(AreaData area) {
         this.area = area;
     }
 

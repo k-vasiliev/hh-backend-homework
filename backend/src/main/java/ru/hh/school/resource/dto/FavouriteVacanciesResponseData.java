@@ -1,4 +1,6 @@
-package ru.hh.school.resource;
+package ru.hh.school.resource.dto;
+
+import ru.hh.school.resource.dto.AreaData;
 
 import java.util.Date;
 
@@ -6,8 +8,8 @@ public class FavouriteVacanciesResponseData {
     private String id;
     private String name;
     private Date date_create; // дата добавления в избранное
-    private String area;
-    private Double salary;
+    private AreaData area;
+    private SalaryData salary;
     private Date created_at;
     private Long employer;
     private Long popularity; // та же логика, что и в компаниях
@@ -17,7 +19,7 @@ public class FavouriteVacanciesResponseData {
     public FavouriteVacanciesResponseData() {
     }
 
-    public FavouriteVacanciesResponseData(String id, String name, Date date_create, String area, Double salary, Date created_at, Long employer, Long popularity, Long views_count, String comment) {
+    public FavouriteVacanciesResponseData(String id, String name, Date date_create, AreaData area, SalaryData salary, Date created_at, Long employer, Long popularity, Long views_count, String comment) {
         this.id = id;
         this.name = name;
         this.date_create = date_create;
@@ -54,19 +56,19 @@ public class FavouriteVacanciesResponseData {
         this.date_create = date_create;
     }
 
-    public String getArea() {
+    public AreaData getArea() {
         return area;
     }
 
-    public void setArea(String area) {
+    public void setArea(AreaData area) {
         this.area = area;
     }
 
-    public Double getSalary() {
+    public SalaryData getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(SalaryData salary) {
         this.salary = salary;
     }
 

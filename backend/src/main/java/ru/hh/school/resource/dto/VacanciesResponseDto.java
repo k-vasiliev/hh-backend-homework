@@ -6,7 +6,7 @@ public class VacanciesResponseDto extends PaginationResponseDto<VacanciesRespons
     public VacanciesResponseDto() {
     }
 
-    public VacanciesResponseDto(List<VacanciesResponseData> data) {
-        super(data);
+    public VacanciesResponseDto(List<VacanciesResponseData> data, Integer pages, Integer perPage, Integer page) {
+        super(data, pages, perPage, page);
     }
 }

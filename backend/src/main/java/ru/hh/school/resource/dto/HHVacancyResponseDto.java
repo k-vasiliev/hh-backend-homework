@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
-public class VacanciesResponseData {
-    private Long id;
+public class HHVacancyResponseDto {
+    private String id;
     private String name;
     private AreaData area;
     private SalaryData salary; // зарплата в том же формате, что в api hh.ru
@@ -13,10 +13,10 @@ public class VacanciesResponseData {
     private Date createdAt;
     private VacancyEmployerResponseDto employer;
 
-    public VacanciesResponseData() {
+    public HHVacancyResponseDto() {
     }
 
-    public VacanciesResponseData(Long id, String name, AreaData area, SalaryData salary, Date createdAt, VacancyEmployerResponseDto employer) {
+    public HHVacancyResponseDto(String id, String name, AreaData area, SalaryData salary, Date createdAt, VacancyEmployerResponseDto employer) {
         this.id = id;
         this.name = name;
         this.area = area;
@@ -25,11 +25,11 @@ public class VacanciesResponseData {
         this.employer = employer;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

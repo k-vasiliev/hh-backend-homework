@@ -1,15 +1,15 @@
 package ru.hh.school.resource.dto;
 
-public class EmployerResponseDto {
+public class HHEmployerResponseDto {
     private Long id; // идентификатор компании
     private String name; // название комопании
     private String description; // описание компании
     private AreaData area; // регион компании
 
-    public EmployerResponseDto() {
+    public HHEmployerResponseDto() {
     }
 
-    public EmployerResponseDto(Long id, String name, String description, AreaData area) {
+    public HHEmployerResponseDto(Long id, String name, String description, AreaData area) {
         this.id = id;
         this.name = name;
         this.description = description;

@@ -2,6 +2,7 @@ package ru.hh.school.resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.hh.school.resource.dto.FavouriteVacancyRequestDto;
 import ru.hh.school.resource.dto.FavouriteEmployerRequestDto;
 import ru.hh.school.resource.dto.FavouriteEmployerUpdateRequestDto;
 import ru.hh.school.resource.dto.FavouriteEmployersResponseDto;
@@ -9,7 +10,6 @@ import ru.hh.school.resource.dto.FavouriteEmployersResponseDto;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 @Singleton
 @Path("/favourites")
@@ -37,7 +37,7 @@ public class FavouritesController {
     @Path(value = "/employer") // todo Поддерживает пагинацию
     public Response getFavouriteEmployers() {
         logger.info("getFavouriteEmployers");
-        return Response.ok(new FavouriteEmployersResponseDto(new ArrayList<>())).build();
+        return null; // Response.ok(new FavouriteEmployersResponseDto(new ArrayList<>())).build();
     }
 
     /**
@@ -90,7 +90,7 @@ public class FavouritesController {
     @Path(value = "/vacancy") // todo Поддерживает пагинацию
     public Response getFavouriteVacancies() {
         logger.info("getFavouriteVacancies");
-        return Response.ok(new FavouriteVacanciesResponseDto(new ArrayList<>())).build();
+        return null;// Response.ok(new FavouriteVacanciesResponseDto(new ArrayList<>())).build();
     }
 
     /**
