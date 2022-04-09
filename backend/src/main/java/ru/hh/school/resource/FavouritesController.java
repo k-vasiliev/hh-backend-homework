@@ -7,9 +7,8 @@ import ru.hh.school.domain.Employer;
 import ru.hh.school.domain.Favourite;
 import ru.hh.school.domain.Vacancy;
 import ru.hh.school.resource.dto.*;
-import ru.hh.school.resource.mapper.EmployerMapper;
 import ru.hh.school.resource.mapper.FavouriteMapper;
-import ru.hh.school.resource.mapper.VacancyMapper;
+import ru.hh.school.service.AreaService;
 import ru.hh.school.service.EmployerService;
 import ru.hh.school.service.FavouriteService;
 import ru.hh.school.service.VacancyService;
@@ -17,7 +16,6 @@ import ru.hh.school.service.VacancyService;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,21 +29,19 @@ public class FavouritesController {
     private static final Logger logger = LoggerFactory.getLogger(FavouritesController.class);
 
     private final EmployerService employerService;
-    private final EmployerMapper employerMapper;
     private final VacancyService vacancyService;
-    private final VacancyMapper vacancyMapper;
     private final FavouriteService favouriteService;
     private final FavouriteMapper favouriteMapper;
+    private final AreaService areaService;
 
     @Autowired
-    public FavouritesController(EmployerService employerService, EmployerMapper employerMapper, VacancyService vacancyService,
-                                VacancyMapper vacancyMapper, FavouriteService favouriteService, FavouriteMapper favouriteMapper) {
+    public FavouritesController(EmployerService employerService, VacancyService vacancyService,
+                                FavouriteService favouriteService, FavouriteMapper favouriteMapper, AreaService areaService) {
         this.employerService = employerService;
-        this.employerMapper = employerMapper;
         this.vacancyService = vacancyService;
-        this.vacancyMapper = vacancyMapper;
         this.favouriteService = favouriteService;
         this.favouriteMapper = favouriteMapper;
+        this.areaService = areaService;
     }
 
     /**
@@ -63,7 +59,9 @@ public class FavouritesController {
         }
         Favourite favouriteEmployer = favouriteService.addEmployer(hhEmployer, employer.getComment());
         logger.info("addFavouriteVacancy");
-        return Response.ok(favouriteMapper.toFavoriteEmployerResponseDto(favouriteEmployer)).build();
+        FavouriteEmployerResponseDto response = favouriteMapper.toFavoriteEmployerResponseDto(favouriteEmployer);
+        response.setArea(areaService.getAreaData(favouriteEmployer.getEmployer().getAreaId()));
+        return Response.ok(response).build();
     }
 
     /**
@@ -74,8 +72,12 @@ public class FavouritesController {
     public Response getFavouriteEmployers(@DefaultValue(DEFAULT_PAGE_PARAM) @QueryParam("page") Integer page,
                                           @DefaultValue(DEFAULT_PER_PAGE_PARAM) @QueryParam("per_page") Integer perPage) {
         List<Favourite> favouriteEmployers = favouriteService.getEmployers(page, perPage);
+        Long favouriteEmployersTotalCount = favouriteService.countEmployers();
+        favouriteService.incrementViews(favouriteEmployers);
         logger.info("getFavouriteEmployers");
-        return Response.ok(favouriteEmployers.stream().map(favouriteMapper::toFavoriteEmployerResponseDto).collect(Collectors.toList())).build();
+        List<FavouriteEmployerResponseDto> employerDtoList =
+                favouriteEmployers.stream().map(favouriteMapper::toFavoriteEmployerResponseDto).collect(Collectors.toList());
+        return Response.ok(new FavouriteEmployersResponseDto(employerDtoList, favouriteEmployersTotalCount, perPage, page)).build();
     }
 
     /**
@@ -83,9 +85,9 @@ public class FavouritesController {
      */
     @PUT
     @Path(value = "/employer/{employer_id}")
-    public Response updateFavouriteEmployer(@PathParam("employer_id") Long employerId, FavouriteEmployerUpdateRequestDto updateDto) {
-        logger.info("updateFavouriteEmployer");
-        return Response.ok(new FavouriteEmployersResponseDto()).build();
+    public Response updateFavouriteEmployer(@PathParam("employer_id") Long employerId, FavouriteUpdateRequestDto updateDto) {
+        Favourite response = favouriteService.updateFavouriteEmployer(employerId, updateDto.getComment());
+        return Response.ok(favouriteMapper.toFavoriteEmployerResponseDto(response)).build();
     }
 
     /**
@@ -118,7 +120,9 @@ public class FavouritesController {
             return Response.status(Response.Status.NOT_FOUND).entity("Favourite employer not found").build();
         }
         logger.info("refreshFavouriteEmployer");
-        return Response.ok(favouriteMapper.toFavoriteEmployerDto(favouriteEmployer)).build();
+        EmployerResponseDto response = favouriteMapper.toFavoriteEmployerDto(favouriteEmployer);
+        response.setArea(areaService.getAreaData(favouriteEmployer.getAreaId()));
+        return Response.ok(response).build();
     }
 
     /**
@@ -136,8 +140,21 @@ public class FavouritesController {
         }
         Favourite favouriteVacancy = favouriteService.addVacancy(hhVacancy, vacancy.getComment());
         logger.info("addFavouriteVacancy");
-        return Response.ok(favouriteMapper.toFavouriteVacancyResponseDto(favouriteVacancy)).build();
+        FavouriteVacancyResponseDto response = favouriteMapper.toFavouriteVacancyResponseDto(favouriteVacancy);
+        response.setArea(areaService.getAreaData(favouriteVacancy.getVacancy().getAreaId()));
+        return Response.ok(response).build();
     }
+
+    /**
+     * Изменить информацию о избранной вакансии
+     */
+    @PUT
+    @Path(value = "/vacancy/{vacancy_id}")
+    public Response updateFavouriteVacancy(@PathParam("vacancy_id") Long vacancyId, FavouriteUpdateRequestDto updateDto) {
+        Favourite response = favouriteService.updateFavouriteVacancy(vacancyId, updateDto.getComment());
+        return Response.ok(favouriteMapper.toFavouriteVacancyResponseDto(response)).build();
+    }
+
 
     /**
      * Получение вакансий из избранного
@@ -147,8 +164,12 @@ public class FavouritesController {
     public Response getFavouriteVacancies(@DefaultValue(DEFAULT_PAGE_PARAM) @QueryParam("page") Integer page,
                                           @DefaultValue(DEFAULT_PER_PAGE_PARAM) @QueryParam("per_page") Integer perPage) {
         logger.info("getFavouriteVacancies");
-        List<Favourite> favouriteVacancies = favouriteService.getEmployers(page, perPage);
-        return Response.ok(favouriteVacancies.stream().map(favouriteMapper::toFavouriteVacancyResponseDto).collect(Collectors.toList())).build();
+        List<Favourite> favouriteVacancies = favouriteService.getVacancies(page, perPage);
+        Long favouriteVacanciesTotalCount = favouriteService.countVacancies();
+        favouriteService.incrementViews(favouriteVacancies);
+        List<FavouriteVacancyResponseDto> vacancyDtoList =
+                favouriteVacancies.stream().map(favouriteMapper::toFavouriteVacancyResponseDto).collect(Collectors.toList());
+        return Response.ok(new FavouriteVacanciesResponseDto(vacancyDtoList, favouriteVacanciesTotalCount, perPage, page)).build();
     }
 
     /**
@@ -157,13 +178,8 @@ public class FavouritesController {
     @DELETE
     @Path(value = "/vacancy/{vacancy_id}")
     public Response deleteFavouriteVacancy(@PathParam("vacancy_id") Long vacancyId) {
-        try {
-            favouriteService.deleteVacancyById(vacancyId);
-            logger.info("deleteFavouriteVacancy {}", vacancyId);
-            return Response.ok().build();
-        } catch (RuntimeException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Favourite vacancy not found").build();
-        }
+        favouriteService.deleteVacancyById(vacancyId);
+        return Response.ok().build();
     }
 
     /**
@@ -180,7 +196,8 @@ public class FavouritesController {
         if (favoriteVacancy == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("Favourite vacancy not found").build();
         }
-        logger.info("refreshFavouriteEmployer");
+        VacancyResponseDto response = favouriteMapper.toFavoriteVacancyDto(favoriteVacancy);
+        response.setArea(areaService.getAreaData(favoriteVacancy.getAreaId()));
         return Response.ok(favouriteMapper.toFavoriteVacancyDto(favoriteVacancy)).build();
     }
 }

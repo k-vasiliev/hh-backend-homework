@@ -2,7 +2,7 @@ package ru.hh.school.resource.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class VacancyResponseDto {
     private String id;
@@ -10,13 +10,13 @@ public class VacancyResponseDto {
     private AreaData area;
     private SalaryData salary; // зарплата в том же формате, что в api hh.ru
     @JsonProperty(value = "created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private VacancyEmployerResponseDto employer;
 
     public VacancyResponseDto() {
     }
 
-    public VacancyResponseDto(String id, String name, AreaData area, SalaryData salary, Date createdAt, VacancyEmployerResponseDto employer) {
+    public VacancyResponseDto(String id, String name, AreaData area, SalaryData salary, LocalDateTime createdAt, VacancyEmployerResponseDto employer) {
         this.id = id;
         this.name = name;
         this.area = area;
@@ -57,11 +57,11 @@ public class VacancyResponseDto {
         this.salary = salary;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

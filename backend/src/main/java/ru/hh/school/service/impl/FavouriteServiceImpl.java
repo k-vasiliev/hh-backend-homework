@@ -5,8 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.hh.school.dao.*;
-import ru.hh.school.domain.*;
+import ru.hh.school.dao.EmployerRepository;
+import ru.hh.school.dao.FavouriteRepository;
+import ru.hh.school.dao.VacancyRepository;
+import ru.hh.school.domain.Employer;
+import ru.hh.school.domain.Favourite;
+import ru.hh.school.domain.FavouriteType;
+import ru.hh.school.domain.Vacancy;
 import ru.hh.school.exception.BadRequestException;
 import ru.hh.school.exception.NotFoundException;
 import ru.hh.school.resource.dto.HHEmployerResponseDto;
@@ -16,51 +21,63 @@ import ru.hh.school.service.FavouriteService;
 
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Optional;
 
 @Singleton
 @Service
 @Transactional(readOnly = true)
 public class FavouriteServiceImpl implements FavouriteService {
     private static final Logger logger = LoggerFactory.getLogger(FavouriteServiceImpl.class);
-    private EmployerService employerService;
-    private FavouriteRepository favouriteRepository;
-    private EmployerRepository employerRepository;
-    private VacancyRepository vacancyRepository;
-    private AreaRepository areaRepository;
+    private final EmployerService employerService;
+    private final FavouriteRepository favouriteRepository;
+    private final EmployerRepository employerRepository;
+    private final VacancyRepository vacancyRepository;
 
 
     @Autowired
-    public FavouriteServiceImpl(EmployerService employerService, FavouriteRepository favouriteRepository, EmployerRepository employerRepository, VacancyRepository vacancyRepository, AreaRepository areaRepository) {
+    public FavouriteServiceImpl(EmployerService employerService, FavouriteRepository favouriteRepository,
+                                EmployerRepository employerRepository, VacancyRepository vacancyRepository) {
         this.employerService = employerService;
         this.favouriteRepository = favouriteRepository;
         this.employerRepository = employerRepository;
         this.vacancyRepository = vacancyRepository;
-        this.areaRepository = areaRepository;
     }
 
-    /**
-     * Получение компаний от HH API
-     * @return
-     */
+    @Override
+    @Transactional
+    public void incrementViews(List<Favourite> favourites) {
+        favourites.forEach(v -> {
+            v.setViewsCount(v.getViewsCount() + 1);
+            if (v.getVacancy() != null) {
+                Optional.ofNullable(favouriteRepository.getFavouriteByEmployerId(v.getVacancy().getEmployer().getId()))
+                        .ifPresent(vacancyFavouriteEmployer -> {
+                            vacancyFavouriteEmployer.setViewsCount(vacancyFavouriteEmployer.getViewsCount() + 1);
+                            favouriteRepository.save(vacancyFavouriteEmployer);
+                        });
+            }
+            favouriteRepository.save(v);
+        });
+    }
+
     @Override
     public List<Favourite> getEmployers(Integer page, Integer perPage) {
-        return favouriteRepository.getAllByFavouriteType(FavouriteType.EMPLOYER);
+        return favouriteRepository.getAllByFavouriteType(page, perPage, FavouriteType.EMPLOYER);
+    }
+
+    @Override
+    public Long countEmployers() {
+        return favouriteRepository.countAllByFavouriteType(FavouriteType.EMPLOYER);
     }
 
     @Override
     @Transactional
     public Favourite addEmployer(HHEmployerResponseDto hhEmployer, String comment) {
-        System.out.println(0);
-        Favourite favourite = favouriteRepository.getFavouriteByVacancyId(hhEmployer.getId());
+        Favourite favourite = favouriteRepository.getFavouriteByEmployerId(hhEmployer.getId());
         if (favourite != null) {
             throw new BadRequestException("Employer already existed");
         }
-        System.out.println(1);
-        Area area = areaRepository.getById(hhEmployer.getArea().getId());
-        System.out.println(2);
-        Employer employer = employerRepository.save(new Employer(hhEmployer.getName(), hhEmployer.getDescription(), area));
-        System.out.println(3);
-        return favouriteRepository.save(new Favourite(employer, hhEmployer.getId(), FavouriteType.EMPLOYER, comment, 0L));
+        Employer employer = employerRepository.save(new Employer(hhEmployer.getName(), hhEmployer.getDescription(), hhEmployer.getArea().getId()));
+        return favouriteRepository.save(new Favourite(employer, hhEmployer.getId(), FavouriteType.EMPLOYER, comment));
     }
 
     @Override
@@ -76,14 +93,21 @@ public class FavouriteServiceImpl implements FavouriteService {
         if (!employer.getDescription().equals(hhEmployer.getDescription())) {
             employer.setDescription(hhEmployer.getDescription());
         }
-        if (!employer.getArea().getId().equals(hhEmployer.getArea().getId())) {
-            Area area = areaRepository.getById(hhEmployer.getArea().getId());
-            if (area == null) {
-                throw new UnsupportedOperationException("Area not found");
-            }
-            employer.setArea(area);
+        if (!employer.getAreaId().equals(hhEmployer.getArea().getId())) {
+            employer.setAreaId(hhEmployer.getArea().getId());
         }
         return employerRepository.save(employer);
+    }
+
+    @Override
+    @Transactional
+    public Favourite updateFavouriteEmployer(Long employerId, String newComment) {
+        Favourite favourite = favouriteRepository.getFavouriteByEmployerId(employerId);
+        if (favourite == null) {
+            throw new NotFoundException(String.format("Employer %d not found", employerId));
+        }
+        favourite.setComment(newComment);
+        return favouriteRepository.save(favourite);
     }
 
     @Override
@@ -98,7 +122,12 @@ public class FavouriteServiceImpl implements FavouriteService {
 
     @Override
     public List<Favourite> getVacancies(Integer page, Integer perPage) {
-        return favouriteRepository.getAllByFavouriteType(FavouriteType.VACANCY);
+        return favouriteRepository.getAllByFavouriteType(page, perPage, FavouriteType.VACANCY);
+    }
+
+    @Override
+    public Long countVacancies() {
+        return favouriteRepository.countAllByFavouriteType(FavouriteType.VACANCY);
     }
 
     @Override
@@ -111,14 +140,25 @@ public class FavouriteServiceImpl implements FavouriteService {
         Employer employer = employerRepository.getById(hhVacancy.getEmployer().getId());
         if (employer == null) {
             HHEmployerResponseDto hhEmployer = employerService.getHHEmployerById(hhVacancy.getEmployer().getId());
-            Area area = areaRepository.getById(hhVacancy.getArea().getId());
-            employer = employerRepository.save(new Employer(hhEmployer.getName(), hhEmployer.getDescription(), area));
+            employer = new Employer(hhEmployer.getName(), hhEmployer.getDescription(), hhVacancy.getArea().getId());
+            favouriteRepository.save(new Favourite(employer, hhEmployer.getId(), FavouriteType.EMPLOYER, null)); // todo {strelchm}
+//            employer = employerRepository.save(new Employer(hhEmployer.getName(), hhEmployer.getDescription(), hhVacancy.getArea().getId()));
         }
-        Area area = areaRepository.getById(hhVacancy.getArea().getId());
         Vacancy vacancy = vacancyRepository.save(new Vacancy(hhVacancy.getName(), hhVacancy.getSalary(),
                 null, // hhVacancy.getCreatedAt(),
-                employer, area));
-        return favouriteRepository.save(new Favourite(vacancy, hhVacancy.getId(), FavouriteType.VACANCY, comment, 0L));
+                employer, hhVacancy.getArea().getId()));
+        return favouriteRepository.save(new Favourite(vacancy, hhVacancy.getId(), FavouriteType.VACANCY, comment));
+    }
+
+    @Override
+    @Transactional
+    public Favourite updateFavouriteVacancy(Long vacancyId, String newComment) {
+        Favourite favourite = favouriteRepository.getFavouriteByVacancyId(vacancyId);
+        if (favourite == null) {
+            throw new NotFoundException(String.format("Vacancy %d not found", vacancyId));
+        }
+        favourite.setComment(newComment);
+        return favouriteRepository.save(favourite);
     }
 
     @Override
@@ -134,12 +174,8 @@ public class FavouriteServiceImpl implements FavouriteService {
         if (!vacancy.getSalary().equals(hhVacancy.getSalary())) {
             vacancy.setSalary(hhVacancy.getSalary());
         }
-        if (!vacancy.getArea().getId().equals(hhVacancy.getArea().getId())) {
-            Area area = areaRepository.getById(hhVacancy.getArea().getId());
-            if (area == null) {
-                throw new UnsupportedOperationException("Area not found");
-            }
-            vacancy.setArea(area);
+        if (!vacancy.getAreaId().equals(hhVacancy.getArea().getId())) {
+            vacancy.setAreaId(hhVacancy.getArea().getId());
         }
         if (!vacancy.getEmployer().getId().equals(hhVacancy.getEmployer().getId())) {
             Employer employer = employerRepository.getById(hhVacancy.getEmployer().getId());

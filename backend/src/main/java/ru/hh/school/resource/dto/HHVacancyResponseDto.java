@@ -1,24 +1,18 @@
 package ru.hh.school.resource.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import ru.hh.school.utils.LocalDateTimeDeserializer;
-import ru.hh.school.utils.LocalDateTimeSerializer;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class HHVacancyResponseDto {
     private Long id;
+
     private String name;
+
     private AreaData area;
+
     private SalaryData salary; // зарплата в том же формате, что в api hh.ru
-//    @JsonProperty(value = "created_at")
-//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-//    @JsonSerialize(using = LocalDateTimeSerializer.class)
-//    private LocalDateTime createdAt;
+
+    private LocalDateTime createdAt;
+
     private VacancyEmployerResponseDto employer;
 
     public HHVacancyResponseDto() {

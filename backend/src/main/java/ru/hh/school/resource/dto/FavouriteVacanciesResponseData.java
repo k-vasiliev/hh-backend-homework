@@ -1,7 +1,5 @@
 package ru.hh.school.resource.dto;
 
-import ru.hh.school.resource.dto.AreaData;
-
 import java.util.Date;
 
 public class FavouriteVacanciesResponseData {

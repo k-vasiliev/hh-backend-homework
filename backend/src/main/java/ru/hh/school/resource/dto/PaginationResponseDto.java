@@ -6,17 +6,21 @@ import java.util.List;
 
 public class PaginationResponseDto<T> {
     private List<T> items;
-    private Integer pages;
+
+    @JsonProperty("item_count")
+    private Long itemCount;
+
+    private Integer page;
+
     @JsonProperty("per_page")
     private Integer perPage;
-    private Integer page;
 
     public PaginationResponseDto() {
     }
 
-    public PaginationResponseDto(List<T> data, Integer pages, Integer perPage, Integer page) {
+    public PaginationResponseDto(List<T> data, Long pages, Integer perPage, Integer page) {
         this.items = data;
-        this.pages = pages;
+        this.itemCount = pages;
         this.perPage = perPage;
         this.page = page;
     }
@@ -29,12 +33,12 @@ public class PaginationResponseDto<T> {
         this.items = items;
     }
 
-    public Integer getPages() {
-        return pages;
+    public Long getItemCount() {
+        return itemCount;
     }
 
-    public void setPages(Integer pages) {
-        this.pages = pages;
+    public void setItemCount(Long itemCount) {
+        this.itemCount = itemCount;
     }
 
     public Integer getPerPage() {

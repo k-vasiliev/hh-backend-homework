@@ -1,6 +1,8 @@
 package ru.hh.school.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "employer")
@@ -10,17 +12,17 @@ public class Employer extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description; // описание компании
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "area_id", referencedColumnName = "id")
-    private Area area;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "area_id", referencedColumnName = "id")
+    private Long areaId;
 
     public Employer() {
     }
 
-    public Employer(String name, String description, Area area) {
+    public Employer(String name, String description, Long areaId) {
         this.name = name;
         this.description = description;
-        this.area = area;
+        this.areaId = areaId;
     }
 
     public String getName() {
@@ -39,11 +41,11 @@ public class Employer extends BaseEntity {
         this.description = description;
     }
 
-    public Area getArea() {
-        return area;
+    public Long getAreaId() {
+        return areaId;
     }
 
-    public void setArea(Area area) {
-        this.area = area;
+    public void setAreaId(Long areaId) {
+        this.areaId = areaId;
     }
 }

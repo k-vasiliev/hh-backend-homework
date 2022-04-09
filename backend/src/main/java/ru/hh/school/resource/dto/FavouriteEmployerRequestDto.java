@@ -1,7 +1,9 @@
 package ru.hh.school.resource.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties
 public class FavouriteEmployerRequestDto {
     @JsonProperty(value = "employer_id")
     private Long employerId; // id компании, данные которой нужно сохранить

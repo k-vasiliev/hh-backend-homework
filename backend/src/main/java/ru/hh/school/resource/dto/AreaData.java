@@ -27,4 +27,12 @@ public class AreaData {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "AreaData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

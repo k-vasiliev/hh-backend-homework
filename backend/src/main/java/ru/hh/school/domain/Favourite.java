@@ -1,20 +1,17 @@
 package ru.hh.school.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "favourite")
 public class Favourite extends BaseEntity {
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employer_id")
     private Employer employer;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vacancy_id")
     private Vacancy vacancy;
 
@@ -31,22 +28,22 @@ public class Favourite extends BaseEntity {
     public Favourite() {
     }
 
-    public Favourite(Vacancy vacancy, Long linkId, FavouriteType type, String comment, Long viewsCount) {
+    public Favourite(Vacancy vacancy, Long linkId, FavouriteType type, String comment) {
         this.vacancy = vacancy;
         this.linkId = linkId;
         this.type = type;
         this.comment = comment;
-        this.viewsCount = viewsCount;
         this.dateCreate = LocalDateTime.now();
+        this.viewsCount = 0L;
     }
 
-    public Favourite(Employer employer, Long linkId, FavouriteType type, String comment, Long viewsCount) {
+    public Favourite(Employer employer, Long linkId, FavouriteType type, String comment) {
         this.employer = employer;
         this.linkId = linkId;
         this.type = type;
         this.comment = comment;
-        this.viewsCount = viewsCount;
         this.dateCreate = LocalDateTime.now();
+        this.viewsCount = 0L;
     }
 
     public Employer getEmployer() {
@@ -103,5 +100,18 @@ public class Favourite extends BaseEntity {
 
     public void setLinkId(Long linkId) {
         this.linkId = linkId;
+    }
+
+    @Override
+    public String toString() {
+        return "Favourite{" +
+                "employer=" + employer +
+                ", vacancy=" + vacancy +
+                ", linkId=" + linkId +
+                ", type=" + type +
+                ", comment='" + comment + '\'' +
+                ", viewsCount=" + viewsCount +
+                ", dateCreate=" + dateCreate +
+                '}';
     }
 }

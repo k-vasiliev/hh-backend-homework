@@ -1,8 +1,13 @@
-CREATE TABLE area
+create table area
 (
-    id   BIGSERIAL PRIMARY KEY,
-    name VARCHAR
-) IF NOT EXISTS;
+    id   bigint not null
+        constraint area_pkey
+            primary key,
+    name varchar(255)
+);
+
+alter table area
+    owner to hh;
 
 INSERT INTO area (name)
 VALUES ('Республика Марий Эл'),
@@ -90,52 +95,60 @@ VALUES ('Республика Марий Эл'),
        ('Республика Калмыкия'),
        ('Ростовская область');
 
-CREATE TABLE employer
+create table employer
 (
-    id            BIGINT       NOT NULL,
-    name          VARCHAR(255) NULL,
-    `description` VARCHAR(255) NULL,
-    area_id       BIGINT       NULL,
-    CONSTRAINT pk_employer PRIMARY KEY (id)
+    id          bigint not null
+        constraint employer_pkey
+            primary key,
+    description text,
+    name        varchar(255),
+    area_id     bigint
+        constraint fkqwv7by5nh76d5l2dvkva4lhwf
+            references area
 );
 
-ALTER TABLE employer
-    ADD CONSTRAINT FK_EMPLOYER_ON_AREA FOREIGN KEY (area_id) REFERENCES area (id);
+alter table employer
+    owner to hh;
 
-CREATE TABLE favourite
+create table vacancy
 (
-    id          BIGINT       NOT NULL,
-    employer_id BIGINT       NULL,
-    vacancy_id  BIGINT       NULL,
-    type        INT          NULL,
-    comment     VARCHAR(255) NULL,
-    viewsCount  BIGINT       NULL,
-    dateCreate  datetime     NULL,
-    CONSTRAINT pk_favourite PRIMARY KEY (id)
+    id           bigint not null
+        constraint vacancy_pkey
+            primary key,
+    createdat    timestamp,
+    name         text,
+    currency     text,
+    start_salary double precision,
+    gross        boolean,
+    end_salary   double precision,
+    area_id      bigint
+        constraint fksajma553prtccg29gaoaer4um
+            references area,
+    employer_id  bigint
+        constraint fkeepnrqfc3aewgiwvmi0ywxs6b
+            references employer
 );
 
-ALTER TABLE favourite
-    ADD CONSTRAINT FK_FAVOURITE_ON_EMPLOYER FOREIGN KEY (employer_id) REFERENCES employer (id);
+alter table vacancy
+    owner to hh;
 
-ALTER TABLE favourite
-    ADD CONSTRAINT FK_FAVOURITE_ON_VACANCY FOREIGN KEY (vacancy_id) REFERENCES vacancy (id);
-
-CREATE TABLE vacancy
+create table favourite
 (
-    id          BIGINT       NOT NULL,
-    name        VARCHAR(255) NULL,
-    createdAt   datetime     NULL,
-    employer_id BIGINT       NULL,
-    area_id     BIGINT       NULL,
-    `from`      DOUBLE       NULL,
-    `to`        DOUBLE       NULL,
-    currency    VARCHAR(255) NULL,
-    gross       BIT(1)       NULL,
-    CONSTRAINT pk_vacancy PRIMARY KEY (id)
+    id          bigint not null
+        constraint favourite_pkey
+            primary key,
+    comment     varchar(255),
+    datecreate  timestamp,
+    linkid      bigint,
+    type        integer,
+    viewscount  bigint,
+    employer_id bigint
+        constraint fk4yq50796p050s3dk6rv95aefd
+            references employer,
+    vacancy_id  bigint
+        constraint fk3yqwo4uqt7qc9at2mt441c8sp
+            references vacancy
 );
 
-ALTER TABLE vacancy
-    ADD CONSTRAINT FK_VACANCY_ON_AREA FOREIGN KEY (area_id) REFERENCES area (id);
-
-ALTER TABLE vacancy
-    ADD CONSTRAINT FK_VACANCY_ON_EMPLOYER FOREIGN KEY (employer_id) REFERENCES employer (id);
+alter table favourite
+    owner to hh;

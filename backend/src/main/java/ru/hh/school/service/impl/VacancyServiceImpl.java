@@ -8,11 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.hh.school.resource.dto.HHEmployerResponseDto;
-import ru.hh.school.resource.dto.HHEmployersResponseDto;
 import ru.hh.school.resource.dto.HHVacanciesResponseDto;
 import ru.hh.school.resource.dto.HHVacancyResponseDto;
-import ru.hh.school.service.EmployerService;
 import ru.hh.school.service.VacancyService;
 
 import javax.inject.Singleton;
@@ -60,12 +57,16 @@ public class VacancyServiceImpl implements VacancyService {
      */
     @Override
     public HHVacancyResponseDto getHHVacancyById(Long vacancyId) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-        HttpEntity<HHVacancyResponseDto> response = restTemplate.getForEntity(
-                HH_VACANCIES_BASE_URL + "/" + vacancyId,
-                HHVacancyResponseDto.class
-        );
-        return response.getBody();
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            HttpEntity<HHVacancyResponseDto> response = restTemplate.getForEntity(
+                    HH_VACANCIES_BASE_URL + "/" + vacancyId,
+                    HHVacancyResponseDto.class
+            );
+            return response.getBody();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

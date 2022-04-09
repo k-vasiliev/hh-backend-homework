@@ -1,7 +1,5 @@
 package ru.hh.school.service;
 
-import ru.hh.school.resource.dto.HHEmployerResponseDto;
-import ru.hh.school.resource.dto.HHEmployersResponseDto;
 import ru.hh.school.resource.dto.HHVacanciesResponseDto;
 import ru.hh.school.resource.dto.HHVacancyResponseDto;
 

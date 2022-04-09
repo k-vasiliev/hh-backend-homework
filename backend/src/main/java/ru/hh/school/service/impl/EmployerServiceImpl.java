@@ -57,12 +57,16 @@ public class EmployerServiceImpl implements EmployerService {
      */
     @Override
     public HHEmployerResponseDto getHHEmployerById(Long id) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-        HttpEntity<HHEmployerResponseDto> response = restTemplate.getForEntity(
-                HH_EMPLOYERS_BASE_URL + "/" + id,
-                HHEmployerResponseDto.class
-        );
-        return response.getBody();
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            HttpEntity<HHEmployerResponseDto> response = restTemplate.getForEntity(
+                    HH_EMPLOYERS_BASE_URL + "/" + id,
+                    HHEmployerResponseDto.class
+            );
+            return response.getBody();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

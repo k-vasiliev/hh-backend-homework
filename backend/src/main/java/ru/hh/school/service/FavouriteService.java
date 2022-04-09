@@ -9,19 +9,29 @@ import ru.hh.school.resource.dto.HHVacancyResponseDto;
 import java.util.List;
 
 public interface FavouriteService {
+    void incrementViews(List<Favourite> favourites);
+
     List<Favourite> getEmployers(Integer page, Integer perPage);
+
+    Long countEmployers();
 
     Favourite addEmployer(HHEmployerResponseDto hhEmployer, String comment);
 
-    List<Favourite> getVacancies(Integer page, Integer perPage);
+    Favourite updateFavouriteEmployer(Long employerId, String newComment);
 
     Employer refreshEmployer(HHEmployerResponseDto hhEmployer);
 
-    Vacancy refreshVacancy(HHVacancyResponseDto hhVacancy);
-
     void deleteEmployerById(Long employerId);
 
-    void deleteVacancyById(Long vacancyId);
+    List<Favourite> getVacancies(Integer page, Integer perPage);
+
+    Long countVacancies();
 
     Favourite addVacancy(HHVacancyResponseDto hhVacancy, String comment);
+
+    Favourite updateFavouriteVacancy(Long vacancyId, String newComment);
+
+    Vacancy refreshVacancy(HHVacancyResponseDto hhVacancy);
+
+    void deleteVacancyById(Long vacancyId);
 }

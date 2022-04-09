@@ -6,7 +6,7 @@ public class EmployersResponseDto extends PaginationResponseDto<EmployersRespons
     public EmployersResponseDto() {
     }
 
-    public EmployersResponseDto(List<EmployersResponseData> data, Integer pages, Integer perPage, Integer page) {
+    public EmployersResponseDto(List<EmployersResponseData> data, Long pages, Integer perPage, Integer page) {
         super(data, pages, perPage, page);
     }
 }

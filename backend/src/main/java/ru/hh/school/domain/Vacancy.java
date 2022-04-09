@@ -20,19 +20,20 @@ public class Vacancy extends BaseEntity {
     @JoinColumn(name = "employer_id")
     private Employer employer;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "area_id", referencedColumnName = "id")
-    private Area area;
+//    @OneToOne(cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "area_id", referencedColumnName = "id")
+    private Long areaId;
 
     public Vacancy() {
     }
 
-    public Vacancy(String name, SalaryData salary, LocalDateTime createdAt, Employer employer, Area area) {
+    public Vacancy(String name, SalaryData salary, LocalDateTime createdAt, Employer employer, Long areaId) {
         this.name = name;
         this.salary = salary;
         this.createdAt = createdAt;
         this.employer = employer;
-        this.area = area;
+        this.areaId = areaId;
+        this.createdAt = LocalDateTime.now();
     }
 
     public String getName() {
@@ -67,12 +68,12 @@ public class Vacancy extends BaseEntity {
         this.employer = employer;
     }
 
-    public Area getArea() {
-        return area;
+    public Long getAreaId() {
+        return areaId;
     }
 
-    public void setArea(Area area) {
-        this.area = area;
+    public void setAreaId(Long areaId) {
+        this.areaId = areaId;
     }
 
     @Override
@@ -82,7 +83,7 @@ public class Vacancy extends BaseEntity {
                 ", salary=" + salary +
                 ", createdAt=" + createdAt +
                 ", employer=" + employer +
-                ", area=" + area +
+                ", areaId=" + areaId +
                 '}';
     }
 }

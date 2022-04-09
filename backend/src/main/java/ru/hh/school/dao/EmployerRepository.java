@@ -5,10 +5,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.hh.school.domain.Employer;
-import ru.hh.school.domain.Vacancy;
 
 import javax.persistence.NoResultException;
-import java.util.Optional;
 
 @Repository
 public class EmployerRepository extends AbstractRepository<Employer> {

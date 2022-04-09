@@ -2,6 +2,7 @@ package ru.hh.school.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.hh.school.domain.Favourite;
@@ -23,6 +24,16 @@ public class FavouriteRepository extends AbstractRepository<Favourite> {
         return session.createQuery("SELECT u From Favourite u WHERE u.type = :favouriteType", Favourite.class)
                 .setParameter("favouriteType", favouriteType)
                 .getResultList();
+    }
+
+    public Long countAllByFavouriteType(FavouriteType favouriteType) {
+        Session session = getSessionFactory().getCurrentSession();
+        return count(session.createQuery("SELECT COUNT(u) From Favourite u WHERE u.type = :favouriteType", Long.class)
+                .setParameter("favouriteType", favouriteType));
+    }
+
+    public List<Favourite> getAllByFavouriteType(int page, int limitPerPage, FavouriteType favouriteType) {
+        return searchByPage(limitPerPage, page, favouriteType);
     }
 
     public Optional<Favourite> getById(Long favouriteId) {
@@ -52,6 +63,20 @@ public class FavouriteRepository extends AbstractRepository<Favourite> {
                     .setParameter("type", FavouriteType.EMPLOYER)
                     .setParameter("employerId", employerId)
                     .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    protected List<Favourite> searchByPage(int limitPerPage, int page, FavouriteType type) {
+        try {
+            Session session = getSessionFactory().getCurrentSession();
+            String sql = "SELECT t FROM Favourite t WHERE t.type = :type";
+            Query query = session.createQuery(sql)
+                    .setParameter("type", type)
+                    .setFirstResult(calculateOffset(page, limitPerPage))
+                    .setMaxResults(limitPerPage);
+            return query.getResultList();
         } catch (NoResultException e) {
             return null;
         }

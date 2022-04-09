@@ -3,7 +3,6 @@ package ru.hh.school.resource.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class FavouriteVacancyResponseDto {
     private String id;
@@ -112,5 +111,21 @@ public class FavouriteVacancyResponseDto {
 
     public void setDateCreate(LocalDateTime dateCreate) {
         this.dateCreate = dateCreate;
+    }
+
+    @Override
+    public String toString() {
+        return "FavouriteVacancyResponseDto{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", area=" + area +
+                ", salary=" + salary +
+                ", createdAt=" + createdAt +
+                ", employer=" + employer +
+                ", comment='" + comment + '\'' +
+                ", viewsCount=" + viewsCount +
+                ", popularity='" + popularity + '\'' +
+                ", dateCreate=" + dateCreate +
+                '}';
     }
 }

@@ -6,7 +6,7 @@ public class HHVacanciesResponseDto extends PaginationResponseDto<VacanciesRespo
     public HHVacanciesResponseDto() {
     }
 
-    public HHVacanciesResponseDto(List<VacanciesResponseData> data, Integer pages, Integer perPage, Integer page) {
+    public HHVacanciesResponseDto(List<VacanciesResponseData> data, Long pages, Integer perPage, Integer page) {
         super(data, pages, perPage, page);
     }
 }
