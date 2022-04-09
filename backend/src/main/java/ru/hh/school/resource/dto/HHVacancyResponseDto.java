@@ -1,35 +1,43 @@
 package ru.hh.school.resource.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import ru.hh.school.utils.LocalDateTimeDeserializer;
+import ru.hh.school.utils.LocalDateTimeSerializer;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class HHVacancyResponseDto {
-    private String id;
+    private Long id;
     private String name;
     private AreaData area;
     private SalaryData salary; // зарплата в том же формате, что в api hh.ru
-    @JsonProperty(value = "created_at")
-    private Date createdAt;
+//    @JsonProperty(value = "created_at")
+//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
+//    private LocalDateTime createdAt;
     private VacancyEmployerResponseDto employer;
 
     public HHVacancyResponseDto() {
     }
 
-    public HHVacancyResponseDto(String id, String name, AreaData area, SalaryData salary, Date createdAt, VacancyEmployerResponseDto employer) {
+    public HHVacancyResponseDto(Long id, String name, AreaData area, SalaryData salary, LocalDateTime createdAt, VacancyEmployerResponseDto employer) {
         this.id = id;
         this.name = name;
         this.area = area;
         this.salary = salary;
-        this.createdAt = createdAt;
+//        this.createdAt = createdAt;
         this.employer = employer;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,13 +65,13 @@ public class HHVacancyResponseDto {
         this.salary = salary;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+//    public LocalDateTime getCreatedAt() {
+//        return createdAt;
+//    }
+//
+//    public void setCreatedAt(LocalDateTime createdAt) {
+//        this.createdAt = createdAt;
+//    }
 
     public VacancyEmployerResponseDto getEmployer() {
         return employer;

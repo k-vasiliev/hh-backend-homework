@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class FavouriteEmployerRequestDto {
     @JsonProperty(value = "employer_id")
     private Long employerId; // id компании, данные которой нужно сохранить
-    private Long comment; // комментарий. Может быть пустым
+    private String comment; // комментарий. Может быть пустым
 
     public FavouriteEmployerRequestDto() {
     }
 
-    public FavouriteEmployerRequestDto(Long employerId, Long comment) {
+    public FavouriteEmployerRequestDto(Long employerId, String comment) {
         this.employerId = employerId;
         this.comment = comment;
     }
@@ -23,11 +23,11 @@ public class FavouriteEmployerRequestDto {
         this.employerId = employerId;
     }
 
-    public Long getComment() {
+    public String getComment() {
         return comment;
     }
 
-    public void setComment(Long comment) {
+    public void setComment(String comment) {
         this.comment = comment;
     }
 }

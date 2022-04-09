@@ -15,15 +15,15 @@ public class AbstractRepository<T extends BaseEntity> {
         this.sessionFactory = sessionFactory;
     }
 
-    public Long save(T user) {
+    public T save(T entity) {
         Session session = getSessionFactory().getCurrentSession();
-        session.saveOrUpdate(user);
-        return user.getId();
+        session.saveOrUpdate(entity);
+        return entity;
     }
 
-    public void deleteById(T user) {
+    public void delete(T entity) {
         Session session = getSessionFactory().getCurrentSession();
-        session.delete(user);
+        session.delete(entity);
     }
 
     protected SessionFactory getSessionFactory() {

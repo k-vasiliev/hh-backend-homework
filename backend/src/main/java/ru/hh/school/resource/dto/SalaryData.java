@@ -1,8 +1,16 @@
 package ru.hh.school.resource.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import java.util.Objects;
+
+@Embeddable
 public class SalaryData {
+    @Column(name = "start_salary")
     private Double from;
+    @Column(name = "end_salary")
     private Double to;
+    @Column(columnDefinition = "TEXT")
     private String currency;
     private Boolean gross;
 
@@ -46,5 +54,18 @@ public class SalaryData {
 
     public void setGross(Boolean gross) {
         this.gross = gross;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SalaryData that = (SalaryData) o;
+        return Objects.equals(from, that.from) && Objects.equals(to, that.to) && Objects.equals(currency, that.currency) && Objects.equals(gross, that.gross);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(from, to, currency, gross);
     }
 }

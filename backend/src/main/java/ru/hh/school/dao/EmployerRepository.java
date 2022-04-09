@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.hh.school.domain.Employer;
 import ru.hh.school.domain.Vacancy;
 
+import javax.persistence.NoResultException;
 import java.util.Optional;
 
 @Repository
@@ -16,11 +17,14 @@ public class EmployerRepository extends AbstractRepository<Employer> {
         super(sessionFactory);
     }
 
-    public Optional<Employer> getById(Long employerId) {
-        Session session = getSessionFactory().getCurrentSession();
-        Employer employer = session.createQuery("SELECT u From Vacancy u WHERE u.id = :id", Employer.class)
-                .setParameter("id", employerId)
-                .getSingleResult();
-        return Optional.of(employer);
+    public Employer getById(Long employerId) {
+        try {
+            Session session = getSessionFactory().getCurrentSession();
+            return session.createQuery("SELECT u From Employer u WHERE u.id = :id", Employer.class)
+                    .setParameter("id", employerId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }
